@@ -17,12 +17,8 @@ Shader "Unlit/FogOfWar"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-            /* #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" */
-
 
             struct appdata
             {
@@ -64,7 +60,6 @@ Shader "Unlit/FogOfWar"
 
             float noise(float2 n)
             {
-                /* return tex2D(_NoiseTex, n); */
                 const float2 d = float2(0.f, 1.f);
                 float2 b = floor(n), f = smoothstep(float2(0.f, 0.f), float2(1.f, 1.f), frac(n));
                 return lerp(lerp(rand(b), rand(b + d.yx), f.x), lerp(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
@@ -74,7 +69,7 @@ Shader "Unlit/FogOfWar"
             {
                 float total = 0.f;
                 float amplitude = 1.f;
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 4; i++) {
                     total += noise(n) * amplitude;
                     n     += n * 2.1f;
                     amplitude *= 0.377f + sin(Time) / 500.f;
@@ -122,17 +117,14 @@ Shader "Unlit/FogOfWar"
                 float intensity = max(main_cloudiness, 1.3f * fbm_readded(uv2)) + 0.9f * main_cloudiness * fbm(uv2) * fbm(uv3);
                 intensity *= 0.64f;
                 intensity += cos(sin(Time / 10.f)) / 7.f - 0.3f;
-                /* return float4(intensity, intensity, intensity, 1.f); */
                 
                 float3 color = float3(1.f, 1.f, 1.f);
                 color *= intensity; 
                 color.z *= color.z;
-                /* return float4(color, 1.f); */
 
                 float overflow = 0.f;
                 color.z -= 0.02f;
                 color.y -= 0.02f;
-                /* return float4(color, 1.f); */
 
                 color = color * sqrt(color);
                 color.r -= 2.f * overflow; 
