@@ -7,7 +7,7 @@ using UnityEngine;
 public static class EquipmentList
 {
     private static StackArray<Equipment> equipmentList;
-    private const int maxEquipmentListSize = 30; 
+    private const int maxEquipmentListSize = 50; 
 
     static EquipmentList()
     {
