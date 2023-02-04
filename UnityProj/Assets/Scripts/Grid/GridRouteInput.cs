@@ -17,6 +17,7 @@ public class GridRouteInput : MonoBehaviour
     public bool _readingInput = false;
     public int2 _currentCellPos;
     public List<MoveDirection> _moveDirections = new List<MoveDirection>();
+    public List<int2> _visitedIndices          = new List<int2>();
     public Character _character = null;
     
     public delegate void OnRouteStartedDel();
@@ -89,6 +90,7 @@ public class GridRouteInput : MonoBehaviour
         _character      = character;
         _currentCellPos = _grid.GridStartIndex;
         _moveDirections.Clear();
+        _visitedIndices.Clear();
         
         OnRouteStarted?.Invoke();
     }
@@ -138,10 +140,18 @@ public class GridRouteInput : MonoBehaviour
             MoveDirection direction = (MoveDirection)(1 << i);
             if ((outDirection & direction) == 0) continue;
             
-            int2 index = _currentCellPos + MoveDirectionUtil.GetDirectionIndex(direction);
-            if (_grid.GridCells[index].isWall)
+            int2 nextIndex = _currentCellPos + MoveDirectionUtil.GetDirectionIndex(direction);
+            
+            if (_grid.GridCells[nextIndex].isWall)
             {
                 outDirection &= ~direction;
+                continue;
+            }
+
+            if (_visitedIndices.Contains(nextIndex))
+            {
+                outDirection &= ~direction;
+                continue;
             }
         }
         
@@ -157,8 +167,10 @@ public class GridRouteInput : MonoBehaviour
         
         _moveDirections.Add(direction);
         _currentCellPos += MoveDirectionUtil.GetDirectionIndex(direction);
-        OnMoveDirectionAdded?.Invoke(_currentCellPos);
+        _visitedIndices.Add(_currentCellPos);
         
+        OnMoveDirectionAdded?.Invoke(_currentCellPos);
+
         // NOTE(WSWhitehouse): Do another valid move directions check to ensure
         // the adventurer is available to move on the next cell.
         MoveDirection nextValidDirections = GetValidMoveDirections();

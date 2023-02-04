@@ -3,11 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CharacterObject : MonoBehaviour
 {
     [SerializeField] private float stepDuration = 1f;
     [SerializeField] private Transform spriteTransform;
+    [SerializeField] private Image sprite;
+    
+    [SerializeField] private Sprite[] _barbarianSprites = Array.Empty<Sprite>();
+    [SerializeField] private Sprite[] _archerSprites    = Array.Empty<Sprite>();
+    [SerializeField] private Sprite[] _assassinSprites  = Array.Empty<Sprite>();
     
     // NOTE(WSWhitehouse): These are set from the CharacterMovementManager script.
     [NonSerialized] public Grid grid;
@@ -20,6 +27,22 @@ public class CharacterObject : MonoBehaviour
     {
         _character      = character;
         _moveDirections = moveDirections;
+        
+        if (_character == null) return;
+        
+        Sprite[] sprites = _character.type switch
+        {
+            CharacterType.BARBARIAN => _barbarianSprites,
+            CharacterType.ARCHER    => _archerSprites,
+            CharacterType.ASSASSIN  => _assassinSprites,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        if (sprites.Length <= 0)
+        {
+            int spriteIndex = Random.Range(0, sprites.Length);
+            sprite.sprite = sprites[spriteIndex];
+        }
     }
 
     public IEnumerator Move()
@@ -38,6 +61,7 @@ public class CharacterObject : MonoBehaviour
             currentCellIndex = endCellIndex;
         }
         
+        gameObject.SetActive(false);
         characterObjectManager.ReturnCharacterObjectToPool(this);
     }
 
