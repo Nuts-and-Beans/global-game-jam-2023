@@ -70,6 +70,28 @@
                     "action": "Route",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "257c41c5-4aa9-4394-ab1c-e7f155b6fa37",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Route",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "974124de-d399-48ad-965c-c3c6fe5408db",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Route",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
