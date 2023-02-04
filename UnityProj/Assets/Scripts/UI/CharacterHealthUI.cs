@@ -24,7 +24,7 @@ public class CharacterHealthUI : MonoBehaviour
     private Transform _heartStartingPosition;
 
     private Transform _characterTransform;
-    private CharacterTest _characterTest;
+    private CharacterObject _characterObject;
     
     private Image[] _hearts;
 
@@ -41,9 +41,9 @@ public class CharacterHealthUI : MonoBehaviour
 
     private void Start()
     {
-        _hearts = new Image[_characterTest._character.maxHealth];
+        _hearts = new Image[_characterObject._character.maxHealth];
 
-        _characterTest._character.OnCharacterHealthEvent += UpdateHeartAmount;
+        _characterObject._character.OnCharacterHealthEvent += UpdateHeartAmount;
 
         _heartsParent = new GameObject("HeartParent");
         
@@ -74,25 +74,25 @@ public class CharacterHealthUI : MonoBehaviour
             _hearts[i] = newHeart;
         }
         
-        UpdateHeartAmount(_characterTest._character.health);
+        UpdateHeartAmount(_characterObject._character.health);
     }
 
     private void OnDestroy()
     {
-        _characterTest._character.OnCharacterHealthEvent -= UpdateHeartAmount;
+        _characterObject._character.OnCharacterHealthEvent -= UpdateHeartAmount;
     }
 
     private void Update()
     {
         //REVIEW(Sebadam2010): Is there less expensive way of doing this?
-        _heartsParent.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_characterTransform.localPosition.x - _heartParentXOffset, _characterTransform.localPosition.y + _heartParentYOffset, _characterTransform.localPosition.z));
+        _heartsParent.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_characterTransform.localPosition.x + _heartParentXOffset, _characterTransform.localPosition.y + _heartParentYOffset, _characterTransform.localPosition.z));
     }
     
     public void setCharacter(GameObject character)
     {
         _characterGameObject = character;
         _characterTransform = _characterGameObject.transform;
-        _characterTest = _characterGameObject.GetComponent<CharacterTest>();
+        _characterObject = _characterGameObject.GetComponent<CharacterObject>();
     }
 
     private void UpdateHeartAmount(int characterHealth)
