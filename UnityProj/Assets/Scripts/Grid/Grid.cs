@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -33,8 +32,7 @@ public class Grid : MonoBehaviour
     [HideInInspector] public Array2D<bool> initialGridValues = new Array2D<bool>(0,0);
     
     private float3 _gridStartPosition;
-    private List<int2> _validCells = new List<int2>();
-
+    
     public RenderTexture CameraRT      { get; private set; } = null;
     public Array2D<GridCell> GridCells { get; private set; } = new Array2D<GridCell>(0,0);
     public int2 GridCellCount  => _gridCount;
@@ -42,8 +40,7 @@ public class Grid : MonoBehaviour
     
     public float3 GetGridPos(int x, int y) => _gridStartPosition + new float3(x, -y, 0);
     public float3 GetGridPos(int2 i)       => GetGridPos(i.x, i.y);
-    public List<int2> GetValidCells()      => new List<int2>(_validCells);
-
+    
     private void Awake()
     {
         GridCells = new Array2D<GridCell>(_gridCount);
@@ -102,11 +99,7 @@ public class Grid : MonoBehaviour
         {
             for (int y = 0; y < _gridCount.y; y++)
             {
-                if (!initialGridValues[x,y])
-                {
-                    _validCells.Add(new int2(x,y));
-                    continue;
-                }
+                if (!initialGridValues[x,y]) continue;
                 
                 GridCells[x,y].isWall = true;
                 
@@ -139,8 +132,6 @@ public class GridEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
-        
         DrawDefaultInspector();
         
         EditorGUILayout.Space();
@@ -149,9 +140,6 @@ public class GridEditor : Editor
         
         InitInitialGridValueArray();
         DrawButtonGrid();
-        
-        serializedObject.SetIsDifferentCacheDirty();
-        serializedObject.ApplyModifiedProperties();
     }
 
     private void InitInitialGridValueArray()
