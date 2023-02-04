@@ -9,17 +9,6 @@ using UnityEngine.InputSystem;
 using UnityEditor;
 #endif // UNITY_EDITOR
 
-[Flags]
-public enum MoveDirection
-{
-    NONE  = 0,
-    UP    = 1,
-    DOWN  = 2,
-    LEFT  = 4,
-    RIGHT = 8,
-    ALL   = UP | DOWN | LEFT | RIGHT
-}
-
 public class GridRouteInput : MonoBehaviour
 {
     [Header("Grid References")]
@@ -28,6 +17,7 @@ public class GridRouteInput : MonoBehaviour
     public bool _readingInput = false;
     public int2 _currentCellPos;
     public List<MoveDirection> _moveDirections = new List<MoveDirection>();
+    public Character _character = null;
     
     public delegate void OnRouteStartedDel();
     public OnRouteStartedDel OnRouteStarted;
@@ -38,7 +28,7 @@ public class GridRouteInput : MonoBehaviour
     public delegate void OnMoveDirectionAddedDel(int2 currentCellIndex);
     public OnMoveDirectionAddedDel OnMoveDirectionAdded;
     
-    public delegate void OnMoveDirectionsConfirmedDel(List<MoveDirection> moveDirections);
+    public delegate void OnMoveDirectionsConfirmedDel(Character character, List<MoveDirection> moveDirections);
     public OnMoveDirectionsConfirmedDel OnMoveDirectionsConfirmed;
 
     private bool _canMove = true;
@@ -93,9 +83,10 @@ public class GridRouteInput : MonoBehaviour
         _canMove = true;
     }
 
-    public void StartRoute()
+    public void StartRoute(Character character)
     {
         _readingInput   = true;
+        _character      = character;
         _currentCellPos = _grid.GridStartIndex;
         _moveDirections.Clear();
         
@@ -106,50 +97,9 @@ public class GridRouteInput : MonoBehaviour
     {
         _readingInput = false;
         OnRouteEnded?.Invoke();
-        OnMoveDirectionsConfirmed?.Invoke(_moveDirections);
+        OnMoveDirectionsConfirmed?.Invoke(_character, _moveDirections);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static int2 GetMoveDirectionIndex(MoveDirection direction)
-    {
-        switch (direction)
-        {
-            case MoveDirection.UP:    return new int2( 0, -1);
-            case MoveDirection.DOWN:  return new int2( 0,  1);
-            case MoveDirection.LEFT:  return new int2(-1,  0);
-            case MoveDirection.RIGHT: return new int2( 1,  0);
-
-            case MoveDirection.NONE:
-            case MoveDirection.ALL:
-            default:
-            {
-                Debug.LogError("Move Direction should not be a flag!");
-                break;
-            }
-        }
-        
-        return new int2(0, 0);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static MoveDirection GetOppositeDirection(MoveDirection direction)
-    {
-        switch (direction)
-        {
-            case MoveDirection.UP:    return MoveDirection.DOWN;
-            case MoveDirection.DOWN:  return MoveDirection.UP;
-            case MoveDirection.LEFT:  return MoveDirection.RIGHT;
-            case MoveDirection.RIGHT: return MoveDirection.LEFT;
-            
-            case MoveDirection.NONE:
-            case MoveDirection.ALL:
-            default:
-            {
-                return MoveDirection.NONE;
-            }
-        }
-    }
-    
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private MoveDirection GetValidMoveDirections()
     {
@@ -180,7 +130,7 @@ public class GridRouteInput : MonoBehaviour
         if (_moveDirections.Count > 0)
         {
             MoveDirection prevDirection = _moveDirections[^1];
-            outDirection &= ~GetOppositeDirection(prevDirection);
+            outDirection &= ~MoveDirectionUtil.GetOppositeDirection(prevDirection);
         }
 
         for (int i = 0; i < 4; i++)
@@ -188,7 +138,7 @@ public class GridRouteInput : MonoBehaviour
             MoveDirection direction = (MoveDirection)(1 << i);
             if ((outDirection & direction) == 0) continue;
             
-            int2 index = _currentCellPos + GetMoveDirectionIndex(direction);
+            int2 index = _currentCellPos + MoveDirectionUtil.GetDirectionIndex(direction);
             if (_grid.GridCells[index].isWall)
             {
                 outDirection &= ~direction;
@@ -206,7 +156,7 @@ public class GridRouteInput : MonoBehaviour
         if (((validDirections & direction) == 0)) return;
         
         _moveDirections.Add(direction);
-        _currentCellPos += GetMoveDirectionIndex(direction);
+        _currentCellPos += MoveDirectionUtil.GetDirectionIndex(direction);
         OnMoveDirectionAdded?.Invoke(_currentCellPos);
         
         // NOTE(WSWhitehouse): Do another valid move directions check to ensure
@@ -233,7 +183,7 @@ public class GridRouteInputEditor : Editor
 
         if (GUILayout.Button("Start Route"))
         {
-           Target.StartRoute();   
+           Target.StartRoute(null);   
         }
 
         if (GUILayout.Button("End Route"))

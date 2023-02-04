@@ -21,9 +21,13 @@ public class CreatureEncounter : MonoBehaviour
 	[SerializeField] private int _groupSize;
 
 	public Character charcter;
+	public ParticleSystem particle;
 
 	void Awake()
     {
+		particle = gameObject.GetComponent<ParticleSystem>();
+		gameObject.active = false;
+
 		if ( _creatures == Creatures.Goblins)
         {
 			_attack = _groupSize;
@@ -64,6 +68,7 @@ public class CreatureEncounter : MonoBehaviour
         if (other.tag == "Character")
         {
 			charcter = other.GetComponent<Character>();
+			particle.Play();
 			//Do stuff on the map with an icon
 			//Do stuff with the statue update thing in the UI
 			GroupEncounter();
@@ -71,7 +76,9 @@ public class CreatureEncounter : MonoBehaviour
     }
 
     private void GroupEncounter()
-	{ 
+	{
+		gameObject.active = true;
+
 		if (charcter.attack > _attack)
 		{
 			_health -= charcter.attack;
@@ -92,18 +99,23 @@ public class CreatureEncounter : MonoBehaviour
             }
 			else
             {
-				Dead();
+				StartCoroutine(Dead());
             }
         }
 
 		if (_health <= 0)
 		{
-			Dead();
+			StartCoroutine(Dead());
 		}
 	}
 
-	private void Dead()
+	private IEnumerator Dead()
 	{
-		Destroy(this);
+		particle.startColor = Color.white;
+		particle.Play();
+		gameObject.active = false;
+
+		yield return new WaitForSeconds(2.5f);
+		Destroy(gameObject);
 	}
 }
