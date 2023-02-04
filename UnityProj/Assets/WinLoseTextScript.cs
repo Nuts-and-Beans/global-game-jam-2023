@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class WinLoseTextScript : MonoBehaviour
 {
@@ -17,7 +18,12 @@ public class WinLoseTextScript : MonoBehaviour
 
    public void ExitGame()
    {
-      print("You have exited the game");
+      
       Application.Quit();
+   }
+
+   public void PlayAgain()
+   {
+      SceneManager.LoadScene(0);
    }
 }
