@@ -1,5 +1,5 @@
-﻿using Unity.Mathematics;
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -10,6 +10,8 @@ using UnityEditor;
 public class GridCell
 {
     public bool isWall;
+    public bool isFogOfWar;
+    public GameObject fogOfWar;
 }
 
 public class Grid : MonoBehaviour
@@ -23,7 +25,9 @@ public class Grid : MonoBehaviour
     [SerializeField] private GameObject _gridFloor;
     [SerializeField] private Transform _wallParent;
     [SerializeField] private GameObject _wallPrefab;
-    
+    [SerializeField] private Transform _fogOfWarParent;
+    [SerializeField] private GameObject _fogOfWarPrefab;
+
     [Header("Camera")]
     [SerializeField] private Camera _camera;
     [SerializeField] private int2 _cellResolution;
@@ -32,7 +36,8 @@ public class Grid : MonoBehaviour
     [HideInInspector] public Array2D<bool> initialGridValues = new Array2D<bool>(0,0);
     
     private float3 _gridStartPosition;
-    
+    private List<int2> _validCells = new List<int2>();
+
     public RenderTexture CameraRT      { get; private set; } = null;
     public Array2D<GridCell> GridCells { get; private set; } = new Array2D<GridCell>(0,0);
     public int2 GridCellCount  => _gridCount;
@@ -40,7 +45,8 @@ public class Grid : MonoBehaviour
     
     public float3 GetGridPos(int x, int y) => _gridStartPosition + new float3(x, -y, 0);
     public float3 GetGridPos(int2 i)       => GetGridPos(i.x, i.y);
-    
+    public List<int2> GetValidCells()      => new List<int2>(_validCells);
+
     private void Awake()
     {
         GridCells = new Array2D<GridCell>(_gridCount);
@@ -63,7 +69,7 @@ public class Grid : MonoBehaviour
         // Transform wallSpawnPos = new GameObject("WallSpawnPos").transform;
         // wallSpawnPos.position = _gridStartPosition;
 
-        SpawnWalls();
+        InitGrid();
         InitCameraRT();
     }
 
@@ -93,15 +99,27 @@ public class Grid : MonoBehaviour
         _camera.orthographicSize = math.max(_gridCount.x, _gridCount.y) * 0.5f;
     }
 
-    private void SpawnWalls()
+    private void InitGrid()
     {
         for (int x = 0; x < _gridCount.x; x++)
         {
             for (int y = 0; y < _gridCount.y; y++)
             {
-                if (!initialGridValues[x,y]) continue;
+                GridCells[x,y].fogOfWar = Instantiate(_fogOfWarPrefab, _fogOfWarParent);
+                GridCells[x,y].fogOfWar.name               = $"{x}, {y}";
+                GridCells[x,y].fogOfWar.transform.position = GetGridPos(x, y);
                 
-                GridCells[x,y].isWall = true;
+                if (!initialGridValues[x,y])
+                {
+                    _validCells.Add(new int2(x,y));
+                    GridCells[x,y].isFogOfWar = true;
+                    
+                    continue;
+                }
+                
+                GridCells[x,y].isWall     = true;
+                GridCells[x,y].isFogOfWar = false;
+                GridCells[x,y].fogOfWar.SetActive(false);
                 
                 GameObject wall = Instantiate(_wallPrefab, _wallParent);
                 
@@ -109,6 +127,9 @@ public class Grid : MonoBehaviour
                 wall.transform.position = GetGridPos(x, y);
             }
         }
+        
+        GridCells[GridStartIndex].isFogOfWar = false;
+        GridCells[GridStartIndex].fogOfWar.SetActive(false);
     }
 }
 
@@ -132,6 +153,8 @@ public class GridEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+        
         DrawDefaultInspector();
         
         EditorGUILayout.Space();
@@ -140,6 +163,9 @@ public class GridEditor : Editor
         
         InitInitialGridValueArray();
         DrawButtonGrid();
+        
+        serializedObject.SetIsDifferentCacheDirty();
+        serializedObject.ApplyModifiedProperties();
     }
 
     private void InitInitialGridValueArray()
@@ -199,3 +225,4 @@ public class GridEditor : Editor
 }
 
 #endif // UNITY_EDITOR
+
