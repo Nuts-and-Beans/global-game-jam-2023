@@ -77,6 +77,11 @@ public class CharacterHealthUI : MonoBehaviour
         UpdateHeartAmount(_characterTest._character.health);
     }
 
+    private void OnDestroy()
+    {
+        _characterTest._character.OnCharacterHealthEvent -= UpdateHeartAmount;
+    }
+
     private void Update()
     {
         //REVIEW(Sebadam2010): Is there less expensive way of doing this?
