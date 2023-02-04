@@ -85,7 +85,9 @@ MonoBehaviour:
   _cellSize:
     x: 1
     y: 1
-  _wallHeight: 1
+  _gridStartIndex:
+    x: 0
+    y: 11
   _gridFloor: {fileID: 4753381735837952375}
   _wallParent: {fileID: 4753381735517980059}
   _wallPrefab: {fileID: 2839167599046237412, guid: 82053643d3fec404f8776701aabe7f43,
@@ -131,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d961c53c310a4b37a32417883786d6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _grid: {fileID: 4753381735683633007}
+  _moveDirections: 
 --- !u!1 &4753381735837952375
 GameObject:
   m_ObjectHideFlags: 0
