@@ -10,6 +10,9 @@ public class Timer : MonoBehaviour
     //NOTE(Sebadam2010): Starting the timer from 3 minutes.
     public static float s_currentTime = 180.0f;
     
+    public delegate void TimerDel();
+    public static event TimerDel OnTimerEndEvent;
+    
     private void Update()
     {
         if (_isTimerRunning)
@@ -19,6 +22,7 @@ public class Timer : MonoBehaviour
             {
                 s_currentTime = 0;
                 _isTimerRunning = false;
+                OnTimerEndEvent?.Invoke();
             }
         }
     }
