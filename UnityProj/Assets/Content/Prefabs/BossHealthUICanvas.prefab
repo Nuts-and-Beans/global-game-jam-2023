@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthParent: {fileID: 2951027138377693934}
+  _layoutGroup: {fileID: 2951027138377693923}
   _healthSectionPrefab: {fileID: 7106350509401081481, guid: f97f4b6e8584b48579eaf590af5ef162,
     type: 3}
   _lerpDuration: 1
@@ -386,8 +387,6 @@ MonoBehaviour:
   _forceImpulseRange:
     x: 50
     y: 100
-  _health: 10
-  remove: 0
 --- !u!1 &2951027140114389065
 GameObject:
   m_ObjectHideFlags: 0

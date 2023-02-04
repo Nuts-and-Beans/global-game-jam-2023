@@ -1,12 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using Unity.Burst;
 using Unity.Mathematics;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// This script is responsible for animating the Bosses health bar UI
+/// <summary>
 public class BossHealthUI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private RectTransform _healthParent;
+    [SerializeField] private HorizontalLayoutGroup _layoutGroup;
     [SerializeField] private PhysicsImage _healthSectionPrefab;
 
     [Header("Animation Settings")]
@@ -14,19 +20,10 @@ public class BossHealthUI : MonoBehaviour
     [SerializeField] private float2 _torqueRange = new (-50f, 50f);
     [SerializeField] private float2 _forceImpulseRange = new (20f, 60f);
 
-    // TODO(Zack): remove when [BossHealth] interaction stuff is implemented
-#if UNITY_EDITOR
-    [Header("TESTING - Health Settings")]
-    [SerializeField] private int _health = 10;
-    [SerializeField] private bool remove = false;
-#endif // UNITY_EDITOR
-
-    private PhysicsImage[] _barSections;
-    private PhysicsImage _currentBarSection => _barSections[_currentHealthBarIndex];
-    private int _currentHealthBarIndex; // NOTE(Zack): this is used to keep track of current index
-
     private delegate IEnumerator LerpDel(PhysicsImage img, float duration);
     private LerpDel LerpTransparentFunc;
+
+    private PhysicsImage[] _barSections;
 
     private void Start()
     {
@@ -34,43 +31,35 @@ public class BossHealthUI : MonoBehaviour
         LerpTransparentFunc = LerpTransparent;
         CreateHealthBar();
 
-        // TODO(Zack): subscribe to actual BossHealthLost event
-        // BossHealth.OnBossHealthLostEvent += RemoveHealth;
+        Boss.OnHealthLostEvent += RemoveHealth;
     }
 
-#if UNITY_EDITOR
-    private void Update() 
+    private void OnDestroy()
     {
-       if (!remove) return;
-       remove = !remove;
-
-       RemoveHealth();
+        Boss.OnHealthLostEvent -= RemoveHealth;
     }
-#endif // UNITY_EDITOR
-
-
 
     private void CreateHealthBar() 
     {
-        // TODO(Zack): get the health from a [BossHealth] or similar script
-        _barSections = new PhysicsImage[_health];
-        for (int i = 0; i < _health; ++i) {
+        int count = Boss.s_maxHealth;
+        _barSections = new PhysicsImage[count];
+
+        for (int i = 0; i < count; ++i) {
             PhysicsImage img = Instantiate(_healthSectionPrefab, _healthParent);
             img.rb.simulated = false;
+            img.rb.gravityScale = 0f;
             _barSections[i] = img;
         }
 
-        _currentHealthBarIndex = _health - 1;
+        Canvas.ForceUpdateCanvases();
+
+        _layoutGroup.enabled = false;
     }
 
-    // REVIEW(Zack): should we just pass in the current health of the player
-    private void RemoveHealth()
+    private void RemoveHealth(int currentHealth)
     {
-        if (_currentHealthBarIndex < 0) return; 
-        PhysicsImage img = _currentBarSection;
+        PhysicsImage img = _barSections[currentHealth - 1];
         img.rb.simulated = true;
-
-        _currentHealthBarIndex -= 1;
 
         // add force downward to the ui entity
         float2 dir = Vector2.down;
@@ -107,6 +96,7 @@ public class BossHealthUI : MonoBehaviour
         yield break;
     }
 
+    [BurstCompile]
     private static Color LerpColour(Color start, Color end, float t)
     {
         Color c;
@@ -117,10 +107,10 @@ public class BossHealthUI : MonoBehaviour
         return c;
     }
 
-    private static float2 RandomVectorRange(float2 min, float2 max) {
+    private static float2 RandomVectorRange(float2 min, float2 max)
+    {
         float x = Random.Range(min.x, max.x);
         float y = Random.Range(min.y, max.y);
-
         return new (x, y);
     }
 }
