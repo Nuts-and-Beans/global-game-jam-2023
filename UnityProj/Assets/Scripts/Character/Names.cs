@@ -1,3 +1,6 @@
+/// <summary>
+/// This script is a static wrapper for all possible names for adventurers.
+/// </summary>
 public static class Names 
 {
     public static readonly string[] names = new string[]
