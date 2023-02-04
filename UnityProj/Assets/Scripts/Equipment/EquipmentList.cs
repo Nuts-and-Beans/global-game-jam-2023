@@ -11,31 +11,14 @@ public static class EquipmentList
 
     static EquipmentList()
     {
-        equipmentList = new(maxEquipmentListSize);
-        
-        for (int i = 0; i < maxEquipmentListSize; i++)
-        {
-            Equipment equipment = new Equipment();
-            int randomNum;
-            int bonusAmount;
-
-            randomNum = Random.Range(0, 5); // 5 types of equipment
-            equipment.equipmentType = (EquipmentType)randomNum;
-
-            // 3 is the max the armour will increase the stat by
-            randomNum = Random.Range(1, 4); 
-            bonusAmount = randomNum;
-            
-            randomNum = Random.Range(0, 3); // Which stat to increase
-            SetEquipmentBonus(equipment, bonusAmount, (StatType)randomNum);
-
-            equipmentList.Push(equipment);
-        }
+        GenerateEquipmentList();
     }
 
     private static void GenerateEquipmentList()
     {
-        for (int i = 0; i < equipmentList.Count; i++)
+        equipmentList = new(maxEquipmentListSize);
+        
+        for (int i = 0; i < maxEquipmentListSize; i++)
         {
             Equipment equipment = new Equipment();
             int randomNum;
