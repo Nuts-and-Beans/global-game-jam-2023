@@ -45,7 +45,8 @@ public class Tab : MonoBehaviour
         {
             _adventurerAttackText = value;
         }
-    }  public TextMeshProUGUI AgilityTextMeshProUGUI
+    }  
+    public TextMeshProUGUI AgilityTextMeshProUGUI
     {
         get
         {

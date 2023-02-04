@@ -36,8 +36,10 @@ public class CharacterObjectManager : MonoBehaviour
 
     private void OnMoveDirectionsConfirmed(Character character, List<MoveDirection> moveDirections)
     {
+        List<MoveDirection> moveDir = new List<MoveDirection>(moveDirections);
+
         CharacterObject cm = GetCharacterObject();
-        cm.SetCharacter(character, moveDirections);
+        cm.SetCharacter(character, moveDir);
         
         cm.gameObject.SetActive(true);
         StartCoroutine(cm.Move());
