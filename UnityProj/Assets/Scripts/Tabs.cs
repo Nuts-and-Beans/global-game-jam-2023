@@ -11,18 +11,18 @@ public class Tabs : MonoBehaviour
     [SerializeField] private GameObject _tab;
     [SerializeField] private Transform _firstTabTransform;
     [SerializeField] private AdventurerTabs _adventurerTabs;
-    [SerializeField] private Vector3 _distanceBetweenTabs;
+     private Vector3 _distanceBetweenTabs = new Vector3(-500,-250,0);
     
     [SerializeField] private float _animDuration;
 
-    private float _animationTimer;
     private Vector3 _startAnimPos;
     private Vector3 _endAnimPos;
     private List<GameObject> _tabGameObjects = new List<GameObject>();
     public float addTabWaitTime = 5.0f;
 
     private float _addTabTime;
-
+    private Coroutine _coroutine1;
+    private Coroutine _coroutine2;
 
     public delegate void TabTimerDelegate();
 
@@ -79,7 +79,9 @@ public class Tabs : MonoBehaviour
                     _endAnimPos = new Vector3(_firstTabTransform.localPosition.x,
                         _tabGameObjects[i].transform.localPosition.y,
                         0);
-                    StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
+                 StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
+                    
+                 
 
                 }
                 else
@@ -91,8 +93,8 @@ public class Tabs : MonoBehaviour
                     _endAnimPos = new Vector3(_firstTabTransform.localPosition.x,
                         _tabGameObjects[i].transform.localPosition.y,
                         0);
-                    StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
-
+                     StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
+                   
 
                 }
 
@@ -117,20 +119,20 @@ public class Tabs : MonoBehaviour
 
 
     [BurstCompile]
-    private IEnumerator TabAnimation(Vector3 start_pos, Vector3 end_pos, int tab_index)
+    private IEnumerator TabAnimation(Vector3 startPos, Vector3 endPos, int tabIndex)
     {
-        _animationTimer = float.Epsilon;
+        float animationTimer = float.Epsilon;
        
-        while (_animationTimer <= _animDuration)
+        while (animationTimer <= _animDuration)
         {
-            _tabGameObjects[tab_index].transform.localPosition = Vector3.Lerp(start_pos, end_pos,
-                _animationTimer / _animDuration);
-            _animationTimer += Time.deltaTime;
+            _tabGameObjects[tabIndex].transform.localPosition = Vector3.Lerp(startPos, endPos,
+                animationTimer / _animDuration);
+            animationTimer += Time.deltaTime;
             yield return null;
         }
 
-      
-        yield break;
+       
+            yield break;
     }
 
 }
