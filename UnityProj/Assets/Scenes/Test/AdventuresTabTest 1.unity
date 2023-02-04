@@ -930,7 +930,7 @@ MonoBehaviour:
   _animDuration: 1
   addTabWaitTime: 5
   _gridRouteInput: {fileID: 399634105}
-  readingInput: 0
+  readingInput: 1
 --- !u!1 &2057210385
 GameObject:
   m_ObjectHideFlags: 0
