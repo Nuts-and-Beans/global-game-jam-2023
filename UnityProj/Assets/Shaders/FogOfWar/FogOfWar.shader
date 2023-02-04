@@ -74,7 +74,7 @@ Shader "Unlit/FogOfWar"
             {
                 float total = 0.f;
                 float amplitude = 1.f;
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 4; i++) {
                     total += noise(n) * amplitude;
                     n     += n * 2.1f;
                     amplitude *= 0.377f + sin(Time) / 500.f;

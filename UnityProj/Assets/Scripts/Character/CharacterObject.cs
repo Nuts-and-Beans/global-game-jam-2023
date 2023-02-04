@@ -60,6 +60,13 @@ public class CharacterObject : MonoBehaviour
             yield return Lerp(startPos, EndPos);
             
             currentCellIndex = endCellIndex;
+            
+            // Remove fog of war
+            if (grid.GridCells[currentCellIndex].isFogOfWar)
+            {
+                grid.GridCells[currentCellIndex].isFogOfWar = false;
+                grid.GridCells[currentCellIndex].fogOfWar.SetActive(false);
+            }
         }
         
         gameObject.SetActive(false);
