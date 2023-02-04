@@ -22,7 +22,12 @@ public class CharacterObject : MonoBehaviour
     [NonSerialized] public CharacterObjectManager characterObjectManager;
     
     private List<MoveDirection> _moveDirections;
-    private Character _character;
+    [NonSerialized] public Character _character;
+
+    private void Start()
+    {
+        _character = Adventurers.GetNextCharacter();
+    }
 
     public void SetCharacter(Character character, List<MoveDirection> moveDirections)
     {
