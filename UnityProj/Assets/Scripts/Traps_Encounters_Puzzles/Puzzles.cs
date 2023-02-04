@@ -19,9 +19,12 @@ public class Puzzles : MonoBehaviour
     [SerializeField] private int _damage;
 
     public Character charcter;
-    // Start is called before the first frame update
+    public ParticleSystem particle;
     private void Awake()
     {
+        particle = gameObject.GetComponent<ParticleSystem>();
+        gameObject.active = false;
+
         if (_puzzle == PuzzleTypes.SteppingStones)
         {
             _chance = 5;
@@ -59,6 +62,7 @@ public class Puzzles : MonoBehaviour
         if (other.tag == "Character")
         {
             charcter = other.GetComponent<Character>();
+            particle.Play();
             //Do stuff on the map with an icon
             //Do stuff with the statue update thing in the UI
             PuzzleActive();
@@ -67,11 +71,13 @@ public class Puzzles : MonoBehaviour
 
     private void PuzzleActive()
     {
+        gameObject.active = true;
+
         int i = Random.Range(0, _chance + 1);
 
         if (i == _chance)
         {
-            Solved();
+            StartCoroutine(Solved());
         }
         else
         {
@@ -79,8 +85,13 @@ public class Puzzles : MonoBehaviour
         }
     }
 
-    private void Solved()
+    private IEnumerator Solved()
     {
-        return;
+        particle.startColor = Color.white;
+        particle.Play();
+        gameObject.active = false;
+
+        yield return new WaitForSeconds(2.5f);
+        Destroy(gameObject);
     }
 }

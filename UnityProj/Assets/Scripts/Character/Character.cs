@@ -22,8 +22,6 @@ public class Character
     public delegate void CharacterDel(int newHealth);
     public event CharacterDel OnCharacterHealthEvent;
     
-    
-        
     public void HealCharacter(int healAmount)
     {
         health += healAmount;
