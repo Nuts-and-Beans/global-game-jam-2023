@@ -22,7 +22,12 @@ public class CharacterObject : MonoBehaviour
     [NonSerialized] public CharacterObjectManager characterObjectManager;
     
     private List<MoveDirection> _moveDirections;
-    private Character _character;
+    [NonSerialized] public Character _character;
+
+    private void Start()
+    {
+        _character = Adventurers.GetNextCharacter();
+    }
 
     public void SetCharacter(Character character, List<MoveDirection> moveDirections)
     {
@@ -60,6 +65,13 @@ public class CharacterObject : MonoBehaviour
             yield return Lerp(startPos, EndPos);
             
             currentCellIndex = endCellIndex;
+            
+            // Remove fog of war
+            if (grid.GridCells[currentCellIndex].isFogOfWar)
+            {
+                grid.GridCells[currentCellIndex].isFogOfWar = false;
+                grid.GridCells[currentCellIndex].fogOfWar.SetActive(false);
+            }
         }
         
         gameObject.SetActive(false);
