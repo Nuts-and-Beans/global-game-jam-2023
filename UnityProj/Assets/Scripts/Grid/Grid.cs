@@ -1,60 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif // UNITY_EDITOR
 
-[Serializable]
-public struct Array2D<T>
+public class GridCell
 {
-    // --- DATA --- //
-    [Serializable]
-    public struct InternalArray
-    {
-        public T[] yData;
-    }
-    
-    public InternalArray[] xData;
-    
-    // --- CTORS --- //
-    public Array2D(int2 length)
-    {
-        xData = new InternalArray[length.x];
-
-        for (int i = 0; i < length.x; i++)
-        {
-            xData[i].yData = new T[length.y];
-        }
-    }
-    
-    public Array2D(int lengthX, int lengthY)
-    {
-        xData = new InternalArray[lengthX];
-
-        for (int i = 0; i < lengthX; i++)
-        {
-            xData[i].yData = new T[lengthY];
-        }
-    }
-
-    // --- INDEXERS --- //
-    public T this[int x, int y]
-    {
-        get => xData[x].yData[y];
-        set => xData[x].yData[y] = value;
-    }
-    
-    public T this[int2 i] 
-    {
-        get => xData[i.x].yData[i.y];
-        set => xData[i.x].yData[i.y] = value;
-    }
-    
-    // --- GETTERS --- //
-    public int2 Length => new int2 { x = xData == null ? 0 : xData.Length, y = xData == null || xData.Length <= 0 ? 0 : xData[0].yData.Length };
+    public bool isWall;
 }
 
 public class Grid : MonoBehaviour
@@ -76,15 +31,26 @@ public class Grid : MonoBehaviour
     // NOTE(WSWhitehouse): This is hidden in the inspector as a custom inspector is used to draw it as a grid.
     [HideInInspector] public Array2D<bool> initialGridValues = new Array2D<bool>(0,0);
     
-    private Array2D<GameObject> _gridCells;
     private float3 _gridStartPosition;
     
-    public static RenderTexture s_CameraRT { get; private set; } = null;
+    public RenderTexture CameraRT      { get; private set; } = null;
+    public Array2D<GridCell> GridCells { get; private set; } = new Array2D<GridCell>(0,0);
+    
+    public float3 GetGridPos(int x, int y) => _gridStartPosition + new float3(x, -y, 0);
+    public float3 GetGridPos(int2 i)       => GetGridPos(i.x, i.y);
     
     private void Awake()
     {
-        _gridCells =  new Array2D<GameObject>(_gridCount);
-        
+        GridCells = new Array2D<GridCell>(_gridCount);
+
+        for (int x = 0; x < _gridCount.x; x++)
+        {
+            for (int y = 0; y < _gridCount.y; y++)
+            {
+                GridCells[x,y] = new GridCell();
+            }
+        }
+
         float2 floorScale = ((float2)_gridCount) * _cellSize;
         _gridFloor.transform.localScale = new Vector3(floorScale.x, floorScale.y, 1.0f);
         
@@ -101,30 +67,28 @@ public class Grid : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (s_CameraRT == null) return;
+        if (CameraRT != null)
+        {
+            _camera.targetTexture = null;
+            DestroyImmediate(CameraRT);
+        }
         
-        _camera.targetTexture = null;
-        DestroyImmediate(s_CameraRT);
+        GridCells = new Array2D<GridCell>(0,0);
     }
 
     private void InitCameraRT()
     {
-        if (s_CameraRT != null)
+        if (CameraRT != null)
         {
             Debug.LogError("A camera render texture is already assigned! Please ensure there is only one Grid in the scene!");
             return;
         }
         
         int2 fullRes = _cellResolution * _gridCount;
-        s_CameraRT   = new RenderTexture(fullRes.x, fullRes.y, 10, GraphicsFormat.R32G32B32A32_SFloat);
+        CameraRT     = new RenderTexture(fullRes.x, fullRes.y, 10, GraphicsFormat.R32G32B32A32_SFloat);
         
-        _camera.targetTexture    = s_CameraRT;
+        _camera.targetTexture    = CameraRT;
         _camera.orthographicSize = math.max(_gridCount.x, _gridCount.y) * 0.5f;
-    }
-
-    private float3 GetGridPos(int x, int y)
-    {
-        return _gridStartPosition + new float3(x, -y, 0);
     }
 
     private void SpawnWalls()
@@ -134,6 +98,8 @@ public class Grid : MonoBehaviour
             for (int y = 0; y < _gridCount.y; y++)
             {
                 if (!initialGridValues[x,y]) continue;
+                
+                GridCells[x,y].isWall = true;
                 
                 GameObject wall = Instantiate(_wallPrefab, _wallParent);
                 
