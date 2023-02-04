@@ -5,6 +5,10 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif // UNITY_EDITOR
+
 [Flags]
 public enum MoveDirection
 {
@@ -25,6 +29,18 @@ public class GridRouteInput : MonoBehaviour
     public int2 _currentCellPos;
     public List<MoveDirection> _moveDirections = new List<MoveDirection>();
     
+    public delegate void OnRouteStartedDel();
+    public OnRouteStartedDel OnRouteStarted;
+    
+    public delegate void OnRouteEndedDel();
+    public OnRouteEndedDel OnRouteEnded;
+    
+    public delegate void OnMoveDirectionAddedDel(int2 currentCellIndex);
+    public OnMoveDirectionAddedDel OnMoveDirectionAdded;
+    
+    public delegate void OnMoveDirectionsConfirmedDel(List<MoveDirection> moveDirections);
+    public OnMoveDirectionsConfirmedDel OnMoveDirectionsConfirmed;
+
     private bool _canMove = true;
     
     private const float DeadZone = 0.25f;
@@ -33,10 +49,8 @@ public class GridRouteInput : MonoBehaviour
     {
         Input.Actions.Grid.Route.performed += OnRoutePerformed;
         Input.Actions.Grid.Route.canceled  += OnRouteCancelled;
-        
-        StartRoute();
     }
-    
+
     private void OnDestroy()
     {
         Input.Actions.Grid.Route.performed -= OnRoutePerformed;
@@ -84,10 +98,19 @@ public class GridRouteInput : MonoBehaviour
         _readingInput   = true;
         _currentCellPos = _grid.GridStartIndex;
         _moveDirections.Clear();
+        
+        OnRouteStarted?.Invoke();
+    }
+
+    public void EndRoute()
+    {
+        _readingInput = false;
+        OnRouteEnded?.Invoke();
+        OnMoveDirectionsConfirmed?.Invoke(_moveDirections);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private int2 GetMoveDirectionIndex(MoveDirection direction)
+    private static int2 GetMoveDirectionIndex(MoveDirection direction)
     {
         switch (direction)
         {
@@ -109,7 +132,7 @@ public class GridRouteInput : MonoBehaviour
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private MoveDirection GetOppositeDirection(MoveDirection direction)
+    private static MoveDirection GetOppositeDirection(MoveDirection direction)
     {
         switch (direction)
         {
@@ -184,5 +207,39 @@ public class GridRouteInput : MonoBehaviour
         
         _moveDirections.Add(direction);
         _currentCellPos += GetMoveDirectionIndex(direction);
+        OnMoveDirectionAdded?.Invoke(_currentCellPos);
+        
+        // NOTE(WSWhitehouse): Do another valid move directions check to ensure
+        // the adventurer is available to move on the next cell.
+        MoveDirection nextValidDirections = GetValidMoveDirections();
+        if (nextValidDirections == MoveDirection.NONE)
+        {
+            EndRoute();
+        }
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(GridRouteInput))]
+public class GridRouteInputEditor : Editor
+{
+    private GridRouteInput Target => target as GridRouteInput;
+    
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        
+        EditorGUILayout.Space();
+
+        if (GUILayout.Button("Start Route"))
+        {
+           Target.StartRoute();   
+        }
+
+        if (GUILayout.Button("End Route"))
+        {
+            Target.EndRoute();
+        }
+    }
+}
+#endif // UNITY_EDITOR
