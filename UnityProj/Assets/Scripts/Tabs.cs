@@ -5,6 +5,7 @@ using TMPro;
 using Unity.Burst;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Tabs : MonoBehaviour
 {
@@ -28,6 +29,13 @@ public class Tabs : MonoBehaviour
 
     public static event TabTimerDelegate AddTabEvent;
 
+
+    [SerializeField] private GridRouteInput _gridRouteInput;
+
+    [SerializeField] public bool readingInput = true;
+
+    private int current_selection = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +49,16 @@ public class Tabs : MonoBehaviour
             tabGameObject.transform.SetParent(this.transform);
             tabGameObject.SetActive(false);
             _tabGameObjects.Add(tabGameObject);
-        }
 
+            
+        };
         UpdateTabs();
         AddTabEvent += AddTab;
-
+        Input.Actions.Selection.Select.performed += SelectCharacter;
+        Input.Actions.Selection.Up.performed += SelectHoverUp;
+        Input.Actions.Selection.Down.performed += SelectHoverDown;
+        
+        // _gridRouteInput.StartRoute(_adventurerTabs.GetTabInfo(0));
 
     }
 
@@ -61,7 +74,53 @@ public class Tabs : MonoBehaviour
         {
             _addTabTime = addTabWaitTime;
             AddTabEvent?.Invoke();
+
         }
+    }
+
+    public void SelectCharacter(InputAction.CallbackContext context)
+    {
+        if (readingInput)
+        { 
+            readingInput = false;
+           _tabGameObjects[current_selection].gameObject.SetActive(false);
+            _gridRouteInput.StartRoute(_adventurerTabs.GetTabInfo(current_selection));
+            _gridRouteInput._readingInput = true;
+        }
+        
+    }
+    public void SelectHoverUp(InputAction.CallbackContext context)
+    {
+        if (readingInput)
+        {
+            current_selection--;
+            if (current_selection < 0)
+            {
+                current_selection = _adventurerTabs.GetMaxTabs() - 1;
+            }
+            print(current_selection);
+        }
+
+    }
+    public void SelectHoverDown(InputAction.CallbackContext context)
+    {
+        if (readingInput)
+        {
+            current_selection++;
+            if (current_selection > _adventurerTabs.GetMaxTabs() - 1)
+            {
+                current_selection = 0;
+            }
+            var current_tab = _tabGameObjects[current_selection].GetComponent<Tab>();
+            if (current_tab != null)
+            {
+                current_tab._adventurerRImage.color = Color.red;
+            }
+
+        }
+        
+        
+        
     }
 
     private void AddTab()
@@ -94,8 +153,6 @@ public class Tabs : MonoBehaviour
                         _tabGameObjects[i].transform.localPosition.y,
                         0);
                      StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
-                   
-
                 }
 
                 break;
