@@ -20,8 +20,12 @@ public class Traps : MonoBehaviour
     [SerializeField] private int _agilityCheck;
 
     public Character charcter;
+    public ParticleSystem particle;
     private void Awake()
     {
+        particle = gameObject.GetComponent<ParticleSystem>();
+        gameObject.active = false;
+
         if (_trap == TrapsTypes.SwingingBlade)
         {
             _damage = 3;
@@ -60,6 +64,7 @@ public class Traps : MonoBehaviour
         if (other.tag == "Character")
         {
             charcter = other.GetComponent<Character>();
+            particle.Play();
             //Do stuff on the map with an icon
             //Do stuff with the statue update thing in the UI
             TrapActive();
@@ -68,6 +73,7 @@ public class Traps : MonoBehaviour
 
     private void TrapActive()
     {
+        gameObject.active = true;
         if (charcter.agility > _agilityCheck)
         {
             return;
@@ -76,6 +82,7 @@ public class Traps : MonoBehaviour
         else if (charcter.agility < _agilityCheck)
         {
             charcter.health -= _damage;
+
         }
 
         else if (charcter.agility == _agilityCheck)
@@ -92,5 +99,15 @@ public class Traps : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private IEnumerator AdventurerHit()
+    {
+        particle.startColor = Color.red;
+        particle.Play();
+        gameObject.active = false;
+
+        yield return new WaitForSeconds(2.5f);
+        particle.Stop();
     }
 }
