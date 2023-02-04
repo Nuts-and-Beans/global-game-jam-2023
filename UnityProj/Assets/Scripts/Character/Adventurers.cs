@@ -21,6 +21,9 @@ public static class Adventurers
             c.type = type;
             c.name = Names.names[i];
 
+            //REVIEW(Sebadam2010): Not sure if this is a safe way to do it? 
+            c.equipment = new Equipment(EquipmentType.NONE);
+
             switch (type) 
             {
                 case CharacterType.BARBARIAN:

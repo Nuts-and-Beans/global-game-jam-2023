@@ -17,7 +17,7 @@ public class Grid : MonoBehaviour
     [Header("Grid Settings")]
     [SerializeField] private int2 _gridCount;
     [SerializeField] private float2 _cellSize;
-    [SerializeField] private float _wallHeight = 1.0f;
+    [SerializeField] private int2 _gridStartIndex;
 
     [Header("Grid References")]
     [SerializeField] private GameObject _gridFloor;
@@ -35,6 +35,8 @@ public class Grid : MonoBehaviour
     
     public RenderTexture CameraRT      { get; private set; } = null;
     public Array2D<GridCell> GridCells { get; private set; } = new Array2D<GridCell>(0,0);
+    public int2 GridCellCount  => _gridCount;
+    public int2 GridStartIndex => _gridStartIndex;
     
     public float3 GetGridPos(int x, int y) => _gridStartPosition + new float3(x, -y, 0);
     public float3 GetGridPos(int2 i)       => GetGridPos(i.x, i.y);
@@ -116,7 +118,8 @@ public class Grid : MonoBehaviour
 public class GridEditor : Editor
 {
     // private const float GridSize = 25f;
-    private static readonly Color32 SelectedColor = new Color32(138, 201, 38, 255);
+    private static readonly Color32 WallColour  = new Color32(0, 0, 0, 255);
+    private static readonly Color32 StartColour = new Color32(138, 201, 38, 255);
     
     private SerializedProperty _gridCountProperty;
     
@@ -172,11 +175,14 @@ public class GridEditor : Editor
         {
             for (int y = 0; y < gridCount.y; y++)
             {
-                if (Target.initialGridValues[x,y]) GUI.color = SelectedColor;
+                int2 index = new int2(x,y);
+                
+                if (Target.initialGridValues[index])        GUI.color = WallColour;
+                if ((index == Target.GridStartIndex).All()) GUI.color = StartColour;
 
                 if (GUI.Button(gridRect, " "))
                 {
-                    Target.initialGridValues[x,y] = !Target.initialGridValues[x,y];
+                    Target.initialGridValues[index] = !Target.initialGridValues[index];
                 }
 
                 GUI.color   = standardCol;
