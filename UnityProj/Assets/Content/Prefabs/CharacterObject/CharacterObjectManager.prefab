@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5110982283456397914}
   - component: {fileID: 5110982283456397913}
   m_Layer: 0
-  m_Name: CharacterMovementManager
+  m_Name: CharacterObjectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,5 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _grid: {fileID: 0}
   _gridRouteInput: {fileID: 0}
-  _characterMovementPrefab: {fileID: 7146500669196823, guid: 0be4f927b4b12254ba5da33e39e51c23,
+  _characterObjectPrefab: {fileID: 7146500669196823, guid: 0be4f927b4b12254ba5da33e39e51c23,
     type: 3}
+  _characterObjectTransform: {fileID: 5110982283456397914}
+  _initialCharObjectSpawnAmount: 25

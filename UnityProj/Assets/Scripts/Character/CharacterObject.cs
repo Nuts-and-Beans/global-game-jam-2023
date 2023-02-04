@@ -4,22 +4,30 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterObject : MonoBehaviour
 {
     [SerializeField] private float stepDuration = 1f;
     [SerializeField] private Transform spriteTransform;
     
     // NOTE(WSWhitehouse): These are set from the CharacterMovementManager script.
-    [NonSerialized] public int2 startCellIndex;
-    [NonSerialized] public List<MoveDirection> moveDirections;
     [NonSerialized] public Grid grid;
+    [NonSerialized] public CharacterObjectManager characterObjectManager;
+    
+    private List<MoveDirection> _moveDirections;
+    private Character _character;
+
+    public void SetCharacter(Character character, List<MoveDirection> moveDirections)
+    {
+        _character      = character;
+        _moveDirections = moveDirections;
+    }
 
     public IEnumerator Move()
     {
-        int2 currentCellIndex = startCellIndex;
-        for (int i = 0; i < moveDirections.Count; i++)
+        int2 currentCellIndex = grid.GridStartIndex;
+        for (int i = 0; i < _moveDirections.Count; i++)
         {
-            MoveDirection direction = moveDirections[i];
+            MoveDirection direction = _moveDirections[i];
             int2 endCellIndex = currentCellIndex + MoveDirectionUtil.GetDirectionIndex(direction);
             
             float3 startPos = grid.GetGridPos(currentCellIndex);
@@ -30,7 +38,7 @@ public class CharacterMovement : MonoBehaviour
             currentCellIndex = endCellIndex;
         }
         
-        Destroy(this.gameObject);
+        characterObjectManager.ReturnCharacterObjectToPool(this);
     }
 
     private IEnumerator Lerp(float3 start, float3 end)

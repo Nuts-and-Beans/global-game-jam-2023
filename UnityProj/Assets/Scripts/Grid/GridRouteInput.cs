@@ -17,6 +17,7 @@ public class GridRouteInput : MonoBehaviour
     public bool _readingInput = false;
     public int2 _currentCellPos;
     public List<MoveDirection> _moveDirections = new List<MoveDirection>();
+    public Character _character = null;
     
     public delegate void OnRouteStartedDel();
     public OnRouteStartedDel OnRouteStarted;
@@ -27,7 +28,7 @@ public class GridRouteInput : MonoBehaviour
     public delegate void OnMoveDirectionAddedDel(int2 currentCellIndex);
     public OnMoveDirectionAddedDel OnMoveDirectionAdded;
     
-    public delegate void OnMoveDirectionsConfirmedDel(List<MoveDirection> moveDirections);
+    public delegate void OnMoveDirectionsConfirmedDel(Character character, List<MoveDirection> moveDirections);
     public OnMoveDirectionsConfirmedDel OnMoveDirectionsConfirmed;
 
     private bool _canMove = true;
@@ -82,9 +83,10 @@ public class GridRouteInput : MonoBehaviour
         _canMove = true;
     }
 
-    public void StartRoute()
+    public void StartRoute(Character character)
     {
         _readingInput   = true;
+        _character      = character;
         _currentCellPos = _grid.GridStartIndex;
         _moveDirections.Clear();
         
@@ -95,7 +97,7 @@ public class GridRouteInput : MonoBehaviour
     {
         _readingInput = false;
         OnRouteEnded?.Invoke();
-        OnMoveDirectionsConfirmed?.Invoke(_moveDirections);
+        OnMoveDirectionsConfirmed?.Invoke(_character, _moveDirections);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -181,7 +183,7 @@ public class GridRouteInputEditor : Editor
 
         if (GUILayout.Button("Start Route"))
         {
-           Target.StartRoute();   
+           Target.StartRoute(null);   
         }
 
         if (GUILayout.Button("End Route"))
