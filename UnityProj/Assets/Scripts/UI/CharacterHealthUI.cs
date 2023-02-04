@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterHealthUI : MonoBehaviour
@@ -11,32 +12,46 @@ public class CharacterHealthUI : MonoBehaviour
     [SerializeField] private Image _heartFullImage;
     [SerializeField] private Image _heartEmptyImage;
 
+    [SerializeField] private float _heartWidth = 35f;
+    [SerializeField] private float _heartHeight = 35f;
+
+    [SerializeField] private float _heartParentYOffset = .75f;
+    [SerializeField] private float _heartParentXOffset = .3f;
+    
+    
+    [SerializeField] private float _heartSpaceXOffset = 35f;
     
     private Transform _heartStartingPosition;
-    private float _heartYOffset = 0.5f;
 
     private Transform _characterTransform;
-    private Character _character;
+    private CharacterTest _characterTest;
     
-    private Image[] _hearts; 
+    private Image[] _hearts;
+
+    private GameObject _heartsParent;
     
     private float _heartAlpha = 1f;
 
     private void Awake()
     {
-        _characterTransform = _characterGameObject.transform;
-        _character = _characterGameObject.GetComponent<Character>();
-
-        _heartStartingPosition = _characterTransform.transform;
+        //NOTE(Sebadam2010): This is here for testing mainly.
+        //Ideally, would have the script responsible for putting the character on the tab into the map.
+        setCharacter(_characterGameObject);
     }
 
     private void Start()
     {
-        _hearts = new Image[_character.maxHealth];
+        _hearts = new Image[_characterTest._character.maxHealth];
 
-        _character.OnCharacterHealthEvent += UpdateHeartAmount;
+        _characterTest._character.OnCharacterHealthEvent += UpdateHeartAmount;
 
-        Vector3 heartLocalPos = _heartStartingPosition.localPosition;
+        _heartsParent = new GameObject("HeartParent");
+        
+        _heartsParent.transform.position = new Vector3(_characterTransform.localPosition.x, _characterTransform.localPosition.y + _heartParentYOffset, _characterTransform.localPosition.z);
+        
+        _heartsParent.transform.SetParent(transform, false);
+        
+        Vector3 heartLocalPos = _heartsParent.transform.localPosition;
 
         //Note(Seb): Creating a heart image pool
         for (int i = 0; i < _hearts.Length; i++)
@@ -44,9 +59,12 @@ public class CharacterHealthUI : MonoBehaviour
             Debug.Log("Creating heart img" + i);
 
             Image newHeart = Instantiate(_heartEmptyImage,
-                new Vector3(heartLocalPos.x, heartLocalPos.y + _heartYOffset, heartLocalPos.z),
+                new Vector3(heartLocalPos.x + i * _heartSpaceXOffset , heartLocalPos.y + _heartParentYOffset, heartLocalPos.z),
                 Quaternion.identity);
-            newHeart.transform.SetParent(transform, false);
+            newHeart.transform.SetParent(_heartsParent.transform, false);
+            
+            newHeart.rectTransform.sizeDelta = new Vector2(_heartWidth, _heartHeight);
+            
             newHeart.enabled = true;
 
             Color tempColor = newHeart.color;
@@ -56,9 +74,22 @@ public class CharacterHealthUI : MonoBehaviour
             _hearts[i] = newHeart;
         }
         
-        UpdateHeartAmount(_character.health);
+        UpdateHeartAmount(_characterTest._character.health);
+    }
+
+    private void Update()
+    {
+        //REVIEW(Sebadam2010): Is there less expensive way of doing this?
+        _heartsParent.transform.position = Camera.main.WorldToScreenPoint(new Vector3(_characterTransform.localPosition.x - _heartParentXOffset, _characterTransform.localPosition.y + _heartParentYOffset, _characterTransform.localPosition.z));
     }
     
+    public void setCharacter(GameObject character)
+    {
+        _characterGameObject = character;
+        _characterTransform = _characterGameObject.transform;
+        _characterTest = _characterGameObject.GetComponent<CharacterTest>();
+    }
+
     private void UpdateHeartAmount(int characterHealth)
     {
         for (int i = 0; i < _hearts.Length; i++)
