@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// This script pre-allocates all of the stats for all possible characters, and adds them to a Stack like structure
+/// </summary>
 public static class Adventurers 
 {
     private static StackArray<Character> characters;
@@ -17,6 +20,9 @@ public static class Adventurers
             Character c = new ();
             c.type = type;
             c.name = Names.names[i];
+
+            //REVIEW(Sebadam2010): Not sure if this is a safe way to do it? 
+            c.equipment = new Equipment(EquipmentType.NONE);
 
             switch (type) 
             {

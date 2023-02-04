@@ -73,9 +73,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: CeltiCons SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -1473134441
   material: {fileID: -4836181943373877055}
-  materialHashCode: 0
+  materialHashCode: 30216919
   m_Version: 1.1.0
   m_SourceFontFileGUID: 2f45d0bf9e54d48338076420ac4e071e
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 2f45d0bf9e54d48338076420ac4e071e,
@@ -147,7 +147,7 @@ MonoBehaviour:
     m_SubscriptSize: 0.5
     m_UnderlineOffset: -12.267895
     m_UnderlineThickness: 1.7157894
-    m_StrikethroughOffset: 0
+    m_StrikethroughOffset: 39.2
     m_StrikethroughThickness: 1.7157894
     m_TabWidth: 44
   m_GlyphTable:
