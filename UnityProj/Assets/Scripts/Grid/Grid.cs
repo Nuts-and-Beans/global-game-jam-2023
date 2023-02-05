@@ -1,15 +1,24 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif // UNITY_EDITOR
 
+// NOTE(WSWhitehouse): This isn't a great way of organising
+// Grid Cells, but it works for a game jam...
 public class GridCell
 {
     public bool isWall;
+    
+    public bool isBoss;
+    
+    // fog of war
     public bool isFogOfWar;
     public GameObject fogOfWar;
 }
@@ -31,6 +40,11 @@ public class Grid : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Camera _camera;
     [SerializeField] private int2 _cellResolution;
+    
+    [Header("Boss & Encounters Settings")]
+    [SerializeField] private GridEncounters _gridEncounters;
+    [SerializeField] private Boss _boss;
+    [SerializeField] public int2[] _bossTiles = Array.Empty<int2>();
 
     // NOTE(WSWhitehouse): This is hidden in the inspector as a custom inspector is used to draw it as a grid.
     [HideInInspector] public Array2D<bool> initialGridValues = new Array2D<bool>(0,0);
@@ -40,6 +54,7 @@ public class Grid : MonoBehaviour
 
     public RenderTexture CameraRT      { get; private set; } = null;
     public Array2D<GridCell> GridCells { get; private set; } = new Array2D<GridCell>(0,0);
+    public int2 GridBossIndex          { get; private set; }
     public int2 GridCellCount  => _gridCount;
     public int2 GridStartIndex => _gridStartIndex;
     
@@ -128,8 +143,20 @@ public class Grid : MonoBehaviour
             }
         }
         
+        // Set the starting cell to visible
         GridCells[GridStartIndex].isFogOfWar = false;
         GridCells[GridStartIndex].fogOfWar.SetActive(false);
+        _validCells.Remove(GridStartIndex);
+        
+        // Set up boss tile
+        int index     = Random.Range(0, _bossTiles.Length);
+        GridBossIndex = _bossTiles[index];
+        
+        GridCells[GridBossIndex].isBoss = true;
+        _validCells.Remove(GridBossIndex);
+        
+        // Init encounters
+        _gridEncounters.InitEncounters(this);
     }
 }
 
@@ -141,6 +168,7 @@ public class GridEditor : Editor
     // private const float GridSize = 25f;
     private static readonly Color32 WallColour  = new Color32(0, 0, 0, 255);
     private static readonly Color32 StartColour = new Color32(138, 201, 38, 255);
+    private static readonly Color32 BossColour  = new Color32(255, 25, 38, 255);
     
     private SerializedProperty _gridCountProperty;
     
@@ -205,6 +233,7 @@ public class GridEditor : Editor
                 
                 if (Target.initialGridValues[index])        GUI.color = WallColour;
                 if ((index == Target.GridStartIndex).All()) GUI.color = StartColour;
+                if (Target._bossTiles.Contains(index))      GUI.color = BossColour;
 
                 if (GUI.Button(gridRect, " "))
                 {
