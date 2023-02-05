@@ -353,9 +353,18 @@ MonoBehaviour:
   _stepDuration: 0.5
   _spriteTransform: {fileID: 1391894251852093758}
   _sprite: {fileID: 1450982980455352499}
-  _barbarianSprites: []
-  _archerSprites: []
-  _assassinSprites: []
+  _barbarianSprites:
+  - {fileID: 21300000, guid: b8eac38eae96c4c408d8ea91455c22f7, type: 3}
+  - {fileID: 21300000, guid: 1a8b02bb4e67b44699d01a807486b649, type: 3}
+  - {fileID: 21300000, guid: d01af0cc4d96a4e529aef7bef02247c8, type: 3}
+  _archerSprites:
+  - {fileID: 342815434, guid: 50d88989fbfb746299a622a0e6827410, type: 3}
+  - {fileID: -381031676, guid: d4397809e917f4f66b7f39de95ccdda6, type: 3}
+  - {fileID: -807413301, guid: 2059c896013794a9b858237134b0936d, type: 3}
+  _assassinSprites:
+  - {fileID: -708469754, guid: fd0c74378c31844a887a6a87c120b8f4, type: 3}
+  - {fileID: 1971512124, guid: 8bf9bc3b9efcb4d74a95dbf84db98835, type: 3}
+  - {fileID: -448710488, guid: fc0cec7454e484e4181a78fd84283c9b, type: 3}
 --- !u!1001 &4604963501477449626
 PrefabInstance:
   m_ObjectHideFlags: 0

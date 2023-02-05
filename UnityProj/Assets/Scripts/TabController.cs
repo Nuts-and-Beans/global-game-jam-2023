@@ -41,7 +41,7 @@ public class TabController : MonoBehaviour
 
     private void Start()
     {
-        _addTabTime = addTabWaitTime;
+        _addTabTime = 0.5f; //addTabWaitTime;
         for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
         {
 
@@ -58,9 +58,9 @@ public class TabController : MonoBehaviour
 
         UpdateTabs();
         AddTabEvent += AddTab;
-        Input.Actions.Selection.Select.performed += SelectCharacter;
-        Input.Actions.Selection.Up.performed += SelectHoverUp;
-        Input.Actions.Selection.Down.performed += SelectHoverDown;
+        // Input.Actions.Selection.Select.performed += SelectCharacter;
+        // Input.Actions.Selection.Up.performed += SelectHoverUp;
+        // Input.Actions.Selection.Down.performed += SelectHoverDown;
         
         // _gridRouteInput.StartRoute(_adventurerTabs.GetTabInfo(0));
 
@@ -73,6 +73,26 @@ public class TabController : MonoBehaviour
 
     private void Update()
     {
+        if (!_gridRouteInput._readingInput)
+        {
+            int tabIndex = -1;
+
+            for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
+            {
+                if (_tabGameObjects[i] == null) continue;
+                
+                tabIndex = i;
+            }
+            
+            if (tabIndex == -1) goto skipRoute;
+            
+            _tabGameObjects[tabIndex].gameObject.SetActive(false);
+            StartCoroutine(RemovingTab(tabIndex));
+            
+            _gridRouteInput.StartRoute(_adventurerTabs.GetTabInfo(tabIndex));
+        }
+        
+        skipRoute:
         _addTabTime -= Time.deltaTime;
         if (_addTabTime <= 0)
         {
@@ -199,37 +219,37 @@ public class TabController : MonoBehaviour
             yield break;
     }
 
-    private IEnumerator RemovingTab()
+    private IEnumerator RemovingTab(int tabIndex)
     {
         while (tabCoroutineRunning)
         {
             yield return null;
         }
-           GameObject removeCharacter = _tabGameObjects[current_selection];
-                _adventurerTabs.OnNeedNewCharacter(current_selection);
-                _tabGameObjects.RemoveAt(current_selection);
-                _tabGameObjects.Add(removeCharacter);
-                UpdateTabs();
-                
-                float animationTimer = float.Epsilon;
-       
-             for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++) 
-             { 
-                 if (i >= current_selection) 
-                 {
-                            Vector3 s = new Vector3(_tabGameObjects[i].transform.localPosition.x,_tabGameObjects[i].transform.localPosition.y,_tabGameObjects[i].transform.localPosition.z);
-                            while (animationTimer <= _animDuration)
-                            {
-                                _tabGameObjects[i].transform.localPosition = Vector3.Lerp(s, s + new Vector3(0, 250, 0),
-                                    animationTimer / _animDuration);
-                                animationTimer += Time.deltaTime;
-                                yield return null;
 
-                 
-                        }
-                    }         
+        GameObject removeCharacter = _tabGameObjects[tabIndex];
+        _adventurerTabs.OnNeedNewCharacter(tabIndex);
+        _tabGameObjects.RemoveAt(tabIndex);
+        _tabGameObjects.Add(removeCharacter);
+        UpdateTabs();
+
+        float animationTimer = float.Epsilon;
+
+        for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
+        {
+            if (i >= tabIndex)
+            {
+                Vector3 s = new Vector3(_tabGameObjects[i].transform.localPosition.x, _tabGameObjects[i].transform.localPosition.y, _tabGameObjects[i].transform.localPosition.z);
+                while (animationTimer <= _animDuration)
+                {
+                    _tabGameObjects[i].transform.localPosition = Vector3.Lerp(s, s + new Vector3(0, 250, 0),
+                        animationTimer / _animDuration);
+                    animationTimer += Time.deltaTime;
+                    yield return null;
                 }
-                yield break;
+            }
+        }
+
+        yield break;
     }
 
 
@@ -237,7 +257,7 @@ public class TabController : MonoBehaviour
 
     {
         _tabGameObjects[current_selection].gameObject.SetActive(false);
-        StartCoroutine(RemovingTab());
+        StartCoroutine(RemovingTab(current_selection));
 
     }
 

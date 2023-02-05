@@ -24,7 +24,21 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _ratsSprite;
     [SerializeField] private Sprite _cubeSprite;
     [SerializeField] private Sprite _knightSprite;
-    
+    [Space]
+    [SerializeField] private AudioClip _goblinEncounterSFX;
+    [SerializeField] private AudioClip _skeletonEncounterSFX;
+    [SerializeField] private AudioClip _zombieEncounterSFX;
+    [SerializeField] private AudioClip _ratsEncounterSFX;
+    [SerializeField] private AudioClip _cubeEncounterSFX;
+    [SerializeField] private AudioClip _knightEncounterSFX;
+    [Space]
+    [SerializeField] private AudioClip _goblinDeathSFX;
+    [SerializeField] private AudioClip _skeletonDeathSFX;
+    [SerializeField] private AudioClip _zombieDeathSFX;
+    [SerializeField] private AudioClip _ratsDeathSFX;
+    [SerializeField] private AudioClip _cubeDeathSFX;
+    [SerializeField] private AudioClip _knightDeathSFX;
+     
     [Header("Puzzle Encounter Icons")]
     [SerializeField] private Sprite _steppingStonesSprite;
     [SerializeField] private Sprite _statueSprite;
@@ -32,6 +46,13 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _potionSprite;
     [SerializeField] private Sprite _solveRiddleSprite;
     [SerializeField] private Sprite _freePrisonerSprite;
+    [Space]
+    [SerializeField] private AudioClip _steppingStonesEncounterSFX;
+    [SerializeField] private AudioClip _statuesEncounterSFX;
+    [SerializeField] private AudioClip _findKeyEncounterSFX;
+    [SerializeField] private AudioClip _potionEncounterSFX;
+    [SerializeField] private AudioClip _solveRiddleEncounterSFX;
+    [SerializeField] private AudioClip _freePrisonerEncounterSFX;
     
     [Header("Trap Encounter Icons")]
     [SerializeField] private Sprite _swingingBladeSprite;
@@ -40,6 +61,13 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _poisonDartSprite;
     [SerializeField] private Sprite _fireFloorSprite;
     [SerializeField] private Sprite _fallingCeilingSprite;
+    [Space]
+    [SerializeField] private AudioClip _swingingBladeEncounterSFX;
+    [SerializeField] private AudioClip _pitFallEncounterSFX;
+    [SerializeField] private AudioClip _poisonGasEncounterSFX;
+    [SerializeField] private AudioClip _poisonDartEncounterSFX;
+    [SerializeField] private AudioClip _fireFloorEncounterSFX;
+    [SerializeField] private AudioClip _fallingCeilingEncounterSFX;
     
     [Header("Equipment Encounter Icons")]
     [SerializeField] private Sprite _bootsSprite;
@@ -48,9 +76,9 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _glovesSprite;
     [SerializeField] private Sprite _helmetSprite;
     [SerializeField] private Sprite _swordSprite;
-    
-    
-    
+    [Space]
+    [SerializeField] private AudioClip _equipmentSFX;
+
     [NonSerialized] public Dictionary<int2, IEncounter> encounters;
     [NonSerialized] public List<int2> visitedEncounters;
     
@@ -82,14 +110,15 @@ public class GridEncounters : MonoBehaviour
             
             IEncounter encounter = type switch
             {
-                EncounterType.CREATURE => new CreatureEncounter(),
-                EncounterType.PUZZLE   => new PuzzleEncounter(),
-                EncounterType.TRAP     => new TrapEncounter(),
+                EncounterType.CREATURE  => new CreatureEncounter(),
+                EncounterType.PUZZLE    => new PuzzleEncounter(),
+                EncounterType.TRAP      => new TrapEncounter(),
                 EncounterType.EQUIPMENT => new EquipmentEncounter(),
-                EncounterType.COUNT    =>  throw new ArgumentOutOfRangeException(),
+                
+                EncounterType.COUNT => throw new ArgumentOutOfRangeException(),
                 _ => throw new ArgumentOutOfRangeException()
             };
-
+            
             int validCellIndex = Random.Range(0, validCells.Count);
             int2 cellIndex = validCells[validCellIndex];
             validCells.RemoveAt(validCellIndex);
@@ -101,7 +130,7 @@ public class GridEncounters : MonoBehaviour
 
     public void VisitEncounter(int2 cellIndex)
     {
-        if (!encounters.ContainsKey(cellIndex))    return;
+        if (!encounters.ContainsKey(cellIndex)) return;
         
         
         if (visitedEncounters.Contains(cellIndex))
@@ -113,6 +142,7 @@ public class GridEncounters : MonoBehaviour
             if (encounter2.EncounterType == EncounterType.EQUIPMENT)
             {
                 icon2.PlayParticleSystem();
+                AudioManager.PlayOneShot(_equipmentSFX);
             }
 
             return;
@@ -133,31 +163,37 @@ public class GridEncounters : MonoBehaviour
                     case CreatureEncounter.CreatureType.Goblins:
                     {
                         iconSprite = _goblinSprite;
+                        AudioManager.PlayOneShot(_goblinEncounterSFX);
                         break;
                     }
                     case CreatureEncounter.CreatureType.Skeletons:
                     {
                         iconSprite = _skeletonSprite;
+                        AudioManager.PlayOneShot(_skeletonEncounterSFX);
                         break;
                     }
                     case CreatureEncounter.CreatureType.Zombie:
                     {
                         iconSprite = _zombieSprite;
+                        AudioManager.PlayOneShot(_zombieEncounterSFX);
                         break;
                     }
                     case CreatureEncounter.CreatureType.Rats:
                     {
                         iconSprite = _ratsSprite;
+                        AudioManager.PlayOneShot(_ratsEncounterSFX);
                         break;
                     }
                     case CreatureEncounter.CreatureType.Cube:
                     {
                         iconSprite = _cubeSprite;
+                        AudioManager.PlayOneShot(_cubeEncounterSFX);
                         break;
                     }
                     case CreatureEncounter.CreatureType.Knight:
                     {
                         iconSprite = _knightSprite;
+                        AudioManager.PlayOneShot(_knightEncounterSFX);
                         break;
                     }
                     
@@ -175,31 +211,37 @@ public class GridEncounters : MonoBehaviour
                     case PuzzleEncounter.PuzzleTypes.SteppingStones:
                     {
                         iconSprite = _steppingStonesSprite;
+                        AudioManager.PlayOneShot(_steppingStonesEncounterSFX);
                         break;
                     }
                     case PuzzleEncounter.PuzzleTypes.Statues:
                     {
                         iconSprite = _statueSprite;
+                        AudioManager.PlayOneShot(_statuesEncounterSFX);
                         break;
                     }
                     case PuzzleEncounter.PuzzleTypes.FindKey:
                     {
                         iconSprite = _findKeySprite;
+                        AudioManager.PlayOneShot(_findKeyEncounterSFX);
                         break;
                     }
                     case PuzzleEncounter.PuzzleTypes.Potion:
                     {
                         iconSprite = _potionSprite;
+                        AudioManager.PlayOneShot(_potionEncounterSFX);
                         break;
                     }
                     case PuzzleEncounter.PuzzleTypes.SolveRiddle:
                     {
                         iconSprite = _solveRiddleSprite;
+                        AudioManager.PlayOneShot(_solveRiddleEncounterSFX);
                         break;
                     }
                     case PuzzleEncounter.PuzzleTypes.FreePrisoner:
                     {
                         iconSprite = _freePrisonerSprite;
+                        AudioManager.PlayOneShot(_freePrisonerEncounterSFX);
                         break;
                     }
                     
@@ -217,31 +259,37 @@ public class GridEncounters : MonoBehaviour
                     case TrapEncounter.TrapsTypes.SwingingBlade:
                     {
                         iconSprite = _swingingBladeSprite;
+                        AudioManager.PlayOneShot(_swingingBladeEncounterSFX);
                         break;
                     }
                     case TrapEncounter.TrapsTypes.PitFall:
                     {
                         iconSprite = _pitFallSprite;
+                        AudioManager.PlayOneShot(_pitFallEncounterSFX);
                         break;
                     }
                     case TrapEncounter.TrapsTypes.PoisonGas:
                     {
                         iconSprite = _poisonGasSprite;
+                        AudioManager.PlayOneShot(_poisonGasEncounterSFX);
                         break;
                     }
                     case TrapEncounter.TrapsTypes.PoisonDart:
                     {
                         iconSprite = _poisonDartSprite;
+                        AudioManager.PlayOneShot(_poisonDartEncounterSFX);
                         break;
                     }
                     case TrapEncounter.TrapsTypes.FireFloor:
                     {
                         iconSprite = _fireFloorSprite;
+                        AudioManager.PlayOneShot(_fireFloorEncounterSFX);
                         break;
                     }
                     case TrapEncounter.TrapsTypes.FallingCeiling:
                     {
                         iconSprite = _fallingCeilingSprite;
+                        AudioManager.PlayOneShot(_fallingCeilingEncounterSFX);
                         break;
                     }
                     
@@ -309,7 +357,54 @@ public class GridEncounters : MonoBehaviour
         if (!visitedEncounters.Contains(cellIndex)) return;
         if (!_activeIcons.ContainsKey(cellIndex))   return;
         
+        IEncounter encounter = encounters[cellIndex];
+        if (encounter.EncounterType == EncounterType.CREATURE)
+        {
+            OnDeathSFX(encounter as CreatureEncounter);
+        }
+        
+        encounters.Remove(cellIndex);
         ReturnEncounterIconToPool(cellIndex);
+    }
+
+    private void OnDeathSFX(CreatureEncounter encounter)
+    {
+        switch (encounter._creatureType)
+        {
+            case CreatureEncounter.CreatureType.Goblins:
+            {
+                AudioManager.PlayOneShot(_goblinDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Skeletons:
+            {
+                AudioManager.PlayOneShot(_skeletonDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Zombie:
+            {
+                AudioManager.PlayOneShot(_zombieDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Rats:
+            {
+                AudioManager.PlayOneShot(_ratsDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Cube:
+            {
+                AudioManager.PlayOneShot(_cubeDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Knight:
+            {
+                AudioManager.PlayOneShot(_knightDeathSFX);
+                break;
+            }
+            
+            case CreatureEncounter.CreatureType.COUNT:
+            default: throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void SpawnEncounterIcon()

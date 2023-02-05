@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fd0c74378c31844a887a6a87c120b8f4
+guid: 2ec764dc3623e1b44b0ccc4f0208a883
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -107,13 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_0
+      name: Gloves set_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 12
+        y: 82
+        width: 40
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa79d430f2e6410439ab651e4f9f76d0
-      internalID: -708469754
+      spriteID: f3ac71da88df03b47885cc3917e98423
+      internalID: 1908915177
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_1
+      name: Gloves set_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 78
+        y: 76
+        width: 40
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +142,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b6b97b16f8eeb348ba51f8c3f6c7c14
-      internalID: -606011208
+      spriteID: 990dcaed086560a40916de09bda177cc
+      internalID: 1082015110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_2
+      name: Gloves set_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 142
+        y: 74
+        width: 44
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,20 +163,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27ecc75d0c51ca14e877b760ea05e630
-      internalID: -9437390
+      spriteID: 6ddc615c5b320294788b19433c228ca2
+      internalID: 606882699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_3
+      name: Gloves set_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
+        x: 208
+        y: 76
+        width: 44
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -184,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 969e90c94ad8236448e096b2aa716f52
-      internalID: 2054542927
+      spriteID: 739be69913b8a254babc57e692f34e23
+      internalID: 1682543980
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_4
+      name: GlovesIcon
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
+        x: 276
+        y: 76
+        width: 40
+        height: 46
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -205,20 +205,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a17e8957d1a12d45a16089070e3eb4f
-      internalID: 1401006907
+      spriteID: 3d382a815b25ee540b1009ba70b3bc2a
+      internalID: 1831943717
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_5
+      name: Gloves set_5
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
+        x: 10
+        y: 8
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -226,20 +226,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f421d45fc86d5754b9a0416d734e65d7
-      internalID: 956635599
+      spriteID: 19ffb9a1a79159a41b302befc67bd0ad
+      internalID: -282477906
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_6
+      name: Gloves set_6
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
+        x: 78
+        y: 8
+        width: 44
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -247,20 +247,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e92d5c4819476ab40945d554a200ba0e
-      internalID: 1390103253
+      spriteID: 8310e5b901c91e340b3181f19f76951b
+      internalID: 1162852929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_7
+      name: Gloves set_7
       rect:
         serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
+        x: 144
+        y: 8
+        width: 40
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,20 +268,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fdbd04cbcb0805419a72c3eda1d32d4
-      internalID: 363431054
+      spriteID: 82598986370efde43b293f8f49293d64
+      internalID: -720422136
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_8
+      name: Gloves set_8
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 64
-        height: 64
+        x: 208
+        y: 6
+        width: 48
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,20 +289,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32594e402bed5a0409df664f95076926
-      internalID: -2078318796
+      spriteID: ca1ff1074837b26408cc7b7ed6a9fa39
+      internalID: -1503175659
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ellie the Energetic-Sheet_9
+      name: Gloves set_9
       rect:
         serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
+        x: 272
+        y: 6
+        width: 48
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,8 +310,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2f80f3026fb8474a96f50268017068f
-      internalID: -165065437
+      spriteID: 3243842a93c7986449818ebaad2b4da3
+      internalID: -545735024
       vertices: []
       indices: 
       edges: []
@@ -319,7 +319,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1170bfa808f84f141843d98d60c9c605
+    spriteID: a12ea0f6e2f204f4f9de9f8228579467
     internalID: 0
     vertices: []
     indices: 
@@ -327,16 +327,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ellie the Energetic-Sheet_3: 2054542927
-      Ellie the Energetic-Sheet_6: 1390103253
-      Ellie the Energetic-Sheet_9: -165065437
-      Ellie the Energetic-Sheet_1: -606011208
-      Ellie the Energetic-Sheet_5: 956635599
-      Ellie the Energetic-Sheet_0: -708469754
-      Ellie the Energetic-Sheet_2: -9437390
-      Ellie the Energetic-Sheet_8: -2078318796
-      Ellie the Energetic-Sheet_4: 1401006907
-      Ellie the Energetic-Sheet_7: 363431054
+      Gloves set_5: -282477906
+      Gloves set_6: 1162852929
+      Gloves set_1: 1082015110
+      Gloves set_0: 1908915177
+      Gloves set_8: -1503175659
+      GlovesIcon: 1831943717
+      Gloves set_9: -545735024
+      Gloves set_7: -720422136
+      Gloves set_3: 1682543980
+      Gloves set_2: 606882699
   spritePackingTag: 
   pSDRemoveMatte: 0
   userData: 
