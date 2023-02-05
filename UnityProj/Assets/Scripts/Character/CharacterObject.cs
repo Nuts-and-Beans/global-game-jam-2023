@@ -59,7 +59,11 @@ public class CharacterObject : MonoBehaviour
     private void RemoveCharacter()
     {
         OnCharacterRemoved?.Invoke();
-        _character = null;
+        if (_character != null)
+        {
+            Adventurers.ReturnCharacter(_character);
+            _character = null;
+        }
     }
 
     public IEnumerator Move()
