@@ -13,6 +13,8 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text _exitText;
 
     [SerializeField] private Button _exitButton;
+
+    [SerializeField] private AudioSource _confirmAudio;
     int selected = 0;
     [SerializeField] int num_buttons;
     public static bool playerwin;
@@ -57,6 +59,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void SelectOption(InputAction.CallbackContext callback)
     {
+        _confirmAudio.Play();
         switch(selected)
         {
             case 0:
