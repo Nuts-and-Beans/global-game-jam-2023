@@ -16,13 +16,9 @@ public class CharacterHealthUI : MonoBehaviour
 
     private void Start()
     {
-        _characterObject._character.OnCharacterHealthEvent += UpdateHeartAmount;
+        _characterObject.OnCharacterSet += SubscribeToEvent;
+        _characterObject.OnCharacterRemoved += UnsubscribeToEvent;
         UpdateHeartAmount(_characterObject._character.health);
-    }
-
-    private void OnDestroy()
-    {
-        _characterObject._character.OnCharacterHealthEvent -= UpdateHeartAmount;
     }
 
     private void UpdateHeartAmount(int characterHealth)
@@ -38,6 +34,26 @@ public class CharacterHealthUI : MonoBehaviour
                 _hearts[i].sprite = _heartFullImage.sprite;
             }
         }
+    }
+
+    private void SubscribeToEvent()
+    {
+        if (_characterObject._character == null)
+        {
+            return;
+        }
+        
+        _characterObject._character.OnCharacterHealthEvent += UpdateHeartAmount;
+    }
+
+    private void UnsubscribeToEvent()
+    {
+        if (_characterObject._character == null)
+        {
+            return;
+        }
+        
+        _characterObject._character.OnCharacterHealthEvent -= UpdateHeartAmount;
     }
     
 }

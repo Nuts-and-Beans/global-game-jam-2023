@@ -5,25 +5,29 @@ using UnityEngine;
 
 public class AdventurerTabs : MonoBehaviour
 {
-    [SerializeField] private Character[] _tabs;
+    [SerializeField] private List<Character> _tabs;
     [SerializeField] private int _maxTabs;
     private void Awake()
     {
-        _tabs = new Character[_maxTabs];
+        _tabs = new List<Character>();
 
         for (int i = 0; i < _maxTabs; i++)
         {
-            _tabs[i] = Adventurers.GetNextCharacter();
+            Character c = Adventurers.GetNextCharacter();
+            _tabs.Add(c);
             Debug.Log(_tabs[i].name);
         }
         
     }
 
-    private void OnNeedNewCharacter(int index)
+    public void OnNeedNewCharacter(int index)
 
     {
         Adventurers.ReturnCharacter(_tabs[index]);
         _tabs[index] = Adventurers.GetNextCharacter();
+        Character movingCharacterIndex = _tabs[index];
+        _tabs.RemoveAt(index);
+        _tabs.Add(movingCharacterIndex);
     }
 
     public int GetMaxTabs()
