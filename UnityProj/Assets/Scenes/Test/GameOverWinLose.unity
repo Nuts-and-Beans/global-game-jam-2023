@@ -835,7 +835,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -240, y: -103.1}
+  m_AnchoredPosition: {x: -9.200012, y: -313}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1048683024
@@ -1036,7 +1036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 175, y: -103.1}
+  m_AnchoredPosition: {x: -9, y: -119}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1256159259
@@ -1163,6 +1163,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myText: {fileID: 71538651}
+  _playButton: {fileID: 1256159259}
+  _playText: {fileID: 88339014}
+  _exitText: {fileID: 999959969}
+  _exitButton: {fileID: 1048683024}
+  num_buttons: 2
 --- !u!4 &1637774963
 Transform:
   m_ObjectHideFlags: 0
