@@ -1,29 +1,39 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class EncounterIcon : MonoBehaviour
 {
     [SerializeField] private Image _image;
-    [SerializeField] private ParticleSystem _particleSystem;
+    
+    [SerializeField] private ParticleSystem _puzzlePS;
+    [SerializeField] private ParticleSystem _trapPS;
+    [SerializeField] private ParticleSystem _creaturePS;
+    
+    private ParticleSystem _currentPS = null;
 
-    public void Enable(Sprite sprite)
+    public void Enable(Sprite sprite, EncounterType type)
     {
         _image.sprite = sprite;
         gameObject.SetActive(true);
         
-        if (_particleSystem != null)
+        _currentPS = type switch
         {
-            _particleSystem.Play();
-        }
+            EncounterType.CREATURE => _creaturePS,
+            EncounterType.PUZZLE   => _puzzlePS,
+            EncounterType.TRAP     => _trapPS,
+            
+            EncounterType.COUNT => throw new ArgumentOutOfRangeException(nameof(type), type, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+        
+        _currentPS.Play();
     }
 
     public void Disable()
     {
-        if (_particleSystem != null)
-        {
-            _particleSystem.Stop();
-        }
-        
+        _currentPS.Stop();
+        _currentPS = null;
         gameObject.SetActive(false);
     }
 }
