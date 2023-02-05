@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 public class NoticeBoard : MonoBehaviour
 {
@@ -12,7 +14,6 @@ public class NoticeBoard : MonoBehaviour
     [SerializeField] private Tab[] _tabs;
     [SerializeField] private RectTransform[] _onScreenSpawnPositions;
     [SerializeField] private RectTransform[] _offScreenSpawnPositions;
-    [SerializeField] private RectTransform _finishedWithTabPosition; // used to lerp tab off screen
 
     [Header("Animation Settings")]
     [SerializeField] private float _lerpOnScreenDuration = 1f;
@@ -20,6 +21,13 @@ public class NoticeBoard : MonoBehaviour
 
     [Header("Notice Board Wait Settings")]
     [SerializeField] private float _waitBetweenNextTab = 1f;
+
+    [Header("Sprites")]
+    [SerializeField] private Sprite[] _barbarianSprites;
+    [SerializeField] private Sprite[] _archerSprites;
+    [SerializeField] private Sprite[] _assassinSprites; 
+
+
 
     private int _currentTabToUseForSelection = 0;
     private int _currentTabToMove = 0;
@@ -46,7 +54,20 @@ public class NoticeBoard : MonoBehaviour
         {
             float3 startPosition = _offScreenSpawnPositions[i].position;
             Character info = Adventurers.GetNextCharacter();
-            _tabs[i].SetTabInfoAndStartPosition(startPosition, info, null);
+
+            Sprite[] sprites = info.type switch
+            {
+                CharacterType.BARBARIAN => _barbarianSprites,
+                CharacterType.ARCHER    => _archerSprites,
+                CharacterType.ASSASSIN  => _assassinSprites,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            
+            int index = Random.Range(0, sprites.Length);
+            Sprite sprite = sprites[index];
+
+            _tabs[i].SetTabInfoAndStartPosition(startPosition, info, sprite);
         }
 
 
@@ -71,8 +92,22 @@ public class NoticeBoard : MonoBehaviour
 
             float3 startPosition = _offScreenSpawnPositions[_currentTabToMove].position;
             float3 endPosition = _onScreenSpawnPositions[_currentTabToMove].position;
+
+            Character info = Adventurers.GetNextCharacter();
+            Sprite[] sprites = info.type switch
+            {
+                CharacterType.BARBARIAN => _barbarianSprites,
+                CharacterType.ARCHER    => _archerSprites,
+                CharacterType.ASSASSIN  => _assassinSprites,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            
+            int index = Random.Range(0, sprites.Length);
+            Sprite sprite = sprites[index];
             Tab freeTab = _tabs[_currentTabToMove];
-            freeTab.SetTabInfo(Adventurers.GetNextCharacter(), null);
+
+            freeTab.SetTabInfo(Adventurers.GetNextCharacter(), sprite);
 
             // we wrap the current tab index
             _currentTabToMove += 1;
@@ -135,7 +170,6 @@ public class NoticeBoard : MonoBehaviour
         float3 endPos   = startPos;
         endPos.x -= 2000; // HACK(Zack): hardcoding this for now
 
-        // TODO(Zack): get removing tabs looking nice
         StartCoroutine(RemoveTabOffScreen(tab, startPos, endPos, _lerpFinishedDuration));
 
         _currentTabToUseForSelection += 1;
