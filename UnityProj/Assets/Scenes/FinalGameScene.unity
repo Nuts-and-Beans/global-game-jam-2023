@@ -1224,8 +1224,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-<<<<<<< HEAD
-=======
     - target: {fileID: 1803988310759965192, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
         type: 3}
       propertyPath: startTime
@@ -1236,7 +1234,6 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
->>>>>>> 336ebb2f1cfdd5979864986dcec29df4167218d8
     - target: {fileID: 1803988310759965198, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
         type: 3}
       propertyPath: m_Pivot.x
