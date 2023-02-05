@@ -14,13 +14,16 @@ public class GameSceneMusic_Drums : MonoBehaviour
         {
             if (Timer.s_currentTime <= 30)
             {
+                Debug.Log("Playing drums loop");
                 drums.Play();
+                isPlaying = true;
             }
-        }
-
-        else
-        {
-            return;
+            else if (Boss.s_currentHealth < 3)
+            {
+                Debug.Log("Playing drums loop");
+                drums.Play();
+                isPlaying = true;
+            }
         }
     }
 }

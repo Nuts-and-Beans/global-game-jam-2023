@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -455,6 +455,42 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _bootsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 77ccdef013713e843b98aa6def502c78,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _chestSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0810a2c4a42ff4e46b1292e53eb3462c,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _swordSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8f6b5fddce131f241953dd3f917ee88f,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _glovesSprite
+      value: 
+      objectReference: {fileID: 1831943717, guid: 2ec764dc3623e1b44b0ccc4f0208a883,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _helmetSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6ece09bf14041df4fa0e5ff254b200e5,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _leggingsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
     - target: {fileID: 4753381735683633004, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
       propertyPath: m_Name
@@ -758,7 +794,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -886,7 +922,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
