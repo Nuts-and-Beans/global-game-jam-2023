@@ -295,11 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cca9c2c562a3c54ea3df83f3a149ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterGameObject: {fileID: 7243653276120307471}
   _heartFullImage: {fileID: 2467915352105338272, guid: f3e7ffe4eb406154f8c4101be40e2d87,
     type: 3}
   _heartEmptyImage: {fileID: 8257108735442397846, guid: f1be65839bfcd4642b39fb0d61bcc1b1,
     type: 3}
+  _characterObject: {fileID: 7146500669196823}
   _hearts:
   - {fileID: 1262490134208219778}
   - {fileID: 5584245068436497676}
@@ -356,13 +356,6 @@ MonoBehaviour:
   _barbarianSprites: []
   _archerSprites: []
   _assassinSprites: []
-  _character:
-    type: 0
-    name: 
-    maxHealth: 3
-    health: 0
-    attack: 0
-    agility: 0
 --- !u!1001 &4604963501477449626
 PrefabInstance:
   m_ObjectHideFlags: 0
