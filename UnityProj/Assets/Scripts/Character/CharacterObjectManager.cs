@@ -122,7 +122,6 @@ public class CharacterObjectManager : MonoBehaviour
 
         if (state == EncounterState.ENCOUNTER_COMPLETE)
         {
-            _gridEncounters.encounters.Remove(cellIndex);
             _gridEncounters.RemoveEncounter(cellIndex);
         }
         

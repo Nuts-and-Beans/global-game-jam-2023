@@ -363,6 +363,7 @@ public class GridEncounters : MonoBehaviour
             OnDeathSFX(encounter as CreatureEncounter);
         }
         
+        encounters.Remove(cellIndex);
         ReturnEncounterIconToPool(cellIndex);
     }
 
