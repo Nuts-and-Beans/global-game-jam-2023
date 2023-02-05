@@ -36,12 +36,12 @@ public class PuzzleEncounter : IEncounter
         if (_puzzle == PuzzleTypes.SteppingStones)
         {
             _chance = 5;
-            _damage = 2;
+            _damage = 3;
         }
         if (_puzzle == PuzzleTypes.Statues)
         {
             _chance = 5;
-            _damage = 0;
+            _damage = 1;
         }
         if (_puzzle == PuzzleTypes.FindKey)
         {
@@ -50,17 +50,17 @@ public class PuzzleEncounter : IEncounter
         }
         if (_puzzle == PuzzleTypes.Potion)
         {
-            _chance = 2;
-            _damage = 3;
+            _chance = 3;
+            _damage = 2;
         }
         if (_puzzle == PuzzleTypes.SolveRiddle)
         {
-            _chance = 10;
-            _damage = 0;
+            _chance = 5;
+            _damage = 3;
         }
         if (_puzzle == PuzzleTypes.FreePrisoner)
         {
-            _chance = 2;
+            _chance = 3;
             _damage = 1;
         }
     }
@@ -79,14 +79,14 @@ public class PuzzleEncounter : IEncounter
 
     public EncounterState AdventurerInteract(Character character)
     {
-        int i = Random.Range(0, _chance + 1);
+        int encounterChance = Random.Range(0, _chance + 1);
 
-        if (i == _chance)
+        if (encounterChance == _chance)
         {
-            return EncounterState.ADVENTURER_PASSED;
+            return EncounterState.ENCOUNTER_COMPLETE;
         }
         
-        character.health -= _damage;
+        character.DamageCharacter(_damage);
 
         if (character.health <= 0)
         {

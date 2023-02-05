@@ -49,8 +49,12 @@ public static class Adventurers
             characters.Push(c); 
         }
     }
-    
 
-    public static Character GetNextCharacter()      => characters.Pop();
-    public static void ReturnCharacter(Character c) => characters.Push(c);
+    public static Character GetNextCharacter() => characters.Pop();
+    
+    public static void ReturnCharacter(Character c) 
+    {
+        c.ResetCharacter();
+        characters.Push(c);
+    }
 }

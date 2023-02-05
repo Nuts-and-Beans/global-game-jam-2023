@@ -148,6 +148,13 @@ public class Grid : MonoBehaviour
         GridCells[GridStartIndex].fogOfWar.SetActive(false);
         _validCells.Remove(GridStartIndex);
         
+        // NOTE(WSWhitehouse): This is hardcoded to remove the surrounding cells of the starting index
+        // Doesn't check the left side of the index so it assumes the start cell starts on the left side of the grid. 
+        int2 surroundingRightCell = GridStartIndex + new int2(1, 0);
+        _validCells.Remove(surroundingRightCell);
+        _validCells.Remove(surroundingRightCell + new int2(0,  1));
+        _validCells.Remove(surroundingRightCell + new int2(0, -1));
+        
         // Set up boss tile
         int index     = Random.Range(0, _bossTiles.Length);
         GridBossIndex = _bossTiles[index];

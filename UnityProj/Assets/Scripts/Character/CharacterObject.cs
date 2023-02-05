@@ -97,7 +97,12 @@ public class CharacterObject : MonoBehaviour
                     characterObjectManager.ReturnCharacterObjectToPool(this);
                     yield break;
                 }
-                
+
+                if (encounterState == EncounterState.ADVENTURER_RETRY)
+                {
+                    float wait = Random.Range(0.5f, 1.5f);
+                    yield return new WaitForSeconds(wait);
+                }
             }
             while (encounterState == EncounterState.ADVENTURER_RETRY);
             

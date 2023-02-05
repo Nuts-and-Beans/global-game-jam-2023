@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public enum CharacterType 
@@ -31,6 +32,12 @@ public class Character
             health = maxHealth;
         }
         
+        OnCharacterHealthEvent?.Invoke(health);
+    }
+
+    public void DamageCharacter(int amount)
+    {
+        health = math.clamp(health - amount, 0, maxHealth);
         OnCharacterHealthEvent?.Invoke(health);
     }
 

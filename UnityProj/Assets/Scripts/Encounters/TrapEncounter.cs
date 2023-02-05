@@ -48,13 +48,13 @@ public class TrapEncounter : IEncounter
         }
         if (_trap == TrapsTypes.PoisonGas)
         {
-            _damage = 2;
+            _damage = 1;
             _agilityCheck = 3;
         }
         if (_trap == TrapsTypes.PoisonDart)
         {
             _damage = 1;
-            _agilityCheck = 3;
+            _agilityCheck = 2;
         }
         if (_trap == TrapsTypes.FireFloor)
         {
@@ -91,7 +91,7 @@ public class TrapEncounter : IEncounter
 
         if (agility < _agilityCheck)
         {
-            character.health -= _damage;
+            character.DamageCharacter(_damage);
         }
         
 
@@ -101,7 +101,7 @@ public class TrapEncounter : IEncounter
 
             if (percentage > 0.5f)
             {
-                character.health -= _damage;
+                character.DamageCharacter(_damage);
             }
         }
 

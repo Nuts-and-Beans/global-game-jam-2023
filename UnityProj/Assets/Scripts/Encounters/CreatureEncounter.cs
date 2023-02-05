@@ -24,7 +24,6 @@ public class CreatureEncounter : IEncounter
     public CreatureType _creatureType;
     private int _attack;
     private int _health;
-    private int _groupSize;
 
     public void Init(int2 cellIndex)
     {
@@ -37,31 +36,31 @@ public class CreatureEncounter : IEncounter
 
     private void InitValues()
     {
-        _groupSize = Random.Range(1, 4);
+        int groupSize = Random.Range(1, 5);
         
         switch (_creatureType)
         {
             case CreatureType.Goblins:
             {
-                _attack = _groupSize;
-                _health = _groupSize;
+                _attack = 2;
+                _health = 2 * groupSize;
                 break;
             }
             case CreatureType.Skeletons:
             {
-                _attack = _groupSize + 1;
-                _health = _groupSize;
+                _attack = 3;
+                _health = 1 * groupSize;
                 break;
             }
             case CreatureType.Zombie:
             {
-                _attack = _groupSize;
-                _health = _groupSize - 1;
+                _attack = 3;
+                _health = 3 * groupSize;
                 break;
             }
             case CreatureType.Rats:
             {
-                _attack = 3;
+                _attack = 2;
                 _health = 1;
                 break;
             }
@@ -74,7 +73,7 @@ public class CreatureEncounter : IEncounter
             case CreatureType.Knight:
             {
                 _attack = 2;
-                _health = 3;
+                _health = 5;
                 break;
             }
             
@@ -91,7 +90,7 @@ public class CreatureEncounter : IEncounter
         }
         else if (character.attack < _attack)
         {
-            character.health -= _attack;
+            character.DamageCharacter(_attack);
         }
         else if (character.attack == _attack)
         {
@@ -103,7 +102,7 @@ public class CreatureEncounter : IEncounter
             }
             else
             {
-                character.health -= _attack;
+                character.DamageCharacter(_attack);
             }
         }
 
