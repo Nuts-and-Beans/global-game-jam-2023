@@ -31,7 +31,14 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private AudioClip _ratsEncounterSFX;
     [SerializeField] private AudioClip _cubeEncounterSFX;
     [SerializeField] private AudioClip _knightEncounterSFX;
-    
+    [Space]
+    [SerializeField] private AudioClip _goblinDeathSFX;
+    [SerializeField] private AudioClip _skeletonDeathSFX;
+    [SerializeField] private AudioClip _zombieDeathSFX;
+    [SerializeField] private AudioClip _ratsDeathSFX;
+    [SerializeField] private AudioClip _cubeDeathSFX;
+    [SerializeField] private AudioClip _knightDeathSFX;
+     
     [Header("Puzzle Encounter Icons")]
     [SerializeField] private Sprite _steppingStonesSprite;
     [SerializeField] private Sprite _statueSprite;
@@ -350,7 +357,53 @@ public class GridEncounters : MonoBehaviour
         if (!visitedEncounters.Contains(cellIndex)) return;
         if (!_activeIcons.ContainsKey(cellIndex))   return;
         
+        IEncounter encounter = encounters[cellIndex];
+        if (encounter.EncounterType == EncounterType.CREATURE)
+        {
+            OnDeathSFX(encounter as CreatureEncounter);
+        }
+        
         ReturnEncounterIconToPool(cellIndex);
+    }
+
+    private void OnDeathSFX(CreatureEncounter encounter)
+    {
+        switch (encounter._creatureType)
+        {
+            case CreatureEncounter.CreatureType.Goblins:
+            {
+                AudioManager.PlayOneShot(_goblinDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Skeletons:
+            {
+                AudioManager.PlayOneShot(_skeletonDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Zombie:
+            {
+                AudioManager.PlayOneShot(_zombieDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Rats:
+            {
+                AudioManager.PlayOneShot(_ratsDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Cube:
+            {
+                AudioManager.PlayOneShot(_cubeDeathSFX);
+                break;
+            }
+            case CreatureEncounter.CreatureType.Knight:
+            {
+                AudioManager.PlayOneShot(_knightDeathSFX);
+                break;
+            }
+            
+            case CreatureEncounter.CreatureType.COUNT:
+            default: throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void SpawnEncounterIcon()

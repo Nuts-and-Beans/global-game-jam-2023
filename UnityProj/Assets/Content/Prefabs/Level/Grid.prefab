@@ -266,6 +266,12 @@ MonoBehaviour:
   _ratsEncounterSFX: {fileID: 8300000, guid: 71ad7ca1a857d364c824152068b3ba4d, type: 3}
   _cubeEncounterSFX: {fileID: 8300000, guid: 610a4f06c5bb4cd4f87288b82a2b191e, type: 3}
   _knightEncounterSFX: {fileID: 8300000, guid: f01ee0d5bfdeb2a4db15c5f03e58e3ca, type: 3}
+  _goblinDeathSFX: {fileID: 8300000, guid: cd94f0e2e7943564aafa649a21494e86, type: 3}
+  _skeletonDeathSFX: {fileID: 8300000, guid: 190dea7e4b6251f439ea809f6ccc9830, type: 3}
+  _zombieDeathSFX: {fileID: 8300000, guid: 312d18f46dcb63649ab10ea53d5b12c0, type: 3}
+  _ratsDeathSFX: {fileID: 8300000, guid: 8fd08935c29273b4f8d4776fcc173dd6, type: 3}
+  _cubeDeathSFX: {fileID: 8300000, guid: b1af90ed84d0ab6408a1f1abfb889821, type: 3}
+  _knightDeathSFX: {fileID: 8300000, guid: 681ffe166df89734e8eb018aeaeb6ff4, type: 3}
   _steppingStonesSprite: {fileID: 21300000, guid: 8b6795ffb1fb3f6439ac03bc59166ce3,
     type: 3}
   _statueSprite: {fileID: 21300000, guid: eba06e3cc09aeee43a827f273e3d2171, type: 3}
