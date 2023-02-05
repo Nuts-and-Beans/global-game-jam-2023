@@ -35,7 +35,7 @@ public class PuzzleEncounter : IEncounter
     {
         if (_puzzle == PuzzleTypes.SteppingStones)
         {
-            _chance = 5;
+            _chance = 2;
             _damage = 3;
         }
         if (_puzzle == PuzzleTypes.Statues)
@@ -45,7 +45,7 @@ public class PuzzleEncounter : IEncounter
         }
         if (_puzzle == PuzzleTypes.FindKey)
         {
-            _chance = 10;
+            _chance = 6;
             _damage = 0;
         }
         if (_puzzle == PuzzleTypes.Potion)
@@ -56,7 +56,7 @@ public class PuzzleEncounter : IEncounter
         if (_puzzle == PuzzleTypes.SolveRiddle)
         {
             _chance = 5;
-            _damage = 3;
+            _damage = 1;
         }
         if (_puzzle == PuzzleTypes.FreePrisoner)
         {
