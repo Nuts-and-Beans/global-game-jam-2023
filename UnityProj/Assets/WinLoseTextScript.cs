@@ -13,7 +13,7 @@ public class WinLoseTextScript : MonoBehaviour
 
    private void Awake()
    {
-      myText.text = playerWin ? "You Win!" : "You Lose!";
+      myText.text = EndLevelScript.playerWin ? "You Win!" : "You Lose!";
    }
 
    public void ExitGame()

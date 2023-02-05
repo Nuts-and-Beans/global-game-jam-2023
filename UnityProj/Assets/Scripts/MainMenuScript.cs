@@ -25,7 +25,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
-        playerwin = false;
+        EndLevelScript.playerWin = false;
         SceneManager.LoadScene(1);
     }
 
