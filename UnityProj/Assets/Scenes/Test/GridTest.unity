@@ -670,13 +670,13 @@ PrefabInstance:
         type: 3}
       propertyPath: _bootsSprite
       value: 
-      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+      objectReference: {fileID: 21300000, guid: 8f70ff1ace54f8241849b4a7da078257,
         type: 3}
     - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
       propertyPath: _chestSprite
       value: 
-      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+      objectReference: {fileID: 21300000, guid: 0810a2c4a42ff4e46b1292e53eb3462c,
         type: 3}
     - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
@@ -688,7 +688,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _helmetSprite
       value: 
-      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+      objectReference: {fileID: 21300000, guid: 6ece09bf14041df4fa0e5ff254b200e5,
         type: 3}
     - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}

@@ -248,22 +248,22 @@ public class GridEncounters : MonoBehaviour
                     }
                     case EquipmentEncounter.EquipmentTypes.LEGGINGS:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _leggingsSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.CHEST:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _chestSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.GLOVES:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _glovesSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.HELMET:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _helmetSprite;
                         break;
                     }
 
