@@ -5,22 +5,22 @@ using Random = UnityEngine.Random;
 
 public class TrapEncounter : IEncounter
 {
-    public enum TrapsTypes
+    public enum TrapsTypes : int
     {
-        SwingingBlade,
+        SwingingBlade = 0,
         PitFall,
         PoisonGas,
         PoisonDart,
         FireFloor,
         FallingCeiling ,
-        COUNT
+        COUNT 
     }
     
-    public EncounterType EncounterType => EncounterType.PUZZLE;
+    public EncounterType EncounterType => EncounterType.TRAP;
     public int2 CellIndex => _cellIndex;
     private int2 _cellIndex;
     
-    private TrapsTypes _trap;
+    public TrapsTypes _trap;
     private int _damage;
     private int _agilityCheck;
     

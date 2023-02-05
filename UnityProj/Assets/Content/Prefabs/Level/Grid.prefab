@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2356031283592726628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4120982965860250092}
+  m_Layer: 0
+  m_Name: EncounterIcons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4120982965860250092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2356031283592726628}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4753381735683633006}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4753381735517980056
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,6 +100,7 @@ Transform:
   - {fileID: 4753381735517980059}
   - {fileID: 6345893003085772266}
   - {fileID: 1677106496897282223}
+  - {fileID: 4120982965860250092}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -216,6 +248,33 @@ MonoBehaviour:
   _encounterSpawnAmountRange:
     x: 80
     y: 150
+  _grid: {fileID: 4753381735683633007}
+  _initialIconSpawnAmount: 50
+  _iconPoolParent: {fileID: 4120982965860250092}
+  _encounterIconPrefab: {fileID: 5535332712020163035, guid: fa0181f1deea72847b9df132bf07557e,
+    type: 3}
+  _goblinSprite: {fileID: 21300000, guid: e8d2d6f5bfd9c264fb1ca235aff698de, type: 3}
+  _skeletonSprite: {fileID: 21300000, guid: 576ccf647dd8a1246828d0c720f2bd92, type: 3}
+  _zombieSprite: {fileID: 21300000, guid: 7315fa6d69408e944a9409bc6187d078, type: 3}
+  _ratsSprite: {fileID: 21300000, guid: e7865c06c89a3544cbc33ea36e3ccab7, type: 3}
+  _cubeSprite: {fileID: 21300000, guid: d6ecc777549e54e4492804a63b888681, type: 3}
+  _knightSprite: {fileID: 21300000, guid: 0c7bf6a8a20371b4cbcf030767e4b119, type: 3}
+  _steppingStonesSprite: {fileID: 21300000, guid: 8b6795ffb1fb3f6439ac03bc59166ce3,
+    type: 3}
+  _statueSprite: {fileID: 21300000, guid: eba06e3cc09aeee43a827f273e3d2171, type: 3}
+  _findKeySprite: {fileID: 21300000, guid: a45eb8858f1de4e46ba9ece69f88cc04, type: 3}
+  _potionSprite: {fileID: 21300000, guid: d8cc87d2cc497724486c818384858247, type: 3}
+  _solveRiddleSprite: {fileID: 21300000, guid: 732887f3e2b488d4ea77c5aa175416cf, type: 3}
+  _freePrisonerSprite: {fileID: 21300000, guid: 9ddbfa2e843f87745897d90f020c5519,
+    type: 3}
+  _swingingBladeSprite: {fileID: 21300000, guid: c48d6c040bf80114690916c85952305a,
+    type: 3}
+  _pitFallSprite: {fileID: 21300000, guid: 7b9548c0427c45e4d8db3e40a606959f, type: 3}
+  _poisonGasSprite: {fileID: 21300000, guid: 1be62adc0adc5294a85b7059597643e9, type: 3}
+  _poisonDartSprite: {fileID: 21300000, guid: 4d9b219079daa5f4787ae5552731ac55, type: 3}
+  _fireFloorSprite: {fileID: 21300000, guid: 4ad97bea9a137b545b5cd9c9c1ee11af, type: 3}
+  _fallingCeilingSprite: {fileID: 21300000, guid: 2e5d9f60437ed45409e93cf4c6fea919,
+    type: 3}
 --- !u!1 &4753381735837952375
 GameObject:
   m_ObjectHideFlags: 0
