@@ -16,6 +16,7 @@ public class Tabs : MonoBehaviour
     
     [SerializeField] private float _animDuration;
 
+    private Vector3 _startpos;
     private Vector3 _startAnimPos;
     private Vector3 _endAnimPos;
     private List<GameObject> _tabGameObjects = new List<GameObject>();
@@ -23,7 +24,9 @@ public class Tabs : MonoBehaviour
 
     private float _addTabTime;
     private Coroutine _coroutine1;
+    private int index1Corutine;
     private Coroutine _coroutine2;
+    private Boolean tabCoroutineRunning = false;
 
     public delegate void TabTimerDelegate();
 
@@ -46,9 +49,11 @@ public class Tabs : MonoBehaviour
             GameObject tabGameObject = Instantiate(_tab, _firstTabTransform.position - _distanceBetweenTabs,
                 Quaternion.identity);
             tabGameObject.transform.localPosition += new Vector3(-500, 0, 0);
+          
             tabGameObject.transform.SetParent(this.transform);
             tabGameObject.SetActive(false);
             _tabGameObjects.Add(tabGameObject);
+            _startpos = tabGameObject.transform.localPosition;
 
             
         };
@@ -131,6 +136,7 @@ public class Tabs : MonoBehaviour
             if (!_tabGameObjects[i].activeSelf)
             {
                 _tabGameObjects[i].SetActive(true);
+             
                 if (i != 0)
                 {
                     _tabGameObjects[i].transform.localPosition =
@@ -139,13 +145,15 @@ public class Tabs : MonoBehaviour
                     _endAnimPos = new Vector3(_firstTabTransform.localPosition.x,
                         _tabGameObjects[i].transform.localPosition.y,
                         0);
-                 StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
+                    index1Corutine = i;
+                 StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, index1Corutine));
                  
                 }
                 else
                 {
-                    _tabGameObjects[i].transform.localPosition =
-                        _tabGameObjects[_adventurerTabs.GetMaxTabs() - 1].transform.localPosition +
+                  
+                    _tabGameObjects[i].transform.localPosition =_startpos
+                         +
                         _distanceBetweenTabs;
                     _startAnimPos = _tabGameObjects[i].transform.localPosition;
                     _endAnimPos = new Vector3(_firstTabTransform.localPosition.x,
@@ -177,6 +185,7 @@ public class Tabs : MonoBehaviour
     [BurstCompile]
     private IEnumerator TabAnimation(Vector3 startPos, Vector3 endPos, int tabIndex)
     {
+        tabCoroutineRunning = true;
         float animationTimer = float.Epsilon;
        
         while (animationTimer <= _animDuration)
@@ -186,31 +195,50 @@ public class Tabs : MonoBehaviour
             animationTimer += Time.deltaTime;
             yield return null;
         }
-       
+
+        tabCoroutineRunning = false;
             yield break;
     }
+
+    private IEnumerator RemovingTab()
+    {
+        while (tabCoroutineRunning)
+        {
+            yield return null;
+        }
+           GameObject removeCharacter = _tabGameObjects[current_selection];
+                _adventurerTabs.OnNeedNewCharacter(current_selection);
+                _tabGameObjects.RemoveAt(current_selection);
+                _tabGameObjects.Add(removeCharacter);
+                UpdateTabs();
+                
+                float animationTimer = float.Epsilon;
+       
+             for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++) 
+             { 
+                 if (i >= current_selection) 
+                 {
+                            Vector3 s = new Vector3(_tabGameObjects[i].transform.localPosition.x,_tabGameObjects[i].transform.localPosition.y,_tabGameObjects[i].transform.localPosition.z);
+                            while (animationTimer <= _animDuration)
+                            {
+                                _tabGameObjects[i].transform.localPosition = Vector3.Lerp(s, s + new Vector3(0, 250, 0),
+                                    animationTimer / _animDuration);
+                                animationTimer += Time.deltaTime;
+                                yield return null;
+
+                 
+                        }
+                    }         
+                }
+                yield break;
+    }
+
 
     private void TabRemoved()
 
     {
         _tabGameObjects[current_selection].gameObject.SetActive(false);
-        GameObject removeCharacter = _tabGameObjects[current_selection];
-        _adventurerTabs.OnNeedNewCharacter(current_selection);
-        /*
-        for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
-        {
-            if (i>current_selection)
-            {
-
-                StartCoroutine(TabAnimation(_tabGameObjects[i].transform.position,
-                    _tabGameObjects[i - 1].transform.position, i));
-            }
-        }
-        */
-        _tabGameObjects.RemoveAt(current_selection);
-        _tabGameObjects.Add(removeCharacter);
-        UpdateTabs();
-
+        StartCoroutine(RemovingTab());
 
     }
 
