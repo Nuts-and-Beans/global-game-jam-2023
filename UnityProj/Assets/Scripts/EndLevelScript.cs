@@ -6,25 +6,23 @@ using UnityEngine.SceneManagement;
 public class EndLevelScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static Boss.EventDel OnBossDefeatedEvent;
-    public static Timer.TimerDel OnTimerEndEvent;
     public static bool playerWin;
     private void Awake()
     {
-        OnBossDefeatedEvent += PlayerWin;
-        OnTimerEndEvent += PlayerLose;
+        Boss.OnBossDefeatedEvent += PlayerWin;
+        Timer.OnTimerEndEvent += PlayerLose;
         playerWin = false;
 
     }
     void PlayerWin()
     {
         playerWin = true;
-        SceneManager.LoadScene("GameOverWinLose");
+        SceneManager.LoadScene(2);
     }
     void PlayerLose()
     {
         playerWin = false;
-        SceneManager.LoadScene("GameOverWinLose");
+        SceneManager.LoadScene(2);
     }
 
     // Update is called once per frame
