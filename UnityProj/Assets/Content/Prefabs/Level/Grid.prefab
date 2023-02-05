@@ -259,6 +259,13 @@ MonoBehaviour:
   _ratsSprite: {fileID: 21300000, guid: e7865c06c89a3544cbc33ea36e3ccab7, type: 3}
   _cubeSprite: {fileID: 21300000, guid: d6ecc777549e54e4492804a63b888681, type: 3}
   _knightSprite: {fileID: 21300000, guid: 0c7bf6a8a20371b4cbcf030767e4b119, type: 3}
+  _goblinEncounterSFX: {fileID: 8300000, guid: 8e2e0bdcac8ee144b98d746afda4a16d, type: 3}
+  _skeletonEncounterSFX: {fileID: 8300000, guid: 214d1c9e141c19a49b333c466d08951a,
+    type: 3}
+  _zombieEncounterSFX: {fileID: 8300000, guid: 457d10635228fb445a268ac4887ff2e9, type: 3}
+  _ratsEncounterSFX: {fileID: 8300000, guid: 71ad7ca1a857d364c824152068b3ba4d, type: 3}
+  _cubeEncounterSFX: {fileID: 8300000, guid: 610a4f06c5bb4cd4f87288b82a2b191e, type: 3}
+  _knightEncounterSFX: {fileID: 8300000, guid: f01ee0d5bfdeb2a4db15c5f03e58e3ca, type: 3}
   _steppingStonesSprite: {fileID: 21300000, guid: 8b6795ffb1fb3f6439ac03bc59166ce3,
     type: 3}
   _statueSprite: {fileID: 21300000, guid: eba06e3cc09aeee43a827f273e3d2171, type: 3}
@@ -266,6 +273,17 @@ MonoBehaviour:
   _potionSprite: {fileID: 21300000, guid: d8cc87d2cc497724486c818384858247, type: 3}
   _solveRiddleSprite: {fileID: 21300000, guid: 732887f3e2b488d4ea77c5aa175416cf, type: 3}
   _freePrisonerSprite: {fileID: 21300000, guid: 9ddbfa2e843f87745897d90f020c5519,
+    type: 3}
+  _steppingStonesEncounterSFX: {fileID: 8300000, guid: ea7cfb07b969e1f4cb01cf3a3888bdea,
+    type: 3}
+  _statuesEncounterSFX: {fileID: 8300000, guid: 8e242139c5d0f33428579a1972148f38,
+    type: 3}
+  _findKeyEncounterSFX: {fileID: 8300000, guid: 736de637f26839a40b6e9e3cb58e61d0,
+    type: 3}
+  _potionEncounterSFX: {fileID: 8300000, guid: 711f42ac0789f1d40aea21c3c1aa18fd, type: 3}
+  _solveRiddleEncounterSFX: {fileID: 8300000, guid: 7f3831dd2a607ab4e8e0458be9e3cc60,
+    type: 3}
+  _freePrisonerEncounterSFX: {fileID: 8300000, guid: e7c9a4d3cb802cc4686477949939081c,
     type: 3}
   _swingingBladeSprite: {fileID: 21300000, guid: c48d6c040bf80114690916c85952305a,
     type: 3}
@@ -275,6 +293,23 @@ MonoBehaviour:
   _fireFloorSprite: {fileID: 21300000, guid: 4ad97bea9a137b545b5cd9c9c1ee11af, type: 3}
   _fallingCeilingSprite: {fileID: 21300000, guid: 2e5d9f60437ed45409e93cf4c6fea919,
     type: 3}
+  _swingingBladeEncounterSFX: {fileID: 8300000, guid: 23868388cb50bf744bd6ebc5601903eb,
+    type: 3}
+  _pitFallEncounterSFX: {fileID: 8300000, guid: 37ea797689dc30447b14dd87c488ca68,
+    type: 3}
+  _poisonGasEncounterSFX: {fileID: 8300000, guid: 11a8184b689c0a14da4b7d44bc0fe041,
+    type: 3}
+  _poisonDartEncounterSFX: {fileID: 8300000, guid: f8c0d46d5b4effa459a3f2d768ae3b2e,
+    type: 3}
+  _fireFloorEncounterSFX: {fileID: 0}
+  _fallingCeilingEncounterSFX: {fileID: 8300000, guid: 5e07de2b76f90f8468a8d316567fb007,
+    type: 3}
+  _bootsSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _leggingsSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _chestSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _glovesSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _helmetSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _equipmentSFX: {fileID: 8300000, guid: 4120831cf27665e44ad958d6715e49aa, type: 3}
 --- !u!1 &4753381735837952375
 GameObject:
   m_ObjectHideFlags: 0
