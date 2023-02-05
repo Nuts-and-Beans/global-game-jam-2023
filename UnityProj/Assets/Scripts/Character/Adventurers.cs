@@ -22,7 +22,7 @@ public static class Adventurers
             c.name = Names.names[i];
 
             //REVIEW(Sebadam2010): Not sure if this is a safe way to do it? 
-            c.equipment = new Equipment(EquipmentType.NONE);
+           // c.equipment = new Equipment(EquipmentType.NONE);
 
             switch (type) 
             {

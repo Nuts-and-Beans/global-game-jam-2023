@@ -6,6 +6,7 @@ public enum EncounterType
     CREATURE,
     PUZZLE,
     TRAP,
+    EQUIPMENT,
     COUNT
 }
 

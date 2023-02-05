@@ -9,6 +9,7 @@ public class EncounterIcon : MonoBehaviour
     [SerializeField] private ParticleSystem _puzzlePS;
     [SerializeField] private ParticleSystem _trapPS;
     [SerializeField] private ParticleSystem _creaturePS;
+    [SerializeField] private ParticleSystem _equipmentPS;
     
     private ParticleSystem _currentPS = null;
 
@@ -22,6 +23,7 @@ public class EncounterIcon : MonoBehaviour
             EncounterType.CREATURE => _creaturePS,
             EncounterType.PUZZLE   => _puzzlePS,
             EncounterType.TRAP     => _trapPS,
+            EncounterType.EQUIPMENT     => _equipmentPS,
             
             EncounterType.COUNT => throw new ArgumentOutOfRangeException(nameof(type), type, null),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
