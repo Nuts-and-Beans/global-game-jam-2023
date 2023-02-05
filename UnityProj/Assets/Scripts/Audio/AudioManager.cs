@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     [Header("Audio References")]
     [SerializeField] private AudioSource _oneShotAudioSource;
+    [SerializeField] private AudioSource _bossOneShotAudioSource;
     
     private static AudioManager s_instance { get; set; }
 
@@ -32,5 +33,11 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null) return;
         s_instance._oneShotAudioSource.PlayOneShot(clip);
+    }
+
+    public static void PlayBossOneShot(AudioClip clip)
+    {
+        if (clip == null) return;
+        s_instance._bossOneShotAudioSource.PlayOneShot(clip);
     }
 }

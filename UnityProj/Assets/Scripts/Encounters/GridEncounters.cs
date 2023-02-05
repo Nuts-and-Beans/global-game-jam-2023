@@ -111,7 +111,7 @@ public class GridEncounters : MonoBehaviour
                 EncounterType.COUNT => throw new ArgumentOutOfRangeException(),
                 _ => throw new ArgumentOutOfRangeException()
             };
-
+            
             int validCellIndex = Random.Range(0, validCells.Count);
             int2 cellIndex = validCells[validCellIndex];
             validCells.RemoveAt(validCellIndex);
@@ -123,7 +123,7 @@ public class GridEncounters : MonoBehaviour
 
     public void VisitEncounter(int2 cellIndex)
     {
-        if (!encounters.ContainsKey(cellIndex))    return;
+        if (!encounters.ContainsKey(cellIndex)) return;
         
         
         if (visitedEncounters.Contains(cellIndex))

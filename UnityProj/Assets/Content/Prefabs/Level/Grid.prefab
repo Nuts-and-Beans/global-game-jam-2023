@@ -246,8 +246,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _encounterSpawnAmountRange:
-    x: 80
-    y: 150
+    x: 75
+    y: 100
   _grid: {fileID: 4753381735683633007}
   _initialIconSpawnAmount: 50
   _iconPoolParent: {fileID: 4120982965860250092}
@@ -304,11 +304,12 @@ MonoBehaviour:
   _fireFloorEncounterSFX: {fileID: 0}
   _fallingCeilingEncounterSFX: {fileID: 8300000, guid: 5e07de2b76f90f8468a8d316567fb007,
     type: 3}
-  _bootsSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _bootsSprite: {fileID: 21300000, guid: 8f70ff1ace54f8241849b4a7da078257, type: 3}
   _leggingsSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
-  _chestSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _chestSprite: {fileID: 21300000, guid: 0810a2c4a42ff4e46b1292e53eb3462c, type: 3}
   _glovesSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
-  _helmetSprite: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412, type: 3}
+  _helmetSprite: {fileID: 21300000, guid: 6ece09bf14041df4fa0e5ff254b200e5, type: 3}
+  _swordSprite: {fileID: 21300000, guid: 8f6b5fddce131f241953dd3f917ee88f, type: 3}
   _equipmentSFX: {fileID: 8300000, guid: 4120831cf27665e44ad958d6715e49aa, type: 3}
 --- !u!1 &4753381735837952375
 GameObject:

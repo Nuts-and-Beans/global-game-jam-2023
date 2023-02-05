@@ -10,8 +10,15 @@ public class EncounterIcon : MonoBehaviour
     [SerializeField] private ParticleSystem _trapPS;
     [SerializeField] private ParticleSystem _creaturePS;
     [SerializeField] private ParticleSystem _equipmentPS;
+    [SerializeField] private ParticleSystem _bossPS;
     
     private ParticleSystem _currentPS = null;
+
+    public void EnableBossIcon()
+    {
+        gameObject.SetActive(true);
+        _bossPS.Play();
+    }
 
     public void Enable(Sprite sprite, EncounterType type)
     {
@@ -20,10 +27,10 @@ public class EncounterIcon : MonoBehaviour
         
         _currentPS = type switch
         {
-            EncounterType.CREATURE => _creaturePS,
-            EncounterType.PUZZLE   => _puzzlePS,
-            EncounterType.TRAP     => _trapPS,
-            EncounterType.EQUIPMENT     => _equipmentPS,
+            EncounterType.CREATURE  => _creaturePS,
+            EncounterType.PUZZLE    => _puzzlePS,
+            EncounterType.TRAP      => _trapPS,
+            EncounterType.EQUIPMENT => _equipmentPS,
             
             EncounterType.COUNT => throw new ArgumentOutOfRangeException(nameof(type), type, null),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
@@ -34,8 +41,12 @@ public class EncounterIcon : MonoBehaviour
 
     public void Disable()
     {
-        _currentPS.Stop();
-        _currentPS = null;
+        if (_currentPS != null)
+        {
+            _currentPS.Stop();
+            _currentPS = null;
+        }
+        
         gameObject.SetActive(false);
     }
 

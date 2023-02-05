@@ -446,6 +446,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5110982283456397913, guid: 09306afe820a7c64c85805fcc76f6a48,
         type: 3}
+      propertyPath: _boss
+      value: 
+      objectReference: {fileID: 4753381736557992736}
+    - target: {fileID: 5110982283456397913, guid: 09306afe820a7c64c85805fcc76f6a48,
+        type: 3}
       propertyPath: _grid
       value: 
       objectReference: {fileID: 1277097074}
@@ -737,42 +742,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _bootsSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8f70ff1ace54f8241849b4a7da078257,
-        type: 3}
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _chestSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0810a2c4a42ff4e46b1292e53eb3462c,
-        type: 3}
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _swordSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8f6b5fddce131f241953dd3f917ee88f,
-        type: 3}
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _glovesSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
-        type: 3}
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _helmetSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6ece09bf14041df4fa0e5ff254b200e5,
-        type: 3}
-    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
-        type: 3}
-      propertyPath: _leggingsSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
-        type: 3}
     - target: {fileID: 4753381735683633004, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
       propertyPath: m_Name
@@ -858,5 +827,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a1fbc662e1d48a4a80917967493e6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4753381736557992736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1850492617167306279, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 4753381736557992733}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e271b6cda21d4e24a6b54d477d3f96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
