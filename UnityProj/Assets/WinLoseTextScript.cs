@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class WinLoseTextScript : MonoBehaviour
 {
    [SerializeField] public TMP_Text myText;
-   [SerializeField] public bool playerWin;
+   public static bool playerWin;
 
    private void Awake()
    {
