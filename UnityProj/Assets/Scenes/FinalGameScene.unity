@@ -1222,16 +1222,6 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1803988310759965192, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
-        type: 3}
-      propertyPath: startTime
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 1803988310759965197, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1803988310759965198, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1341,16 +1331,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TimerCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1803988312519542872, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -31
-      objectReference: {fileID: 0}
-    - target: {fileID: 1803988312519542872, guid: a22ffaf3e69f2714a8178128fb3fb9bc,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -553
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
