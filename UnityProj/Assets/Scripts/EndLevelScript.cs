@@ -7,6 +7,11 @@ public class EndLevelScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public static bool playerWin;
+
+
+
+
+
     private void Awake()
     {
         Boss.OnBossDefeatedEvent += PlayerWin;

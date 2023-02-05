@@ -38,4 +38,11 @@ public class EncounterIcon : MonoBehaviour
         _currentPS = null;
         gameObject.SetActive(false);
     }
+
+    public void PlayParticleSystem()
+    {
+        if (_currentPS == null) return;
+        
+        _currentPS.Play();
+    }
 }

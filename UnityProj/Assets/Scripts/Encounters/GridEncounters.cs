@@ -100,7 +100,21 @@ public class GridEncounters : MonoBehaviour
     public void VisitEncounter(int2 cellIndex)
     {
         if (!encounters.ContainsKey(cellIndex))    return;
-        if (visitedEncounters.Contains(cellIndex)) return;
+        
+        
+        if (visitedEncounters.Contains(cellIndex))
+        {
+            IEncounter encounter2 = encounters[cellIndex];
+            EncounterIcon icon2 = _activeIcons[cellIndex];
+
+            // play the ps if we are equipment. useless comment i know.
+            if (encounter2.EncounterType == EncounterType.EQUIPMENT)
+            {
+                icon2.PlayParticleSystem();
+            }
+
+            return;
+        }
         
         visitedEncounters.Add(cellIndex);
         IEncounter encounter = encounters[cellIndex];
