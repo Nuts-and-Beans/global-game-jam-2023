@@ -10,6 +10,7 @@ public class CharacterObjectManager : MonoBehaviour
     [SerializeField] private Grid _grid;
     [SerializeField] private GridRouteInput _gridRouteInput;
     [SerializeField] private GridEncounters _gridEncounters;
+    [SerializeField] private Boss _boss;
     
     [Header("Character Movement")]
     [SerializeField] private CharacterObject _characterObjectPrefab;
@@ -84,7 +85,17 @@ public class CharacterObjectManager : MonoBehaviour
 
     public EncounterState CheckForGridCellInteraction(Character character, int2 cellIndex)
     {
+        // Check for boss tile
+        if ((_grid.GridBossIndex == cellIndex).All())
+        {
+            Boss.RemoveHealth();
+            return EncounterState.ADVENTURER_DEAD;
+        }
+        
+        // Check for other grid interactions
         if (!_gridEncounters.encounters.ContainsKey(cellIndex)) return EncounterState.ADVENTURER_PASSED;
+        
+        _gridEncounters.VisitEncounter(cellIndex);
         
         Debug.Log("Doing Encounter Interaction");
         
@@ -94,6 +105,7 @@ public class CharacterObjectManager : MonoBehaviour
         if (state == EncounterState.ENCOUNTER_COMPLETE)
         {
             _gridEncounters.encounters.Remove(cellIndex);
+            _gridEncounters.RemoveEncounter(cellIndex);
         }
         
         return state;

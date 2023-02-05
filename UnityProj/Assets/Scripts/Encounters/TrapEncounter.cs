@@ -5,22 +5,22 @@ using Random = UnityEngine.Random;
 
 public class TrapEncounter : IEncounter
 {
-    public enum TrapsTypes
+    public enum TrapsTypes : int
     {
-        SwingingBlade,
+        SwingingBlade = 0,
         PitFall,
         PoisonGas,
         PoisonDart,
         FireFloor,
         FallingCeiling ,
-        COUNT
+        COUNT 
     }
     
-    public EncounterType EncounterType => EncounterType.PUZZLE;
+    public EncounterType EncounterType => EncounterType.TRAP;
     public int2 CellIndex => _cellIndex;
     private int2 _cellIndex;
     
-    private TrapsTypes _trap;
+    public TrapsTypes _trap;
     private int _damage;
     private int _agilityCheck;
     
@@ -48,13 +48,13 @@ public class TrapEncounter : IEncounter
         }
         if (_trap == TrapsTypes.PoisonGas)
         {
-            _damage = 2;
+            _damage = 1;
             _agilityCheck = 3;
         }
         if (_trap == TrapsTypes.PoisonDart)
         {
             _damage = 1;
-            _agilityCheck = 3;
+            _agilityCheck = 2;
         }
         if (_trap == TrapsTypes.FireFloor)
         {
@@ -91,7 +91,7 @@ public class TrapEncounter : IEncounter
 
         if (agility < _agilityCheck)
         {
-            character.health -= _damage;
+            character.DamageCharacter(_damage);
         }
         
 
@@ -101,7 +101,7 @@ public class TrapEncounter : IEncounter
 
             if (percentage > 0.5f)
             {
-                character.health -= _damage;
+                character.DamageCharacter(_damage);
             }
         }
 
