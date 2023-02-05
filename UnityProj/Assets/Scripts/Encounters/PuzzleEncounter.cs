@@ -3,9 +3,9 @@ using Random = UnityEngine.Random;
 
 public class PuzzleEncounter : IEncounter
 {
-    public enum PuzzleTypes
+    public enum PuzzleTypes : int
     {
-        SteppingStones,
+        SteppingStones = 0,
         Statues,
         FindKey,
         Potion,
@@ -18,7 +18,7 @@ public class PuzzleEncounter : IEncounter
     public int2 CellIndex => _cellIndex;
     private int2 _cellIndex;
     
-    private PuzzleTypes _puzzle;
+    public PuzzleTypes _puzzle;
     private int _chance;
     private int _damage;
     

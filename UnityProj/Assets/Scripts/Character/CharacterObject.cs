@@ -21,6 +21,9 @@ public class CharacterObject : MonoBehaviour
     [NonSerialized] public Grid grid;
     [NonSerialized] public CharacterObjectManager characterObjectManager;
     
+    public Action OnCharacterSet;
+    public Action OnCharacterRemoved;
+    
     private List<MoveDirection> _moveDirections;
     [NonSerialized] public Character _character;
 
@@ -33,6 +36,8 @@ public class CharacterObject : MonoBehaviour
     {
         _character      = character;
         _moveDirections = moveDirections;
+        
+        OnCharacterSet?.Invoke();
         
         if (_character == null) return;
         
@@ -49,6 +54,12 @@ public class CharacterObject : MonoBehaviour
             int spriteIndex = Random.Range(0, sprites.Length);
             _sprite.sprite = sprites[spriteIndex];
         }
+    }
+
+    private void RemoveCharacter()
+    {
+        OnCharacterRemoved?.Invoke();
+        _character = null;
     }
 
     public IEnumerator Move()
@@ -81,6 +92,7 @@ public class CharacterObject : MonoBehaviour
 
                 if (encounterState == EncounterState.ADVENTURER_DEAD)
                 {
+                    RemoveCharacter();
                     gameObject.SetActive(false);
                     characterObjectManager.ReturnCharacterObjectToPool(this);
                     yield break;
@@ -91,6 +103,7 @@ public class CharacterObject : MonoBehaviour
             
         }
         
+        RemoveCharacter();
         gameObject.SetActive(false);
         characterObjectManager.ReturnCharacterObjectToPool(this);
     }

@@ -8,7 +8,7 @@ public class CreatureEncounter : IEncounter
 {
     public enum CreatureType : int
     {
-        Goblins,
+        Goblins = 0,
         Skeletons,
         Zombie,
         Rats,
@@ -21,7 +21,7 @@ public class CreatureEncounter : IEncounter
     public int2 CellIndex => _cellIndex;
     private int2 _cellIndex;
     
-    private CreatureType _creatureType;
+    public CreatureType _creatureType;
     private int _attack;
     private int _health;
     private int _groupSize;
