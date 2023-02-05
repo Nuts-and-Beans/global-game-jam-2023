@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CharacterObjectManager : MonoBehaviour
 {
@@ -10,18 +11,26 @@ public class CharacterObjectManager : MonoBehaviour
     [SerializeField] private Grid _grid;
     [SerializeField] private GridRouteInput _gridRouteInput;
     [SerializeField] private GridEncounters _gridEncounters;
-    [SerializeField] private Boss _boss;
-    
+
     [Header("Character Movement")]
     [SerializeField] private CharacterObject _characterObjectPrefab;
     [SerializeField] private Transform _characterObjectTransform;
     [SerializeField] private int _initialCharObjectSpawnAmount = 25;
     
+    [Header("Boss Settings")]
+    [SerializeField] private Boss _boss;
+    [SerializeField] private EncounterIcon _bossEncounterIcon;
+    [SerializeField] private AudioClip _bossEncounterSFX;
+    
+    private bool _visitedBoss = false;
+
     private List<CharacterObject> _characterObjectPool;
     private List<CharacterObject> _activeCharacterObjects;
 
     private void Awake()
     {
+        _bossEncounterIcon.Disable();
+        
         _characterObjectPool    = new List<CharacterObject>(_initialCharObjectSpawnAmount);
         _activeCharacterObjects = new List<CharacterObject>(_initialCharObjectSpawnAmount);
 
@@ -89,6 +98,15 @@ public class CharacterObjectManager : MonoBehaviour
         if ((_grid.GridBossIndex == cellIndex).All())
         {
             Boss.RemoveHealth();
+
+            if (!_visitedBoss)
+            {
+                _bossEncounterIcon.transform.position = _grid.GetGridPos(cellIndex);
+                _bossEncounterIcon.EnableBossIcon();
+                AudioManager.PlayBossOneShot(_bossEncounterSFX);
+                _visitedBoss = true;
+            }
+            
             return EncounterState.ADVENTURER_DEAD;
         }
         
