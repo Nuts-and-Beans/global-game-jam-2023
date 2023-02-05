@@ -44,7 +44,7 @@ public class CharacterObject : MonoBehaviour
             _ => throw new ArgumentOutOfRangeException()
         };
 
-        if (sprites.Length <= 0)
+        if (sprites.Length > 0)
         {
             int spriteIndex = Random.Range(0, sprites.Length);
             _sprite.sprite = sprites[spriteIndex];
@@ -63,15 +63,32 @@ public class CharacterObject : MonoBehaviour
             float3 EndPos   = grid.GetGridPos(endCellIndex);
             
             yield return Lerp(startPos, EndPos);
-            
+
             currentCellIndex = endCellIndex;
-            
+
             // Remove fog of war
             if (grid.GridCells[currentCellIndex].isFogOfWar)
             {
                 grid.GridCells[currentCellIndex].isFogOfWar = false;
                 grid.GridCells[currentCellIndex].fogOfWar.SetActive(false);
             }
+            
+            EncounterState encounterState;
+            
+            do
+            {
+                encounterState = characterObjectManager.CheckForGridCellInteraction(_character, currentCellIndex);
+
+                if (encounterState == EncounterState.ADVENTURER_DEAD)
+                {
+                    gameObject.SetActive(false);
+                    characterObjectManager.ReturnCharacterObjectToPool(this);
+                    yield break;
+                }
+                
+            }
+            while (encounterState == EncounterState.ADVENTURER_RETRY);
+            
         }
         
         gameObject.SetActive(false);

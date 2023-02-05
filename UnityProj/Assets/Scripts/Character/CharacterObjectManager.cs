@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CharacterObjectManager : MonoBehaviour
@@ -7,6 +9,7 @@ public class CharacterObjectManager : MonoBehaviour
     [Header("Scene References")]
     [SerializeField] private Grid _grid;
     [SerializeField] private GridRouteInput _gridRouteInput;
+    [SerializeField] private GridEncounters _gridEncounters;
     
     [Header("Character Movement")]
     [SerializeField] private CharacterObject _characterObjectPrefab;
@@ -77,5 +80,22 @@ public class CharacterObjectManager : MonoBehaviour
     {
         _activeCharacterObjects.Remove(charObject);
         _characterObjectPool.Add(charObject);
+    }
+
+    public EncounterState CheckForGridCellInteraction(Character character, int2 cellIndex)
+    {
+        if (!_gridEncounters.encounters.ContainsKey(cellIndex)) return EncounterState.ADVENTURER_PASSED;
+        
+        Debug.Log("Doing Encounter Interaction");
+        
+        IEncounter encounter = _gridEncounters.encounters[cellIndex];
+        EncounterState state = encounter.AdventurerInteract(character);
+
+        if (state == EncounterState.ENCOUNTER_COMPLETE)
+        {
+            _gridEncounters.encounters.Remove(cellIndex);
+        }
+        
+        return state;
     }
 }
