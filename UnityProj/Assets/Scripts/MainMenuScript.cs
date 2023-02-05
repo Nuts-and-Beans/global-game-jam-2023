@@ -26,7 +26,7 @@ public class MainMenuScript : MonoBehaviour
     public void PlayGame()
     {
         playerwin = false;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(1);
     }
 
     public void OptionDown(InputAction.CallbackContext callback)

@@ -7,12 +7,12 @@ public class EndLevelScript : MonoBehaviour
 {
     // Start is called before the first frame update
     public static Boss.EventDel OnBossDefeatedEvent;
-    public static Timer.TimerDel OnTimerEndEvent;
+    //public static Timer.TimerDel OnTimerEndEvent;
     public static bool playerWin;
     private void Awake()
     {
         OnBossDefeatedEvent += PlayerWin;
-        OnTimerEndEvent += PlayerLose;
+        Timer.OnTimerEndEvent += PlayerLose;
         playerWin = false;
 
     }
@@ -23,8 +23,9 @@ public class EndLevelScript : MonoBehaviour
     }
     void PlayerLose()
     {
+        Debug.Log("Game over bitch");
         playerWin = false;
-        SceneManager.LoadScene("GameOverWinLose");
+        SceneManager.LoadScene(2);
     }
 
     // Update is called once per frame
