@@ -29,7 +29,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6377899271104226364}
   m_Father: {fileID: 1391894251852093758}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -245,19 +246,19 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5865087131745471568}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.39}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1262490134208219777}
   - {fileID: 5584245068436497679}
   - {fileID: 3998793489344736857}
-  m_Father: {fileID: 6852086668158860635}
+  m_Father: {fileID: 1594293775366529307}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.0107, y: 0.625}
+  m_AnchoredPosition: {x: 0.3857, y: 1}
   m_SizeDelta: {x: 1.25, y: 0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &413454145332915057
@@ -299,11 +300,6 @@ MonoBehaviour:
     type: 3}
   _heartEmptyImage: {fileID: 8257108735442397846, guid: f1be65839bfcd4642b39fb0d61bcc1b1,
     type: 3}
-  _heartWidth: 35
-  _heartHeight: 35
-  _heartParentYOffset: 0.75
-  _heartParentXOffset: 0.3
-  _heartSpaceXOffset: 35
   _hearts:
   - {fileID: 1262490134208219778}
   - {fileID: 5584245068436497676}
@@ -339,7 +335,6 @@ Transform:
   m_Children:
   - {fileID: 4858742749258630209}
   - {fileID: 1391894251852093758}
-  - {fileID: 6377899271104226364}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -361,6 +356,13 @@ MonoBehaviour:
   _barbarianSprites: []
   _archerSprites: []
   _assassinSprites: []
+  _character:
+    type: 0
+    name: 
+    maxHealth: 3
+    health: 0
+    attack: 0
+    agility: 0
 --- !u!1001 &4604963501477449626
 PrefabInstance:
   m_ObjectHideFlags: 0
