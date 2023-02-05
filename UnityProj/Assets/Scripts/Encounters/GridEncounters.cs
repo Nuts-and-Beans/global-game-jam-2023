@@ -233,7 +233,7 @@ public class GridEncounters : MonoBehaviour
         
         EncounterIcon icon = GetEncounterIcon(cellIndex);
         icon.transform.position = _grid.GetGridPos(cellIndex);
-        icon.Enable(iconSprite);
+        icon.Enable(iconSprite, encounter.EncounterType);
     }
 
     public void RemoveEncounter(int2 cellIndex)

@@ -6,13 +6,22 @@ using UnityEngine;
 public class Timer : MonoBehaviour
 {
     [SerializeField] private bool _isTimerRunning = true;
+
+    public float startTime = 180.0f;
     
     //NOTE(Sebadam2010): Starting the timer from 3 minutes.
-    public static float s_currentTime = 180.0f;
+    public static float s_currentTime;
     
     public delegate void TimerDel();
     public static event TimerDel OnTimerEndEvent;
+
     
+    
+    private void Awake()
+    {
+        s_currentTime = startTime;
+    }
+  
     private void Update()
     {
         if (_isTimerRunning)

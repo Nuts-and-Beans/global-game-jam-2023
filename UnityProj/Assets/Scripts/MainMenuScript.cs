@@ -15,6 +15,7 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private Button _exitButton;
     int selected = 0;
     [SerializeField] int num_buttons;
+    public static bool playerwin;
     private void Awake()
     {
         Input.Actions.Selection.Select.performed += SelectOption;
@@ -24,8 +25,8 @@ public class MainMenuScript : MonoBehaviour
 
     public void PlayGame()
     {
-        
-        SceneManager.LoadScene("SampleScene");
+        playerwin = false;
+        SceneManager.LoadScene(1);
     }
 
     public void OptionDown(InputAction.CallbackContext callback)
