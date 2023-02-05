@@ -41,6 +41,14 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _fireFloorSprite;
     [SerializeField] private Sprite _fallingCeilingSprite;
     
+    [Header("Equipment Encounter Icons")]
+    [SerializeField] private Sprite _bootsSprite;
+    [SerializeField] private Sprite _leggingsSprite;
+    [SerializeField] private Sprite _chestSprite;
+    [SerializeField] private Sprite _glovesSprite;
+    [SerializeField] private Sprite _helmetSprite;
+    
+    
     [NonSerialized] public Dictionary<int2, IEncounter> encounters;
     [NonSerialized] public List<int2> visitedEncounters;
     
@@ -75,6 +83,7 @@ public class GridEncounters : MonoBehaviour
                 EncounterType.CREATURE => new CreatureEncounter(),
                 EncounterType.PUZZLE   => new PuzzleEncounter(),
                 EncounterType.TRAP     => new TrapEncounter(),
+                EncounterType.EQUIPMENT => new EquipmentEncounter(),
                 EncounterType.COUNT    =>  throw new ArgumentOutOfRangeException(),
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -221,6 +230,44 @@ public class GridEncounters : MonoBehaviour
                     }
                     
                     case TrapEncounter.TrapsTypes.COUNT:
+                    default: throw new ArgumentOutOfRangeException();
+                }
+                
+                break;
+            }
+            
+            case EncounterType.EQUIPMENT:
+            {
+                EquipmentEncounter equipment = encounter as EquipmentEncounter;
+                switch (equipment._equipment)
+                {
+                    case EquipmentEncounter.EquipmentTypes.BOOTS:
+                    {
+                        iconSprite = _bootsSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.LEGGINGS:
+                    {
+                        iconSprite = _bootsSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.CHEST:
+                    {
+                        iconSprite = _bootsSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.GLOVES:
+                    {
+                        iconSprite = _bootsSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.HELMET:
+                    {
+                        iconSprite = _bootsSprite;
+                        break;
+                    }
+
+                    case EquipmentEncounter.EquipmentTypes.COUNT:
                     default: throw new ArgumentOutOfRangeException();
                 }
                 
