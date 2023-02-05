@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 3435442157547652930}
   - component: {fileID: 3435442157547652929}
   m_Layer: 5
-  m_Name: NoticeBoardCanvas
+  m_Name: ArchivedNoticeBoardCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

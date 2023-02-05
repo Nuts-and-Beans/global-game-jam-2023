@@ -39,15 +39,13 @@ public class TabController : MonoBehaviour
 
     private int current_selection = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _addTabTime = addTabWaitTime;
         for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
         {
 
-            GameObject tabGameObject = Instantiate(_tab, _firstTabTransform.position - _distanceBetweenTabs,
-                Quaternion.identity);
+            GameObject tabGameObject = Instantiate(_tab, _firstTabTransform.position - _distanceBetweenTabs, Quaternion.identity);
             tabGameObject.transform.localPosition += new Vector3(-500, 0, 0);
           
             tabGameObject.transform.SetParent(this.transform);

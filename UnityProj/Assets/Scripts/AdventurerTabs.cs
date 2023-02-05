@@ -15,7 +15,7 @@ public class AdventurerTabs : MonoBehaviour
         {
             Character c = Adventurers.GetNextCharacter();
             _tabs.Add(c);
-            Debug.Log(_tabs[i].name);
+            // Debug.Log(_tabs[i].name);
         }
         
     }
