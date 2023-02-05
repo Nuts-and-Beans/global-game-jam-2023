@@ -40,7 +40,7 @@ public class PuzzleEncounter : IEncounter
         }
         if (_puzzle == PuzzleTypes.Statues)
         {
-            _chance = 5;
+            _chance = 3;
             _damage = 1;
         }
         if (_puzzle == PuzzleTypes.FindKey)
@@ -55,7 +55,7 @@ public class PuzzleEncounter : IEncounter
         }
         if (_puzzle == PuzzleTypes.SolveRiddle)
         {
-            _chance = 5;
+            _chance = 4;
             _damage = 1;
         }
         if (_puzzle == PuzzleTypes.FreePrisoner)
