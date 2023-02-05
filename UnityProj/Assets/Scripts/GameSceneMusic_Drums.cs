@@ -14,13 +14,18 @@ public class GameSceneMusic_Drums : MonoBehaviour
             if (Timer.s_currentTime <= 30)
             {
                 Debug.Log("Playing drums loop");
-                AudioSource.PlayClipAtPoint(drums.clip, transform.position);
+                drums.loop = true;
+                drums.Play();
+                //AudioSource.PlayClipAtPoint(drums.clip, transform.position);
                 isPlaying = true;
             }
             else if (Boss.s_currentHealth < 3)
             {
+                
                 Debug.Log("Playing drums loop");
-                AudioSource.PlayClipAtPoint(drums.clip, transform.position);
+                drums.loop = true;
+                drums.Play();
+               // AudioSource.PlayClipAtPoint(drums.clip, transform.position);
                 isPlaying = true;
             }
         }

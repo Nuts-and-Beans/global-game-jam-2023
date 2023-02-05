@@ -16,6 +16,11 @@ public class WinLoseTextScript : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text _playText;
     [SerializeField] private TMPro.TMP_Text _exitText;
 
+    [SerializeField] private AudioSource _winAudio;
+    [SerializeField] private AudioSource _loseAudio;
+    [SerializeField] private AudioSource _confirmAudio;
+    [SerializeField] private AudioSource _cancelAudio;
+
     [SerializeField] private Button _exitButton;
     int selected = 0;
     [SerializeField] int num_buttons;
@@ -26,6 +31,19 @@ public class WinLoseTextScript : MonoBehaviour
         Input.Actions.Selection.Up.performed += OptionUp;
         Input.Actions.Selection.Down.performed += OptionDown;
         myText.text = EndLevelScript.playerWin ? "You Win!" : "You Lose!";
+    }
+    private void Start()
+    {
+        
+        if (EndLevelScript.playerWin)
+        {
+            _winAudio.Play();
+
+        }
+        else
+        {
+            _loseAudio.Play();
+        }
     }
 
     public void PlayGame()
@@ -66,6 +84,7 @@ public class WinLoseTextScript : MonoBehaviour
         {
             case 0:
                 {
+                    _confirmAudio.Play();
                     PlayGame();
                     break;
                 }
