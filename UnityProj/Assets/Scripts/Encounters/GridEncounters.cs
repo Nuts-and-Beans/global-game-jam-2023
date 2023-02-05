@@ -68,10 +68,10 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _chestSprite;
     [SerializeField] private Sprite _glovesSprite;
     [SerializeField] private Sprite _helmetSprite;
+    [SerializeField] private Sprite _swordSprite;
     [Space]
     [SerializeField] private AudioClip _equipmentSFX;
-    
-    
+
     [NonSerialized] public Dictionary<int2, IEncounter> encounters;
     [NonSerialized] public List<int2> visitedEncounters;
     
@@ -305,22 +305,27 @@ public class GridEncounters : MonoBehaviour
                     }
                     case EquipmentEncounter.EquipmentTypes.LEGGINGS:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _leggingsSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.CHEST:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _chestSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.GLOVES:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _glovesSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.HELMET:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _helmetSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.SWORD:
+                    {
+                        iconSprite = _swordSprite;
                         break;
                     }
 
