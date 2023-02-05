@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class Tab : MonoBehaviour
 {
-    [SerializeField] private RawImage _adventurerRImage;
-    [SerializeField] private TextMeshProUGUI _adventurerNameText;
-    [SerializeField] private TextMeshProUGUI _adventurerHealthText;
-    [SerializeField] private TextMeshProUGUI _adventurerAttackText;
-    [SerializeField] private TextMeshProUGUI _adventurerAgilityText;
+    [SerializeField] public RawImage _adventurerRImage;
+    [SerializeField] public TextMeshProUGUI _adventurerNameText;
+    [SerializeField] public TextMeshProUGUI _adventurerHealthText;
+    [SerializeField] public TextMeshProUGUI _adventurerAttackText;
+    [SerializeField] public TextMeshProUGUI _adventurerAgilityText;
    
 
     public TextMeshProUGUI NameTextMeshProUGUI

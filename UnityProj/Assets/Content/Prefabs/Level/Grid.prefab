@@ -68,7 +68,7 @@ Transform:
   - {fileID: 6345893003085772266}
   - {fileID: 1677106496897282223}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4753381735683633007
 MonoBehaviour:
@@ -93,7 +93,7 @@ MonoBehaviour:
     y: 11
   _gridFloor: {fileID: 4753381735837952375}
   _wallParent: {fileID: 4753381735517980059}
-  _wallPrefab: {fileID: 2839167599046237412, guid: 82053643d3fec404f8776701aabe7f43,
+  _wallPrefab: {fileID: 6166139979120437196, guid: 75dd81731f4204bc082be670389d90a7,
     type: 3}
   _fogOfWarParent: {fileID: 1677106496897282223}
   _fogOfWarPrefab: {fileID: 893193912728391154, guid: 6efd6c518b2777842827ae8d7bb7ca1a,

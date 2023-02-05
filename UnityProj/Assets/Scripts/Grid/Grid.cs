@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
@@ -225,3 +225,4 @@ public class GridEditor : Editor
 }
 
 #endif // UNITY_EDITOR
+

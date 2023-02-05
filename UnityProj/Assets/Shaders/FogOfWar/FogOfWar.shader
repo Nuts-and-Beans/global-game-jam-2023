@@ -3,9 +3,9 @@ Shader "Unlit/FogOfWar"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _NoiseTex ("Texture", 2D) = "white" {}
         _BaseColour ("Colour", Color) = (1.0, 1.0, 1.0, 1.0)
         _TimeMultiplier ("TimeMultiplier", Float) = 1.0
+        _LoopIterations ("Loop Iterations", Int) = 1 // NOTE(Zack): we clamp this value to 20 to ensure we don't get awful performance
     }
     SubShader
     {
@@ -17,12 +17,8 @@ Shader "Unlit/FogOfWar"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-            /* #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl" */
-
 
             struct appdata
             {
@@ -38,13 +34,10 @@ Shader "Unlit/FogOfWar"
             };
 
             sampler2D _MainTex;
-            sampler2D _NoiseTex;
             float4 _MainTex_ST;
-            float4 _NoiseTex_ST;
             float4 _BaseColour;
             float _TimeMultiplier;
-
-            
+            int _LoopIterations;
             #define Time (_Time.y * _TimeMultiplier)
 
             v2f vert(appdata i) 
@@ -56,28 +49,43 @@ Shader "Unlit/FogOfWar"
                 return o;
             }
 
+            // effect modified from: https://www.shadertoy.com/view/Mtd3W7
             float rand(float2 n)
             {
-                float value = frac(sin(cos(dot(n, float2(12.9898f, 8.1414f)))) * 42758.5453f);
-                return sqrt(value) / 1.25f;
+                float d = dot(n, float2(12.9898f, 8.1414f));
+                float c = cos(d);
+                float s = sin(c);
+                float value = frac(s * 42758.5453f);
+                return value;
             }
 
             float noise(float2 n)
             {
-                /* return tex2D(_NoiseTex, n); */
                 const float2 d = float2(0.f, 1.f);
-                float2 b = floor(n), f = smoothstep(float2(0.f, 0.f), float2(1.f, 1.f), frac(n));
-                return lerp(lerp(rand(b), rand(b + d.yx), f.x), lerp(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+                const float2 start = float2(0.f, 0.f);
+                const float2 end = float2(1.f, 1.f);
+                float2 b = floor(n);
+                float2 f = lerp(start, end, frac(n));
+
+                float r1 = rand(b);
+                float r2 = rand(b + d.yx);
+                float r3 = rand(b + d.xy);
+                float r4 = rand(b + d.yy);
+
+                return lerp(lerp(r1, r2, f.x), lerp(r3, r4, f.x), f.y);
             }
 
             float fbm(float2 n)
             {
                 float total = 0.f;
                 float amplitude = 1.f;
-                for (int i = 0; i < 4; i++) {
+               
+                // REVIEW(Zack): this may be worse for performance as we're no longer using a constant value
+                int loop_count = clamp(_LoopIterations, 1, 15);
+                for (int i = 0; i < loop_count; ++i) {
                     total += noise(n) * amplitude;
-                    n     += n * 2.1f;
                     amplitude *= 0.377f + sin(Time) / 500.f;
+                    n += n;
                 }
                 return total;
             }
@@ -88,15 +96,15 @@ Shader "Unlit/FogOfWar"
                 uv.x = uv.x * 1.5f; 
                 uv.y += 0.5f;
 
-                float i2 = fbm(uv);
+                float i2 = 0.6f; 
                 uv.y = uv.y * 2.0f;
                 uv.x -= 0.3f;
 
-                float i3 = fbm(uv);
+                float i3 = 1.5f;
                 uv.x = uv.x * 2.0f;
                 uv.y += 0.7f;
 
-                float i4 = fbm(uv);
+                float i4 = 1.f; 
                 uv.y = uv.y * 1.5f;
                 uv.x += 0.4f;
 
@@ -122,24 +130,34 @@ Shader "Unlit/FogOfWar"
                 float intensity = max(main_cloudiness, 1.3f * fbm_readded(uv2)) + 0.9f * main_cloudiness * fbm(uv2) * fbm(uv3);
                 intensity *= 0.64f;
                 intensity += cos(sin(Time / 10.f)) / 7.f - 0.3f;
-                /* return float4(intensity, intensity, intensity, 1.f); */
                 
-                float3 color = float3(1.f, 1.f, 1.f);
-                color *= intensity; 
-                color.z *= color.z;
-                /* return float4(color, 1.f); */
+                float3 colour = float3(1.f, 1.f, 1.f);
+                colour *= intensity; 
+                colour.z *= colour.z;
 
                 float overflow = 0.f;
-                color.z -= 0.02f;
-                color.y -= 0.02f;
-                /* return float4(color, 1.f); */
+                if (colour.z > 0.6f)
+                {
+                    colour.y -= 0.05f;
+                    colour.z -= 0.096f;
+                    colour.z *= 0.93f;
+                    colour.z *= sqrt(colour.z) * 1.29f;        
+                }
+                else
+                {
+                    colour.z -= 0.1f;
+                    colour.z *= 0.9f;
+                }
 
-                color = color * sqrt(color);
-                color.r -= 2.f * overflow; 
-                color.g -= 2.f * overflow;
+                colour.z -= 0.02f;
+                colour.y -= 0.02f;
 
-                color *= _BaseColour;
-                return float4(color, 1.f);
+                colour = colour * sqrt(colour);
+                colour.r -= 2.f * overflow; 
+                colour.g -= 2.f * overflow;
+
+                colour *= _BaseColour;
+                return float4(colour, 1.f);
             }
             
             ENDCG

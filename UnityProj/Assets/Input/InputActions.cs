@@ -116,6 +116,74 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Selection"",
+            ""id"": ""1b0d2718-7f30-4381-a0b7-4c4b43975008"",
+            ""actions"": [
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""1bdc2e49-6715-41f6-a5e6-73137aa4ec2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""3bfccf79-93b1-4620-85ec-1b9349c231f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""5810a9c4-efec-4cd1-b10f-0b8549f58319"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4ccd92e7-66df-4ff0-955f-4a62007a4750"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fcd5d5b-252a-41fa-a935-0d9050231a19"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fb4c55f-fd25-4ce7-b5d5-0a932df1f054"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -123,6 +191,11 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         // Grid
         m_Grid = asset.FindActionMap("Grid", throwIfNotFound: true);
         m_Grid_Route = m_Grid.FindAction("Route", throwIfNotFound: true);
+        // Selection
+        m_Selection = asset.FindActionMap("Selection", throwIfNotFound: true);
+        m_Selection_Up = m_Selection.FindAction("Up", throwIfNotFound: true);
+        m_Selection_Down = m_Selection.FindAction("Down", throwIfNotFound: true);
+        m_Selection_Select = m_Selection.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -211,8 +284,63 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         }
     }
     public GridActions @Grid => new GridActions(this);
+
+    // Selection
+    private readonly InputActionMap m_Selection;
+    private ISelectionActions m_SelectionActionsCallbackInterface;
+    private readonly InputAction m_Selection_Up;
+    private readonly InputAction m_Selection_Down;
+    private readonly InputAction m_Selection_Select;
+    public struct SelectionActions
+    {
+        private @InputActions m_Wrapper;
+        public SelectionActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Up => m_Wrapper.m_Selection_Up;
+        public InputAction @Down => m_Wrapper.m_Selection_Down;
+        public InputAction @Select => m_Wrapper.m_Selection_Select;
+        public InputActionMap Get() { return m_Wrapper.m_Selection; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SelectionActions set) { return set.Get(); }
+        public void SetCallbacks(ISelectionActions instance)
+        {
+            if (m_Wrapper.m_SelectionActionsCallbackInterface != null)
+            {
+                @Up.started -= m_Wrapper.m_SelectionActionsCallbackInterface.OnUp;
+                @Up.performed -= m_Wrapper.m_SelectionActionsCallbackInterface.OnUp;
+                @Up.canceled -= m_Wrapper.m_SelectionActionsCallbackInterface.OnUp;
+                @Down.started -= m_Wrapper.m_SelectionActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_SelectionActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_SelectionActionsCallbackInterface.OnDown;
+                @Select.started -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_SelectionActionsCallbackInterface.OnSelect;
+            }
+            m_Wrapper.m_SelectionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Up.started += instance.OnUp;
+                @Up.performed += instance.OnUp;
+                @Up.canceled += instance.OnUp;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
+            }
+        }
+    }
+    public SelectionActions @Selection => new SelectionActions(this);
     public interface IGridActions
     {
         void OnRoute(InputAction.CallbackContext context);
+    }
+    public interface ISelectionActions
+    {
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
 }
