@@ -47,6 +47,8 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _chestSprite;
     [SerializeField] private Sprite _glovesSprite;
     [SerializeField] private Sprite _helmetSprite;
+    [SerializeField] private Sprite _swordSprite;
+    
     
     
     [NonSerialized] public Dictionary<int2, IEncounter> encounters;
@@ -100,7 +102,21 @@ public class GridEncounters : MonoBehaviour
     public void VisitEncounter(int2 cellIndex)
     {
         if (!encounters.ContainsKey(cellIndex))    return;
-        if (visitedEncounters.Contains(cellIndex)) return;
+        
+        
+        if (visitedEncounters.Contains(cellIndex))
+        {
+            IEncounter encounter2 = encounters[cellIndex];
+            EncounterIcon icon2 = _activeIcons[cellIndex];
+
+            // play the ps if we are equipment. useless comment i know.
+            if (encounter2.EncounterType == EncounterType.EQUIPMENT)
+            {
+                icon2.PlayParticleSystem();
+            }
+
+            return;
+        }
         
         visitedEncounters.Add(cellIndex);
         IEncounter encounter = encounters[cellIndex];
@@ -248,22 +264,27 @@ public class GridEncounters : MonoBehaviour
                     }
                     case EquipmentEncounter.EquipmentTypes.LEGGINGS:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _leggingsSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.CHEST:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _chestSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.GLOVES:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _glovesSprite;
                         break;
                     }
                     case EquipmentEncounter.EquipmentTypes.HELMET:
                     {
-                        iconSprite = _bootsSprite;
+                        iconSprite = _helmetSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.SWORD:
+                    {
+                        iconSprite = _swordSprite;
                         break;
                     }
 

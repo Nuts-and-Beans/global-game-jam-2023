@@ -15,6 +15,7 @@ public class EquipmentEncounter : IEncounter
         CHEST,
         GLOVES,
         HELMET,
+        SWORD,
         COUNT,
     }
    
@@ -56,7 +57,11 @@ public class EquipmentEncounter : IEncounter
         }
         if (_equipment == EquipmentTypes.HELMET)
         {
-            _attackBonusAmount = 1;
+            _agilityBonusAmount = 1;
+        }
+        if (_equipment == EquipmentTypes.SWORD)
+        {
+            _attackBonusAmount = 2;
         }
     }
     

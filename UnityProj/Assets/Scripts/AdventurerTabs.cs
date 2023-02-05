@@ -21,7 +21,6 @@ public class AdventurerTabs : MonoBehaviour
     }
 
     public void OnNeedNewCharacter(int index)
-
     {
         Adventurers.ReturnCharacter(_tabs[index]);
         _tabs[index] = Adventurers.GetNextCharacter();
