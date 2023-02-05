@@ -83,7 +83,8 @@ public class Tabs : MonoBehaviour
         if (readingInput)
         { 
             readingInput = false;
-           _tabGameObjects[current_selection].gameObject.SetActive(false);
+           //_tabGameObjects[current_selection].gameObject.SetActive(false);
+           TabRemoved();
             _gridRouteInput.StartRoute(_adventurerTabs.GetTabInfo(current_selection));
             _gridRouteInput._readingInput = true;
         }
@@ -139,9 +140,7 @@ public class Tabs : MonoBehaviour
                         _tabGameObjects[i].transform.localPosition.y,
                         0);
                  StartCoroutine(TabAnimation(_startAnimPos, _endAnimPos, i));
-                    
                  
-
                 }
                 else
                 {
@@ -187,9 +186,32 @@ public class Tabs : MonoBehaviour
             animationTimer += Time.deltaTime;
             yield return null;
         }
-
        
             yield break;
+    }
+
+    private void TabRemoved()
+
+    {
+        _tabGameObjects[current_selection].gameObject.SetActive(false);
+        GameObject removeCharacter = _tabGameObjects[current_selection];
+        _adventurerTabs.OnNeedNewCharacter(current_selection);
+        /*
+        for (int i = 0; i < _adventurerTabs.GetMaxTabs(); i++)
+        {
+            if (i>current_selection)
+            {
+
+                StartCoroutine(TabAnimation(_tabGameObjects[i].transform.position,
+                    _tabGameObjects[i - 1].transform.position, i));
+            }
+        }
+        */
+        _tabGameObjects.RemoveAt(current_selection);
+        _tabGameObjects.Add(removeCharacter);
+        UpdateTabs();
+
+
     }
 
 }
