@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Tabs : MonoBehaviour
+public class TabController : MonoBehaviour
 {
     [SerializeField] private GameObject _tab;
     [SerializeField] private Transform _firstTabTransform;
@@ -57,6 +57,7 @@ public class Tabs : MonoBehaviour
 
             
         };
+
         UpdateTabs();
         AddTabEvent += AddTab;
         Input.Actions.Selection.Select.performed += SelectCharacter;
