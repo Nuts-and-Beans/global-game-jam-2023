@@ -47,6 +47,8 @@ public class GridEncounters : MonoBehaviour
     [SerializeField] private Sprite _chestSprite;
     [SerializeField] private Sprite _glovesSprite;
     [SerializeField] private Sprite _helmetSprite;
+    [SerializeField] private Sprite _swordSprite;
+    
     
     
     [NonSerialized] public Dictionary<int2, IEncounter> encounters;
@@ -278,6 +280,11 @@ public class GridEncounters : MonoBehaviour
                     case EquipmentEncounter.EquipmentTypes.HELMET:
                     {
                         iconSprite = _helmetSprite;
+                        break;
+                    }
+                    case EquipmentEncounter.EquipmentTypes.SWORD:
+                    {
+                        iconSprite = _swordSprite;
                         break;
                     }
 

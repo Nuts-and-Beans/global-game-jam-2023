@@ -680,6 +680,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
+      propertyPath: _swordSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8f6b5fddce131f241953dd3f917ee88f,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
       propertyPath: _glovesSprite
       value: 
       objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,

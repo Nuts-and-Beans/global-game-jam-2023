@@ -44,7 +44,7 @@ public class TrapEncounter : IEncounter
         if (_trap == TrapsTypes.PitFall)
         {
             _damage = 2;
-            _agilityCheck = 3;
+            _agilityCheck = 2;
         }
         if (_trap == TrapsTypes.PoisonGas)
         {
