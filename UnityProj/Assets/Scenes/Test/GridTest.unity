@@ -666,6 +666,36 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _bootsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _chestSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _glovesSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _helmetSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
+    - target: {fileID: 1984852092159872241, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
+        type: 3}
+      propertyPath: _leggingsSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b307b3d98ee40bc458e8fc2aaed77412,
+        type: 3}
     - target: {fileID: 4753381735683633004, guid: cf620eb5aeb4c6a4693b412bf34ed4f0,
         type: 3}
       propertyPath: m_Name
