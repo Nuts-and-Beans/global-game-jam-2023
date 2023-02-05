@@ -6,12 +6,10 @@ using UnityEngine.SceneManagement;
 public class EndLevelScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static Boss.EventDel OnBossDefeatedEvent;
-    //public static Timer.TimerDel OnTimerEndEvent;
     public static bool playerWin;
     private void Awake()
     {
-        OnBossDefeatedEvent += PlayerWin;
+        Boss.OnBossDefeatedEvent += PlayerWin;
         Timer.OnTimerEndEvent += PlayerLose;
         playerWin = false;
 
@@ -19,11 +17,10 @@ public class EndLevelScript : MonoBehaviour
     void PlayerWin()
     {
         playerWin = true;
-        SceneManager.LoadScene("GameOverWinLose");
+        SceneManager.LoadScene(2);
     }
     void PlayerLose()
     {
-        Debug.Log("Game over bitch");
         playerWin = false;
         SceneManager.LoadScene(2);
     }
