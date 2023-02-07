@@ -21,6 +21,10 @@ public class NoticeBoard : MonoBehaviour
     [SerializeField] private RectTransform[] _onScreenSpawnPositions;
     [SerializeField] private RectTransform[] _offScreenSpawnPositions;
 
+    [Header("SFX References")]
+    [SerializeField] private AudioClip _requestAdventurer;
+    [SerializeField] private AudioClip _removeAdventurer;
+
     [Header("Animation Settings")]
     [SerializeField] private float _lerpOnScreenDuration = 1f;
     [SerializeField] private float _lerpFinishedDuration = 0.5f;
@@ -71,6 +75,9 @@ public class NoticeBoard : MonoBehaviour
         }
 
 
+        // we start the first tab flashing for the selection
+        _tabs[_currentTabIndexToUseForSelection].StartFlashing();
+
         // NOTE(Zack): we begin the infinite Coroutine to check if we're able to send a new tab onto the screen, at set intervals
         // This could easily be done in the [Update()] loop, but to simplify some of the code, this method has been chosen instead
         StartCoroutine(WaitAndTrySendNewTabFunc(_initialWaitTime)); 
@@ -117,6 +124,8 @@ public class NoticeBoard : MonoBehaviour
     [BurstCompile]
     private IEnumerator MoveTabOnScreen(Tab tab, float3 startPos, float3 endPos, float duration)
     {
+        AudioManager.PlayOneShot(_requestAdventurer);
+
         float timer = 0f;
         tab.transform.position = startPos;
         while (timer < duration)
@@ -139,6 +148,8 @@ public class NoticeBoard : MonoBehaviour
     [BurstCompile]
     private IEnumerator RemoveTabOffScreen(Tab tab, float3 startPos, float3 endPos, float duration)
     {
+        AudioManager.PlayOneShot(_removeAdventurer);
+
         // NOTE(Zack): this is set so that when an input is pressed we don't accidentally choose this tab
         // whilst it is animating off of the screen
         tab.onScreen = false;
@@ -164,6 +175,8 @@ public class NoticeBoard : MonoBehaviour
 
         // we use the current character tab info for the grid input set
         Tab tab = _tabs[_currentTabIndexToUseForSelection];
+        tab.StopFlashing();
+
         _gridRoute.StartRoute(tab.info);
         _gridRoute._readingInput = true;
 
@@ -176,6 +189,9 @@ public class NoticeBoard : MonoBehaviour
 
         _currentTabIndexToUseForSelection += 1;
         _currentTabIndexToUseForSelection  = WrapIndex(_currentTabIndexToUseForSelection, _tabs.Length);
+
+        // set the next tab for selection flashing
+        _tabs[_currentTabIndexToUseForSelection].StartFlashing();
         
         _currentTabCountInBoard -= 1;
         _currentTabCountInBoard  = math.max(_currentTabCountInBoard, 0); // REVIEW(Zack): this is probably unnecessary, but just to be safe
