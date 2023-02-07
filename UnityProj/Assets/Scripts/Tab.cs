@@ -59,7 +59,7 @@ public class Tab : MonoBehaviour
     { 
         _adventurerImage.sprite = sprite;
         _adventurerNameText.text = info.name;
-            
+
         // setup the sprites for the notice board
         for (int i = 0; i < 3; ++i) {
             int num = i + 1;

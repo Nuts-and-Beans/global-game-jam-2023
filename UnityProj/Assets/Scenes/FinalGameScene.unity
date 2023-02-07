@@ -3811,6 +3811,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7176826051014736291, guid: 0cbf2dea2505342b59242a2bf9cad4fc,
+        type: 3}
+      propertyPath: m_Name
+      value: Tabs
+      objectReference: {fileID: 0}
     - target: {fileID: 7176826051014736293, guid: 0cbf2dea2505342b59242a2bf9cad4fc,
         type: 3}
       propertyPath: m_Enabled
