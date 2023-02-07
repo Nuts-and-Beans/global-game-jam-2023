@@ -114,13 +114,13 @@ public class WinLoseTextScript : MonoBehaviour
     {
         if (selected == 0)
         {
-            _playText.text = ">Play Again<";
+            _playText.text = "*Play Again*";
             _playText.fontStyle = TMPro.FontStyles.Underline
                 ;
         }
         else if (selected == 1)
         {
-            _exitText.text = ">Exit Game<";
+            _exitText.text = "*Exit Game*";
             _exitText.fontStyle = TMPro.FontStyles.Underline;
         }
     }

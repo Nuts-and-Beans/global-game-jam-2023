@@ -127,7 +127,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""id"": ""1bdc2e49-6715-41f6-a5e6-73137aa4ec2c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -136,7 +136,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""id"": ""3bfccf79-93b1-4620-85ec-1b9349c231f2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
@@ -145,7 +145,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""id"": ""5810a9c4-efec-4cd1-b10f-0b8549f58319"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 }
             ],

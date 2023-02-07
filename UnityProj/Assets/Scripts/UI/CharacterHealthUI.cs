@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterHealthUI : MonoBehaviour
@@ -44,6 +40,7 @@ public class CharacterHealthUI : MonoBehaviour
         }
         
         _characterObject._character.OnCharacterHealthEvent += UpdateHeartAmount;
+        UpdateHeartAmount(_characterObject._character.health);
     }
 
     private void UnsubscribeToEvent()
