@@ -13,7 +13,12 @@ public class Tab : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _adventurerHealthText;
     [SerializeField] private TextMeshProUGUI _adventurerAttackText;
     [SerializeField] private TextMeshProUGUI _adventurerAgilityText;
-    
+   
+    [Header("Stat Image References")]
+    [SerializeField] private Image[] _health;
+    [SerializeField] private Image[] _attack;
+    [SerializeField] private Image[] _agility;
+
     public RawImage _adventurerRImage;
 
     [HideInInspector] public Character info;
@@ -30,9 +35,24 @@ public class Tab : MonoBehaviour
     { 
         _adventurerImage.sprite = sprite;
         _adventurerNameText.text = info.name;
-        _adventurerHealthText.text = info.health.ToString();
-        _adventurerAttackText.text = info.attack.ToString();
-        _adventurerAgilityText.text = info.agility.ToString();
+            
+        // setup the sprites for the notice board
+        for (int i = 0; i < 3; ++i) {
+            int num = i + 1;
+            
+            bool healthEnabled  = false;
+            bool attackEnabled  = false;
+            bool agilityEnabled = false;
+
+            if (info.health  >= num) healthEnabled  = true;
+            if (info.attack  >= num) attackEnabled  = true;
+            if (info.agility >= num) agilityEnabled = true;
+
+            _health[i].enabled  = healthEnabled;
+            _attack[i].enabled  = attackEnabled;
+            _agility[i].enabled = agilityEnabled;
+        }
+
         this.info = info;
     }
 

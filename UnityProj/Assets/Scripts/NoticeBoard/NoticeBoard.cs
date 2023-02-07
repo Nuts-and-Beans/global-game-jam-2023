@@ -28,11 +28,6 @@ public class NoticeBoard : MonoBehaviour
     [SerializeField] private float _initialWaitTime = 0.5f;
     [SerializeField] private float _waitBetweenNextTab = 1f;
 
-    [Header("Sprites")] // TODO(Zack): remove the use of these arrays from here, and make a global one, so that we are able to actually have the same sprites in the [Grid]
-    [SerializeField] private Sprite[] _barbarianSprites;
-    [SerializeField] private Sprite[] _archerSprites;
-    [SerializeField] private Sprite[] _assassinSprites; 
-
 
     private int _currentTabIndexToUseForSelection = 0;
     private int _currentTabIndexToMove = 0;
