@@ -4783,7 +4783,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4824,6 +4824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4767806699455388001}
   - component: {fileID: 4767806699455388006}
+  - component: {fileID: 1193404960730619979}
   m_Layer: 0
   m_Name: PPVolume
   m_TagString: Untagged
@@ -4863,6 +4864,23 @@ MonoBehaviour:
   blendDistance: 1
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 2a486be89df03114a85e0de1f847805e, type: 2}
+--- !u!114 &1193404960730619979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4767806699455388000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaae9c80e9d44b5c8546230d366280fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _volumeProfile: {fileID: 11400000, guid: 2a486be89df03114a85e0de1f847805e, type: 2}
+  _chromaticAberrationIndex: 1
+  _startIntensity: 0.35
+  _endIntensity: 0.15
+  _duration: 3.5
 --- !u!1 &4767806700887081473
 GameObject:
   m_ObjectHideFlags: 0
@@ -4897,7 +4915,7 @@ Transform:
   - {fileID: 4767806699455388001}
   - {fileID: 4767806698973644646}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4767806700887081476
 Camera:

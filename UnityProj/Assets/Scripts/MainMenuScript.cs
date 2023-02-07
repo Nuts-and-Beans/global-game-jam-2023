@@ -62,9 +62,6 @@ public class MainMenuScript : MonoBehaviour
     {
         prevSeleted = selected;
         selected--;
-        // selected    = math.clamp(selected--, 0, NUM_BUTTONS);
-
-        Debug.Log($"Up {selected}");
 
         OnSelectionChanged();
     }
@@ -73,9 +70,6 @@ public class MainMenuScript : MonoBehaviour
     {
         prevSeleted = selected;
         selected++;
-        // selected    = math.clamp(selected, 0, NUM_BUTTONS);
-        
-        Debug.Log($"Down {selected}");
         
         OnSelectionChanged();
     }
