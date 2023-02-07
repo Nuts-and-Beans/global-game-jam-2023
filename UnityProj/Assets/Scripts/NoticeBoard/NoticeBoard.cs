@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Burst;
@@ -121,6 +122,7 @@ public class NoticeBoard : MonoBehaviour
         while (timer < duration)
         {
             float t = timer / duration;
+            t = EaseOutBack(t);
             tab.transform.position = math.lerp(startPos, endPos, t);
             timer += Time.deltaTime;
             yield return null;
@@ -146,6 +148,7 @@ public class NoticeBoard : MonoBehaviour
         while (timer < duration)
         {
             float t = timer/ duration;
+            t = EaseInSinusoidal(t);
             tab.transform.position = math.lerp(startPos, endPos, t);
             timer += Time.deltaTime;
             yield return null;
@@ -178,5 +181,18 @@ public class NoticeBoard : MonoBehaviour
         _currentTabCountInBoard  = math.max(_currentTabCountInBoard, 0); // REVIEW(Zack): this is probably unnecessary, but just to be safe
     }
 
+
+
+    [BurstCompile, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float EaseOutBack(float val) {
+        const float s = 1.70158f;
+        const float c3 = s + 1f;
+        return 1f + c3 * math.pow(val - 1f, 3f) + s * math.pow(val - 1f, 2f);
+    }
+
+    [BurstCompile, MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float EaseInSinusoidal(float val) => 1f - math.cos(val * (math.PI * 0.5f));
+
+    [BurstCompile, MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int WrapIndex(int index, int size) => (index + size) % size;
 }
