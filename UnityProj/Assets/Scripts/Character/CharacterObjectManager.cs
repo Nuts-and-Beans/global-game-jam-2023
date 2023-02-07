@@ -11,6 +11,7 @@ public class CharacterObjectManager : MonoBehaviour
     [SerializeField] private Grid _grid;
     [SerializeField] private GridRouteInput _gridRouteInput;
     [SerializeField] private GridEncounters _gridEncounters;
+    [SerializeField] private AdventurerSprites _adventurerSprites; 
 
     [Header("Character Movement")]
     [SerializeField] private CharacterObject _characterObjectPrefab;
@@ -29,6 +30,8 @@ public class CharacterObjectManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Assert(_adventurerSprites != null, "Adventurer Sprites has not been set in the inspector", this);
+
         _bossEncounterIcon.Disable();
         
         _characterObjectPool    = new List<CharacterObject>(_initialCharObjectSpawnAmount);
@@ -51,8 +54,9 @@ public class CharacterObjectManager : MonoBehaviour
     {
         List<MoveDirection> moveDir = new List<MoveDirection>(moveDirections);
 
+        Sprite sprite = _adventurerSprites.GetSprite(character);
         CharacterObject cm = GetCharacterObject();
-        cm.SetCharacter(character, moveDir);
+        cm.SetCharacter(character, sprite,  moveDir);
         
         cm.gameObject.SetActive(true);
         StartCoroutine(cm.Move());

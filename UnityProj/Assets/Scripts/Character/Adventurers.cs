@@ -20,9 +20,10 @@ public static class Adventurers
             Character c = new ();
             c.type = type;
             c.name = Names.names[i];
+            c.spriteIndex = Random.Range(0, 3); // HACK(Zack): being lazy with regards to the 
 
             //REVIEW(Sebadam2010): Not sure if this is a safe way to do it? 
-           // c.equipment = new Equipment(EquipmentType.NONE);
+            // c.equipment = new Equipment(EquipmentType.NONE);
 
             switch (type) 
             {
