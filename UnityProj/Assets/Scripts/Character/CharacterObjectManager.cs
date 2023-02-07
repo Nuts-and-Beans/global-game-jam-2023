@@ -119,8 +119,10 @@ public class CharacterObjectManager : MonoBehaviour
         
         _gridEncounters.VisitEncounter(cellIndex);
         
+#if UNITY_EDITOR
         Debug.Log("Doing Encounter Interaction");
-        
+#endif
+
         IEncounter encounter = _gridEncounters.encounters[cellIndex];
         EncounterState state = encounter.AdventurerInteract(character);
 

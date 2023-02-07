@@ -11,7 +11,7 @@ public class Tab : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Image _adventurerImage;
-    [SerializeField] private Image _selectionBorder;
+    [SerializeField] private Image[] _selectionBorders;
     [SerializeField] private TextMeshProUGUI _adventurerNameText;
 
     [Header("Unused References")]
@@ -43,7 +43,7 @@ public class Tab : MonoBehaviour
         FlashSelectionFunc = FlashSelection;
 
         // setup the colour lerping values
-        _flashOnColour = _selectionBorder.color;
+        _flashOnColour = _selectionBorders[0].color;
         _flashOffColour = _flashOnColour;
         _flashOffColour.a = 0f;
     }
@@ -79,7 +79,11 @@ public class Tab : MonoBehaviour
 
         this.info = info;
 
-        _selectionBorder.color = _flashOffColour;
+        // we set the flash colour to transparent on all of the borders so
+        for (int i = 0; i < _selectionBorders.Length; ++i)
+        {
+            _selectionBorders[i].color = _flashOffColour;
+        }
     }
 
 
@@ -96,6 +100,7 @@ public class Tab : MonoBehaviour
         _flashCoroutine = null;
     }
 
+    [BurstCompile]
     private IEnumerator FlashSelection(Color start, Color end, float duration)
     {
         float timer = 0f;
@@ -103,12 +108,21 @@ public class Tab : MonoBehaviour
         {
             float t = timer / duration;
             t = EaseInOutExp(t);
-            _selectionBorder.color = LerpColour(start, end, t);
+            Color c = LerpColour(start, end, t);
+
+            for (int i = 0; i < _selectionBorders.Length; ++i)
+            {
+                _selectionBorders[i].color = c;
+            }
+
             timer += Time.deltaTime;
             yield return null;
         }
         
-        _selectionBorder.color = end;
+        for (int i = 0; i < _selectionBorders.Length; ++i)
+        {
+            _selectionBorders[i].color = start;
+        }
 
         // do a simple swap to change the colours over
         Color temp = start;

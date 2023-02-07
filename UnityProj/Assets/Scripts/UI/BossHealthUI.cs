@@ -20,6 +20,9 @@ public class BossHealthUI : MonoBehaviour
     [SerializeField] private float2 _torqueRange = new (-50f, 50f);
     [SerializeField] private float2 _forceImpulseRange = new (20f, 60f);
 
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip[] _damageSFXs;
+
     private delegate IEnumerator LerpDel(PhysicsImage img, float duration);
     private LerpDel LerpTransparentFunc;
 
@@ -58,6 +61,11 @@ public class BossHealthUI : MonoBehaviour
 
     private void RemoveHealth(int currentHealth)
     {
+        // we play a damage sfx for the boss
+        int index = Random.Range(0, _damageSFXs.Length);
+        AudioClip sfx = _damageSFXs[index];
+        AudioManager.PlayOneShot(sfx);
+
         PhysicsImage img = _barSections[currentHealth - 1];
         img.rb.simulated = true;
 

@@ -67,7 +67,9 @@ public class EquipmentEncounter : IEncounter
     
     public EncounterState AdventurerInteract(Character character)
     {
+#if UNITY_EDITOR
         Debug.Log("Interacted with Equipment/Armor encounter");
+#endif
         character.health += _healthBonusAmount;
         character.attack += _attackBonusAmount;
         character.agility += _agilityBonusAmount;
