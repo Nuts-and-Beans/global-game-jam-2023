@@ -17,6 +17,19 @@ public class ChromaticAberrationIntensity : MonoBehaviour
     [SerializeField] private float _duration;
     
     private ChromaticAberration _chromaticAberration => _volumeProfile.components[_chromaticAberrationIndex] as ChromaticAberration;
+    private float _initialValue;
+    
+    
+    private void Awake()
+    {
+        _initialValue = _startIntensity;
+        _chromaticAberration.intensity.value = _initialValue;
+    }
+
+    private void OnDestroy()
+    {
+        _chromaticAberration.intensity.value = _initialValue;
+    }
 
     private IEnumerator Start()
     {
