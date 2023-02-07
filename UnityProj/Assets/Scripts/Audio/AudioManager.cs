@@ -15,12 +15,12 @@ public class AudioManager : MonoBehaviour
     {
         if (s_instance != null)
         {
-            Debug.LogError("Multiple Audio Managers are in the scene! Only one should be in the scene");
             Destroy(this.gameObject);
             return;
         }
         
         s_instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void OnDestroy()
