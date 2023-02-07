@@ -32,7 +32,7 @@ public class CharacterObject : MonoBehaviour
         _character = Adventurers.GetNextCharacter();
     }
 
-    public void SetCharacter(Character character, List<MoveDirection> moveDirections)
+    public void SetCharacter(Character character, Sprite sprite, List<MoveDirection> moveDirections)
     {
         _character      = character;
         _moveDirections = moveDirections;
@@ -41,19 +41,7 @@ public class CharacterObject : MonoBehaviour
         
         if (_character == null) return;
         
-        Sprite[] sprites = _character.type switch
-        {
-            CharacterType.BARBARIAN => _barbarianSprites,
-            CharacterType.ARCHER    => _archerSprites,
-            CharacterType.ASSASSIN  => _assassinSprites,
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        if (sprites.Length > 0)
-        {
-            int spriteIndex = Random.Range(0, sprites.Length);
-            _sprite.sprite = sprites[spriteIndex];
-        }
+        _sprite.sprite = sprite;
     }
 
     private void RemoveCharacter()

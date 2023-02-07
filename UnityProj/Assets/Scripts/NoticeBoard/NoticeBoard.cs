@@ -13,6 +13,7 @@ public class NoticeBoard : MonoBehaviour
 {
     [Header("Scene References")]
     [SerializeField] private GridRouteInput _gridRoute;
+    [SerializeField] private AdventurerSprites _adventurerSprites;
 
     [Header("Prefab References")]
     [SerializeField] private Tab[] _tabs;
@@ -48,8 +49,10 @@ public class NoticeBoard : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Assert(_gridRoute != null, "Grid Route Input is null, set in the inspector", this);
+        Debug.Assert(_gridRoute         != null, "Grid Route Input is null, set in the inspector",   this);
+        Debug.Assert(_adventurerSprites != null, "Adventurer Sprites is null, set in the inspector", this);
 
+        // subscribe to the select button input (Currently set to [Enter])
         Input.Actions.Selection.Select.performed += SelectCharacter;
 
         // delegate allocations
@@ -94,21 +97,8 @@ public class NoticeBoard : MonoBehaviour
             _currentTabCountInBoard += 1;
 
             Character info = Adventurers.GetNextCharacter();
-            // TODO(Zack): remove this setting of the sprite for a character and make a global version to be use in [Grid] as well
-            Sprite[] sprites = info.type switch
-            {
-                CharacterType.BARBARIAN => _barbarianSprites,
-                CharacterType.ARCHER    => _archerSprites,
-                CharacterType.ASSASSIN  => _assassinSprites,
-                _ => null
-            };
-            
-            Debug.Assert(sprites != null, "Sprites array is false, unknown character type chosen", this);
-            
-            // set the new tabs information, and then move it onto the screen
-            int index = Random.Range(0, sprites.Length);
-            Sprite sprite = sprites[index];
-            Tab freeTab = _tabs[_currentTabIndexToMove];
+            Sprite sprite  = _adventurerSprites.GetSprite(info);
+            Tab freeTab    = _tabs[_currentTabIndexToMove];
             freeTab.SetTabInfo(info, sprite);
 
             float3 startPosition = _offScreenSpawnPositions[_currentTabIndexToMove].position;

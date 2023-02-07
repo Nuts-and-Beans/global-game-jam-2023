@@ -19,6 +19,8 @@ public class Character
     public int health;
     public int attack; 
     public int agility;
+
+    public int spriteIndex;
     
     public delegate void CharacterDel(int newHealth);
     public event CharacterDel OnCharacterHealthEvent;
