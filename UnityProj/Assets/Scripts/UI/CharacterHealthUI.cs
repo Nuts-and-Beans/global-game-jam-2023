@@ -14,6 +14,9 @@ public class CharacterHealthUI : MonoBehaviour
     {
         _characterObject.OnCharacterSet += SubscribeToEvent;
         _characterObject.OnCharacterRemoved += UnsubscribeToEvent;
+
+        // NOTE(Zack): this updating of the character health relies on [_characterObject] getting a new character from [Adventurers] in it's [Awake()] function.
+        // else we just get a garbage value
         UpdateHeartAmount(_characterObject._character.health);
     }
 

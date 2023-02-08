@@ -27,7 +27,7 @@ public class CharacterObject : MonoBehaviour
     private List<MoveDirection> _moveDirections;
     [NonSerialized] public Character _character;
 
-    private void Start()
+    private void Awake()
     {
         _character = Adventurers.GetNextCharacter();
     }
