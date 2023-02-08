@@ -35,6 +35,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EndRoute"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1be8cf9-81ee-4619-9ebe-49faad463e39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,17 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Route"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55dfd50a-d03a-4775-949f-5776f1630d91"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EndRoute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -191,6 +211,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         // Grid
         m_Grid = asset.FindActionMap("Grid", throwIfNotFound: true);
         m_Grid_Route = m_Grid.FindAction("Route", throwIfNotFound: true);
+        m_Grid_EndRoute = m_Grid.FindAction("EndRoute", throwIfNotFound: true);
         // Selection
         m_Selection = asset.FindActionMap("Selection", throwIfNotFound: true);
         m_Selection_Up = m_Selection.FindAction("Up", throwIfNotFound: true);
@@ -256,11 +277,13 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Grid;
     private IGridActions m_GridActionsCallbackInterface;
     private readonly InputAction m_Grid_Route;
+    private readonly InputAction m_Grid_EndRoute;
     public struct GridActions
     {
         private @InputActions m_Wrapper;
         public GridActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Route => m_Wrapper.m_Grid_Route;
+        public InputAction @EndRoute => m_Wrapper.m_Grid_EndRoute;
         public InputActionMap Get() { return m_Wrapper.m_Grid; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,6 +296,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Route.started -= m_Wrapper.m_GridActionsCallbackInterface.OnRoute;
                 @Route.performed -= m_Wrapper.m_GridActionsCallbackInterface.OnRoute;
                 @Route.canceled -= m_Wrapper.m_GridActionsCallbackInterface.OnRoute;
+                @EndRoute.started -= m_Wrapper.m_GridActionsCallbackInterface.OnEndRoute;
+                @EndRoute.performed -= m_Wrapper.m_GridActionsCallbackInterface.OnEndRoute;
+                @EndRoute.canceled -= m_Wrapper.m_GridActionsCallbackInterface.OnEndRoute;
             }
             m_Wrapper.m_GridActionsCallbackInterface = instance;
             if (instance != null)
@@ -280,6 +306,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Route.started += instance.OnRoute;
                 @Route.performed += instance.OnRoute;
                 @Route.canceled += instance.OnRoute;
+                @EndRoute.started += instance.OnEndRoute;
+                @EndRoute.performed += instance.OnEndRoute;
+                @EndRoute.canceled += instance.OnEndRoute;
             }
         }
     }
@@ -336,6 +365,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     public interface IGridActions
     {
         void OnRoute(InputAction.CallbackContext context);
+        void OnEndRoute(InputAction.CallbackContext context);
     }
     public interface ISelectionActions
     {
