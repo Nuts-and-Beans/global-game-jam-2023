@@ -88,7 +88,7 @@ public class GridRouteInput : MonoBehaviour
 
     private void OnEndRoutePerformed(InputAction.CallbackContext context)
     {
-        EndRoute();
+        if (_readingInput) EndRoute();
     }
 
     public void StartRoute(Character character)
@@ -104,6 +104,8 @@ public class GridRouteInput : MonoBehaviour
 
     public void EndRoute()
     {
+        if(_visitedIndices.Count <= 0) return;
+
         _readingInput = false;
         OnRouteEnded?.Invoke();
         OnMoveDirectionsConfirmed?.Invoke(_character, _moveDirections);
