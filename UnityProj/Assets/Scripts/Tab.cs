@@ -89,6 +89,7 @@ public class Tab : MonoBehaviour
 
     public void StartFlashing()
     {
+        if (_flashCoroutine != null) return;
         // NOTE(Zack): the border selection starts completely transparent so we need to lerp it to be visible to begin with
         _flashCoroutine = StartCoroutine(FlashSelectionFunc(_flashOffColour, _flashOnColour, _flashDuration));
     }
