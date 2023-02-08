@@ -38,14 +38,16 @@ public class GridRouteInput : MonoBehaviour
 
     private void Awake()
     {
-        Input.Actions.Grid.Route.performed += OnRoutePerformed;
-        Input.Actions.Grid.Route.canceled  += OnRouteCancelled;
+        Input.Actions.Grid.Route.performed    += OnRoutePerformed;
+        Input.Actions.Grid.Route.canceled     += OnRouteCancelled;
+        Input.Actions.Grid.EndRoute.performed += OnEndRoutePerformed;
     }
 
     private void OnDestroy()
     {
-        Input.Actions.Grid.Route.performed -= OnRoutePerformed;
-        Input.Actions.Grid.Route.canceled  -= OnRouteCancelled;
+        Input.Actions.Grid.Route.performed    -= OnRoutePerformed;
+        Input.Actions.Grid.Route.canceled     -= OnRouteCancelled;       
+        Input.Actions.Grid.EndRoute.performed -= OnEndRoutePerformed;
     }
 
     private void OnRoutePerformed(InputAction.CallbackContext context)
@@ -63,7 +65,7 @@ public class GridRouteInput : MonoBehaviour
         
         if (!_canMove) return;
         _canMove = false;
-        
+
         bool xMax = math.abs(axis.x) >= math.abs(axis.y);
 
         MoveDirection direction;
@@ -82,6 +84,11 @@ public class GridRouteInput : MonoBehaviour
     private void OnRouteCancelled(InputAction.CallbackContext context)
     {
         _canMove = true;
+    }
+
+    private void OnEndRoutePerformed(InputAction.CallbackContext context)
+    {
+        EndRoute();
     }
 
     public void StartRoute(Character character)

@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "EndRoute",
+                    "type": "Button",
+                    "id": "c1be8cf9-81ee-4619-9ebe-49faad463e39",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -90,6 +99,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Route",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55dfd50a-d03a-4775-949f-5776f1630d91",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EndRoute",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

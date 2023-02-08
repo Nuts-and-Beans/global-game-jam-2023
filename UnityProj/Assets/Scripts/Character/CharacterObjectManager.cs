@@ -54,7 +54,7 @@ public class CharacterObjectManager : MonoBehaviour
     {
         List<MoveDirection> moveDir = new List<MoveDirection>(moveDirections);
 
-        Sprite sprite = _adventurerSprites.GetSprite(character);
+        Sprite sprite = character == null ? null : _adventurerSprites.GetSprite(character);
         CharacterObject cm = GetCharacterObject();
         cm.SetCharacter(character, sprite,  moveDir);
         
