@@ -25,6 +25,13 @@ public class WinLoseTextScript : MonoBehaviour
     int selected = 0;
     [SerializeField] int num_buttons;
     public static bool playerwin;
+    
+    private const string MAIN_MENU_STR = "MAIN MENU";
+    private const string EXIT_GAME_STR = "EXIT GAME";
+    private const string MAIN_MENU_BLINK_STR = "*MAIN MENU*";
+    private const string EXIT_GAME_BLINK_STR = "*EXIT GAME*";
+
+
     private void Awake()
     {
         Input.Actions.Selection.Select.performed += SelectOption;
@@ -32,6 +39,7 @@ public class WinLoseTextScript : MonoBehaviour
         Input.Actions.Selection.Down.performed += OptionDown;
         myText.text = EndLevelScript.playerWin ? "You Win!" : "You Lose!";
     }
+
     private void Start()
     {
         
@@ -44,12 +52,14 @@ public class WinLoseTextScript : MonoBehaviour
         {
             _loseAudio.Play();
         }
+
+        _playText.text = MAIN_MENU_BLINK_STR;
     }
 
     public void PlayGame()
     {
         EndLevelScript.playerWin = false;
-        SceneManager.LoadScene(1);
+        PlayAgain();
     }
 
     public void OptionDown(InputAction.CallbackContext callback)
@@ -101,36 +111,37 @@ public class WinLoseTextScript : MonoBehaviour
     {
         if (previous == 0)
         {
-            _playText.text = "Play Again";
-            _playText.fontStyle = TMPro.FontStyles.Normal;
+            _playText.text = MAIN_MENU_STR;
+            // _playText.fontStyle = TMPro.FontStyles.Normal;
         }
         else if (previous == 1)
         {
-            _exitText.text = "Exit Game";
-            _exitText.fontStyle = TMPro.FontStyles.Normal;
+            _exitText.text = EXIT_GAME_STR;
+            // _exitText.fontStyle = TMPro.FontStyles.Normal;
         }
     }
     private void highlight(int selected)
     {
         if (selected == 0)
         {
-            _playText.text = "*Play Again*";
-            _playText.fontStyle = TMPro.FontStyles.Underline
-                ;
+            _playText.text = MAIN_MENU_BLINK_STR;
+            // _playText.fontStyle = TMPro.FontStyles.Underline;
         }
         else if (selected == 1)
         {
-            _exitText.text = "*Exit Game*";
-            _exitText.fontStyle = TMPro.FontStyles.Underline;
+            _exitText.text = EXIT_GAME_BLINK_STR;
+            // _exitText.fontStyle = TMPro.FontStyles.Underline;
         }
     }
 
-
-
    public void ExitGame()
    {
-      
+        // NOTE(Zack): so that we're able to stop the editor using the buttons 
+#if UNITY_EDITOR
+       UnityEditor.EditorApplication.isPlaying = false;
+#else
       Application.Quit();
+#endif
    }
 
    public void PlayAgain()

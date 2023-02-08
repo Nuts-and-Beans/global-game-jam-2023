@@ -182,7 +182,12 @@ public class MainMenuScript : MonoBehaviour
 
     public void ExitGame()
     {
+        // NOTE(Zack): so that we're able to stop the editor using the buttons 
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
         //print("You have quit the game");
     }
     
