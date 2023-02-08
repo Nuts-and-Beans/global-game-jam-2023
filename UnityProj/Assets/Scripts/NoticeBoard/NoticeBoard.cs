@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Unity.Burst;
 using Unity.Mathematics;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// This script combines the functionality from <see cref="TabController"/> and <see cref="AdventurerTabs"/>
@@ -27,7 +24,7 @@ public class NoticeBoard : MonoBehaviour
 
     [Header("Animation Settings")]
     [SerializeField] private float _lerpOnScreenDuration = 1f;
-    [SerializeField] private float _lerpFinishedDuration = 0.5f;
+    [SerializeField] private float _lerpFinishedWithTabDuration = 0.5f;
 
     [Header("Notice Board Wait Settings")]
     [SerializeField] private float _initialWaitTime = 0.5f;
@@ -42,9 +39,11 @@ public class NoticeBoard : MonoBehaviour
     // function pointer delegates
     private delegate IEnumerator LerpDel(Tab tab, float3 start, float3 end, float duration);
     private delegate IEnumerator TrySendDel(float delay);
+    private delegate IEnumerator EmptyDel();
     private TrySendDel WaitAndTrySendNewTabFunc;
     private LerpDel MoveTabOnScreenFunc;
     private LerpDel RemoveTabOffScreenFunc;
+    private EmptyDel WaitAndAutoSelectAdventurerTabFunc;
     
 
     private void Awake()
@@ -52,18 +51,11 @@ public class NoticeBoard : MonoBehaviour
         Debug.Assert(_gridRoute         != null, "Grid Route Input is null, set in the inspector",   this);
         Debug.Assert(_adventurerSprites != null, "Adventurer Sprites is null, set in the inspector", this);
 
-        // subscribe to the select button input (Currently set to [Enter])
-        Input.Actions.Selection.Select.performed += SelectCharacter;
-
         // delegate allocations
         WaitAndTrySendNewTabFunc = WaitAndTrySendNewTab;
         MoveTabOnScreenFunc      = MoveTabOnScreen;
         RemoveTabOffScreenFunc   = RemoveTabOffScreen;
-    }
-
-    private void OnDestroy()
-    {
-        Input.Actions.Selection.Select.performed -= SelectCharacter;
+        WaitAndAutoSelectAdventurerTabFunc = WaitAndAutoSelectAdventurerTab;
     }
 
     private void Start()
@@ -75,12 +67,46 @@ public class NoticeBoard : MonoBehaviour
         }
 
 
-        // we start the first tab flashing for the selection
-        _tabs[_currentTabIndexToUseForSelection].StartFlashing();
-
         // NOTE(Zack): we begin the infinite Coroutine to check if we're able to send a new tab onto the screen, at set intervals
         // This could easily be done in the [Update()] loop, but to simplify some of the code, this method has been chosen instead
         StartCoroutine(WaitAndTrySendNewTabFunc(_initialWaitTime)); 
+        StartCoroutine(WaitAndAutoSelectAdventurerTab());
+    }
+
+    // HACK(Zack): this is a super scuffed way to do the automatically choose the next adventurer,
+    // but it works and probably doesn't need to be expanded upon so it's probably fine for now.
+    private IEnumerator WaitAndAutoSelectAdventurerTab()
+    {
+        while (true)
+        {
+            // we wait until we're able to read input and the tab is actually on screen
+            Tab tab = _tabs[_currentTabIndexToUseForSelection]; 
+            tab.StartFlashing(); // set the tab we're currently going to be using
+            while (!tab.onScreen || _gridRoute._readingInput) yield return null;
+            
+            // start grid route selection input
+            _gridRoute.StartRoute(tab.info);
+
+            // we wait for the grid input to be finished
+            while (_gridRoute._readingInput) yield return null;
+
+            // remove the tab from the screen
+            tab.StopFlashing();
+            float3 startPos = tab.transform.position;
+            float3 endPos   = startPos;
+            endPos.x -= 2000f; // HACK(Zack): hardcorded for now;
+
+            StartCoroutine(RemoveTabOffScreenFunc(tab, startPos, endPos, _lerpFinishedWithTabDuration));
+
+            _currentTabIndexToUseForSelection += 1;
+            _currentTabIndexToUseForSelection  = WrapIndex(_currentTabIndexToUseForSelection, _tabs.Length);
+
+            _currentTabCountInBoard -= 1;
+            _currentTabCountInBoard  = math.max(_currentTabCountInBoard, 0); // REVIEW(Zack): this is probably unnecessary, but just to be safe
+            yield return null; // NOTE(Zack): unnecessary but putting this here for safety so that we don't get a spin lock
+        }
+
+        yield break;
     }
 
     [BurstCompile]
@@ -99,10 +125,10 @@ public class NoticeBoard : MonoBehaviour
         {
             _currentTabCountInBoard += 1;
 
+            // set the tabs info
             Character info = Adventurers.GetNextCharacter();
             Sprite sprite  = _adventurerSprites.GetSprite(info);
             Tab freeTab    = _tabs[_currentTabIndexToMove];
-            freeTab.SetTabInfo(info, sprite);
 
             float3 startPosition = _offScreenSpawnPositions[_currentTabIndexToMove].position;
             float3 endPosition = _onScreenSpawnPositions[_currentTabIndexToMove].position;
@@ -126,8 +152,8 @@ public class NoticeBoard : MonoBehaviour
     {
         AudioManager.PlayOneShot(_requestAdventurer);
 
-        float timer = 0f;
         tab.transform.position = startPos;
+        float timer = 0f;
         while (timer < duration)
         {
             float t = timer / duration;
@@ -168,36 +194,6 @@ public class NoticeBoard : MonoBehaviour
         tab.transform.position = endPos;
         yield break;
     }
-
-    private void SelectCharacter(InputAction.CallbackContext context)
-    {
-        if (!_tabs[_currentTabIndexToUseForSelection].onScreen || _gridRoute._readingInput) return;
-
-        // we use the current character tab info for the grid input set
-        Tab tab = _tabs[_currentTabIndexToUseForSelection];
-        tab.StopFlashing();
-
-        _gridRoute.StartRoute(tab.info);
-        _gridRoute._readingInput = true;
-
-        // we then move this tab off of the screen as we're done with it
-        float3 startPos = tab.transform.position;
-        float3 endPos   = startPos;
-        endPos.x -= 2000; // HACK(Zack): hardcoding this for now
-
-        StartCoroutine(RemoveTabOffScreenFunc(tab, startPos, endPos, _lerpFinishedDuration));
-
-        _currentTabIndexToUseForSelection += 1;
-        _currentTabIndexToUseForSelection  = WrapIndex(_currentTabIndexToUseForSelection, _tabs.Length);
-
-        // set the next tab for selection flashing
-        _tabs[_currentTabIndexToUseForSelection].StartFlashing();
-        
-        _currentTabCountInBoard -= 1;
-        _currentTabCountInBoard  = math.max(_currentTabCountInBoard, 0); // REVIEW(Zack): this is probably unnecessary, but just to be safe
-    }
-
-
 
     [BurstCompile, MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float EaseOutBack(float val) {
