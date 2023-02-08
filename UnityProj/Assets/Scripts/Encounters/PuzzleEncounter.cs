@@ -79,9 +79,9 @@ public class PuzzleEncounter : IEncounter
 
     public EncounterState AdventurerInteract(Character character)
     {
-        int encounterChance = Random.Range(0, _chance + 1);
+        int smarts = character.smarts + Random.Range(0, 5); // we add on an additional amount so that we always have a chance to actually progress past a given puzzle
 
-        if (encounterChance == _chance)
+        if (smarts > _chance)
         {
             return EncounterState.ENCOUNTER_COMPLETE;
         }

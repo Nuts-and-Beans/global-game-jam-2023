@@ -47,6 +47,7 @@ public static class Adventurers
                 } break;
             }
 
+            c.smarts = Random.Range(0, 4);
             characters.Push(c); 
         }
     }

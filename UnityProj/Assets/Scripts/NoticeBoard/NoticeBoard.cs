@@ -129,6 +129,7 @@ public class NoticeBoard : MonoBehaviour
             Character info = Adventurers.GetNextCharacter();
             Sprite sprite  = _adventurerSprites.GetSprite(info);
             Tab freeTab    = _tabs[_currentTabIndexToMove];
+            freeTab.SetTabInfo(info, sprite);
 
             float3 startPosition = _offScreenSpawnPositions[_currentTabIndexToMove].position;
             float3 endPosition = _onScreenSpawnPositions[_currentTabIndexToMove].position;

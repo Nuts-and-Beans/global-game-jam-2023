@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum CharacterType 
 {
@@ -19,6 +20,7 @@ public class Character
     public int health;
     public int attack; 
     public int agility;
+    public int smarts;
 
     public int spriteIndex;
     
@@ -103,5 +105,7 @@ public class Character
                 agility = 3;
             } break;
         }
+
+        smarts = Random.Range(0, 4);
     }
 }

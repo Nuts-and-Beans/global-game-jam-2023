@@ -102,7 +102,7 @@ Transform:
   - {fileID: 1677106496897282223}
   - {fileID: 4120982965860250092}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4753381735683633007
 MonoBehaviour:
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e271b6cda21d4e24a6b54d477d3f96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 8
+  _maxHealth: 3
   _removeHealth: 0
 --- !u!114 &1984852092159872241
 MonoBehaviour:

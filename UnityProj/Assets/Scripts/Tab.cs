@@ -23,8 +23,10 @@ public class Tab : MonoBehaviour
     [SerializeField] private Image[] _health;
     [SerializeField] private Image[] _attack;
     [SerializeField] private Image[] _agility;
+    [SerializeField] private Image[] _smarts;
 
     [Header("Selection Flash Settings")]
+    [SerializeField] private Color _flashOnColour = Color.green;
     [SerializeField] private float _flashDuration = 0.5f;
 
     public RawImage _adventurerRImage;
@@ -34,7 +36,6 @@ public class Tab : MonoBehaviour
     private delegate IEnumerator LerpDel(Color start, Color end, float duration);
     private LerpDel FlashSelectionFunc;
     private Coroutine _flashCoroutine;
-    private Color _flashOnColour;
     private Color _flashOffColour;
 
     private void Awake()
@@ -43,7 +44,6 @@ public class Tab : MonoBehaviour
         FlashSelectionFunc = FlashSelection;
 
         // setup the colour lerping values
-        _flashOnColour = _selectionBorders[0].color;
         _flashOffColour = _flashOnColour;
         _flashOffColour.a = 0f;
     }
@@ -67,14 +67,17 @@ public class Tab : MonoBehaviour
             bool healthEnabled  = false;
             bool attackEnabled  = false;
             bool agilityEnabled = false;
+            bool smartsEnabled  = false;
 
             if (info.health  >= num) healthEnabled  = true;
             if (info.attack  >= num) attackEnabled  = true;
             if (info.agility >= num) agilityEnabled = true;
+            if (info.smarts >= num)  smartsEnabled  = true;
 
             _health[i].enabled  = healthEnabled;
             _attack[i].enabled  = attackEnabled;
             _agility[i].enabled = agilityEnabled;
+            _smarts[i].enabled  = agilityEnabled;
         }
 
         this.info = info;
